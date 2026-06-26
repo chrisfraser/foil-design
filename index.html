@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hydrodynamic Foils — a course on designing fishing depressors</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .hero { margin: 1rem 0 2.5rem; }
+  .index-list { list-style: none; padding: 0; margin: 1rem 0; }
+  .index-list li {
+    border: 1px solid var(--rule); border-radius: 6px; background: #fff;
+    padding: .9rem 1.1rem; margin: .6rem 0; transition: border-color .12s, background .12s;
+  }
+  .index-list li:hover { border-color: var(--accent); background: #f6fbfb; }
+  .index-list a { border: none; font-weight: 600; font-size: 1.08rem; }
+  .index-list .desc { display:block; color: var(--ink-soft); font-size: .9rem; margin-top: .15rem;
+    font-family: ui-sans-serif, system-ui, sans-serif; }
+  .index-list .badge { float: right; font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .soon { opacity: .55; }
+  .soon a { color: var(--ink-soft); cursor: default; }
+</style>
+</head>
+<body>
+
+<div class="course-tag">A learn-by-building course</div>
+<h1 class="hero">Hydrodynamic Foils</h1>
+<p class="subtitle">Understanding underwater foils well enough to design, compute, 3D-print, and water-test fishing <em>depressors</em> — towed wings that drive a lure deep while trolling.</p>
+
+<div class="callout intuition">
+  <div class="callout-title">The whole idea in one line</div>
+  A depressor is an <strong>upside-down wing</strong>: it makes a force <em>perpendicular</em> to the flow — point that force down, and your lure dives.
+</div>
+
+<h2>Lessons</h2>
+<ul class="index-list">
+  <li>
+    <span class="badge">Lesson 01</span>
+    <a href="lessons/0001-foils-101.html">A Depressor Is an Upside-Down Wing</a>
+    <span class="desc">Lift = force across the flow · drag = the toll along it · angle of attack · stall · meet the lift equation.</span>
+  </li>
+  <li class="soon">
+    <span class="badge">Lesson 02</span>
+    <a>The Lift Equation, With Numbers <em>— coming soon</em></a>
+    <span class="desc">Compute real downforce from speed, area, and angle for a plate in water.</span>
+  </li>
+</ul>
+
+<h2>Reference</h2>
+<ul class="index-list">
+  <li>
+    <span class="badge">Glossary</span>
+    <a href="reference/glossary.html">Course Glossary</a>
+    <span class="desc">The shared vocabulary — foil, lift/drag, angle of attack, camber, aspect ratio, Reynolds number, cavitation.</span>
+  </li>
+</ul>
+
+<h2>Course documents</h2>
+<ul class="index-list">
+  <li><a href="MISSION.md">Mission</a><span class="desc">Why this course exists and what success looks like.</span></li>
+  <li><a href="RESOURCES.md">Resources</a><span class="desc">Vetted sources (NASA, Airfoil Tools, XFLR5, FAO Otter Board manual) and communities.</span></li>
+</ul>
+
+<div class="ask-teacher">
+  <b>This is a living course.</b> Lessons are added over time, each a single tangible win tied to building a real depressor. Start with Lesson 01.
+</div>
+
+</body>
+</html>

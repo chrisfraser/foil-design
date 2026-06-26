@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — Hydrodynamic Foils</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  dl.gloss { margin: 1.5rem 0; }
+  dl.gloss dt { font-weight: 600; margin-top: 1.1rem; color: var(--accent); font-size: 1.05rem; }
+  dl.gloss dt .sym { color: var(--ink-soft); font-style: italic; font-weight: 400; margin-left: .4rem; }
+  dl.gloss dd { margin: .2rem 0 0; }
+  .group { margin-top: 2.2rem; }
+  @media print { dl.gloss dt { color: #000; } }
+</style>
+</head>
+<body>
+
+<div class="course-tag">Hydrodynamic Foils · Reference</div>
+<h1>Glossary</h1>
+<p class="subtitle">The shared vocabulary for the course. Every lesson uses these terms exactly as defined here.</p>
+
+<div class="callout intuition">
+  <div class="callout-title">Orientation</div>
+  A <strong>depressor</strong> is just a wing turned over so its “lift” points <em>down</em>. So most of this glossary is ordinary wing/foil language — only the direction of the useful force is flipped.
+</div>
+
+<div class="group">
+<h2>The device</h2>
+<dl class="gloss">
+  <dt>Foil</dt>
+  <dd>A shaped surface (a wing, blade, or plate) that turns flowing fluid to generate a force mostly <em>perpendicular</em> to the flow. “Hydrofoil” = a foil working in water.</dd>
+
+  <dt>Depressor / Diving planer</dt>
+  <dd>A towed foil that produces <em>downward</em> force to pull a fishing lure or line deep while trolling. Same physics as a wing, oriented for downforce.</dd>
+
+  <dt>Paravane</dt>
+  <dd>A towed “water kite” that planes sideways or downward off a line — the broad family depressors belong to.</dd>
+
+  <dt>Otter board / Trawl door</dt>
+  <dd>Commercial-fishing foils that spread or sink a trawl net. The best-documented engineering cousins of a depressor (low aspect ratio, often cambered).</dd>
+</dl>
+</div>
+
+<div class="group">
+<h2>Geometry of a foil</h2>
+<dl class="gloss">
+  <dt>Chord <span class="sym">c</span></dt>
+  <dd>Straight-line distance from the leading edge to the trailing edge — the “depth” of the foil in the flow direction.</dd>
+
+  <dt>Span <span class="sym">b</span></dt>
+  <dd>Tip-to-tip width, measured across the flow.</dd>
+
+  <dt>Planform area <span class="sym">A (or S)</span></dt>
+  <dd>The footprint area seen from above — roughly span × chord. The area used in the lift/drag equations.</dd>
+
+  <dt>Aspect ratio <span class="sym">AR = b² / A</span></dt>
+  <dd>How long-and-skinny vs short-and-stubby the foil is. Gliders: high AR. Depressors: <strong>low</strong> AR — which leaks lift and adds drag (covered later).</dd>
+
+  <dt>Camber</dt>
+  <dd>The curvature of the foil’s mean line. A cambered (asymmetric) section makes force even at zero angle of attack — useful for a depressor.</dd>
+
+  <dt>Thickness</dt>
+  <dd>How fat the section is, as a % of chord. Affects strength, drag, and stall behaviour.</dd>
+
+  <dt>NACA section</dt>
+  <dd>A standardised airfoil shape. e.g. <strong>NACA 2412</strong> = 2% camber, located at 40% chord, 12% thick. We’ll generate these in a tool.</dd>
+</dl>
+</div>
+
+<div class="group">
+<h2>Forces & angles</h2>
+<dl class="gloss">
+  <dt>Angle of attack <span class="sym">α (alpha)</span></dt>
+  <dd>The angle between the foil’s chord line and the oncoming flow. The primary control knob for how much force the foil makes.</dd>
+
+  <dt>Lift <span class="sym">L</span></dt>
+  <dd>The force component <em>perpendicular</em> to the oncoming flow. For a depressor, we aim this <em>downward</em>. (We still call it “lift” — it’s the technical name for the perpendicular force.)</dd>
+
+  <dt>Drag <span class="sym">D</span></dt>
+  <dd>The force component <em>along</em> the flow — resistance you must tow against.</dd>
+
+  <dt>Dynamic pressure <span class="sym">q = ½ ρ v²</span></dt>
+  <dd>The “pressure of motion” — how hard the moving water pushes. Scales with the <em>square</em> of speed, so doubling speed quadruples the force.</dd>
+
+  <dt>Stall</dt>
+  <dd>When angle of attack gets too steep, flow separates from the foil, lift collapses and drag spikes. There’s a max useful α.</dd>
+</dl>
+</div>
+
+<div class="group">
+<h2>Coefficients & performance</h2>
+<dl class="gloss">
+  <dt>Lift coefficient <span class="sym">C<sub>L</sub></span></dt>
+  <dd>A dimensionless number capturing how effective the foil shape + angle are at making lift, independent of size/speed/fluid.</dd>
+
+  <dt>Drag coefficient <span class="sym">C<sub>D</sub></span></dt>
+  <dd>Same idea for drag.</dd>
+
+  <dt>Lift-to-drag ratio <span class="sym">L/D</span></dt>
+  <dd>Efficiency: downforce gained per unit of towing drag paid. Higher is better.</dd>
+
+  <dt>Polar</dt>
+  <dd>A plot of C<sub>L</sub> vs C<sub>D</sub> (or vs α) for a section. The chart you read to choose an operating angle.</dd>
+
+  <dt>Induced drag</dt>
+  <dd>Extra drag created as a by-product of making lift on a <em>finite</em> wing — worse at low aspect ratio.</dd>
+</dl>
+</div>
+
+<div class="group">
+<h2>Operating in water</h2>
+<dl class="gloss">
+  <dt>Reynolds number <span class="sym">Re = ρ v L / μ</span></dt>
+  <dd>Ratio of inertial to viscous forces; sets whether flow is smooth (laminar) or turbulent. You must match your foil’s Re when reading polars from tools.</dd>
+
+  <dt>Cavitation</dt>
+  <dd>At high speed/low pressure, water boils into vapour bubbles that wreck lift and erode the surface. A concern toward the 8–10 kn top end.</dd>
+
+  <dt>Cavitation number <span class="sym">σ (sigma)</span></dt>
+  <dd>A dimensionless measure of how close the flow is to cavitating. Lower σ = more likely to cavitate.</dd>
+</dl>
+</div>
+
+<p style="margin-top:3rem"><a href="../lessons/0001-foils-101.html">← Lesson 1: A Depressor Is an Upside-Down Wing</a></p>
+
+</body>
+</html>

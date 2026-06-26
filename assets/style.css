@@ -1,0 +1,178 @@
+/* ===========================================================================
+   Hydrodynamic Foil — shared lesson stylesheet
+   Tufte-inspired: readable serif body, generous margins, sidenotes, print-clean.
+   Every lesson links this file. Keep lesson-specific CSS out of here unless reusable.
+   =========================================================================== */
+
+:root {
+  --ink:        #1a1a17;
+  --ink-soft:   #5a5a52;
+  --paper:      #fdfcf8;
+  --rule:       #d8d4c6;
+  --accent:     #1f6f78;   /* teal — "water" */
+  --accent-2:   #b5532a;   /* rust — "force / heat" */
+  --flow:       #2b6cb0;   /* flow arrows */
+  --good:       #2f7d4f;
+  --bad:        #b23b3b;
+  --hl:         #fff3c4;   /* highlight */
+  --maxw:       43rem;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 19px; }
+
+body {
+  margin: 0 auto;
+  max-width: var(--maxw);
+  padding: 3.5rem 1.6rem 6rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---- Course furniture --------------------------------------------------- */
+.course-tag {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.lesson-no { color: var(--ink-soft); }
+
+/* ---- Headings ----------------------------------------------------------- */
+h1, h2, h3 { line-height: 1.15; font-weight: 600; }
+h1 { font-size: 2.1rem; margin: .2rem 0 .4rem; letter-spacing: -.01em; }
+h2 {
+  font-size: 1.35rem; margin: 2.6rem 0 .6rem;
+  padding-bottom: .25rem; border-bottom: 1px solid var(--rule);
+}
+h3 { font-size: 1.08rem; margin: 1.8rem 0 .4rem; color: var(--ink); }
+
+.subtitle { font-size: 1.15rem; color: var(--ink-soft); font-style: italic; margin: 0 0 1.6rem; }
+
+p { margin: .8rem 0; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(31,111,120,.35); }
+a:hover { border-bottom-color: var(--accent); }
+
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+/* ---- Lead / takeaway ---------------------------------------------------- */
+.lead {
+  font-size: 1.12rem;
+  border-left: 3px solid var(--accent);
+  padding: .2rem 0 .2rem 1rem;
+  margin: 1.4rem 0;
+  color: var(--ink);
+}
+
+/* ---- Callouts ----------------------------------------------------------- */
+.callout {
+  margin: 1.5rem 0; padding: 1rem 1.2rem;
+  border: 1px solid var(--rule); border-radius: 6px;
+  background: #fbf9f1;
+}
+.callout > .callout-title {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 700; margin-bottom: .3rem; color: var(--accent-2);
+}
+.callout.intuition { background: #f1f7f7; border-color: #cfe4e4; }
+.callout.intuition > .callout-title { color: var(--accent); }
+.callout.warning  { background: #fdf3ee; border-color: #eccfc0; }
+.callout.warning  > .callout-title { color: var(--accent-2); }
+.callout.key      { background: var(--hl); border-color: #e9d98a; }
+.callout.key      > .callout-title { color: #8a6d12; }
+
+/* ---- Equations ---------------------------------------------------------- */
+.eq {
+  margin: 1.3rem 0; padding: 1rem 1.2rem; text-align: center;
+  background: #f6f4ec; border: 1px solid var(--rule); border-radius: 6px;
+  font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 1.25rem;
+}
+.eq .where {
+  display: block; margin-top: .6rem; font-size: .8rem; color: var(--ink-soft);
+  font-family: ui-sans-serif, system-ui, sans-serif; line-height: 1.4;
+}
+var { font-style: italic; }
+.unit { font-family: ui-sans-serif, system-ui, sans-serif; font-size: .85em; color: var(--ink-soft); }
+
+/* ---- Figures ------------------------------------------------------------ */
+figure { margin: 1.8rem 0; text-align: center; }
+figure svg { max-width: 100%; height: auto; }
+figcaption {
+  font-size: .82rem; color: var(--ink-soft); margin-top: .5rem;
+  font-family: ui-sans-serif, system-ui, sans-serif; line-height: 1.4;
+}
+
+/* ---- Tables ------------------------------------------------------------- */
+table { border-collapse: collapse; width: 100%; margin: 1.4rem 0; font-size: .95rem; }
+th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--rule); }
+th { font-family: ui-sans-serif, system-ui, sans-serif; font-size: .78rem;
+     text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
+
+/* ---- Citations / source ------------------------------------------------- */
+.cite { font-size: .85em; }
+sup.ref a { border: none; color: var(--accent-2); font-weight: 600; }
+.primary-source {
+  margin: 2rem 0; padding: 1rem 1.2rem; border: 1px dashed var(--accent);
+  border-radius: 6px; background: #f1f7f7;
+}
+.primary-source .callout-title { color: var(--accent); }
+
+/* ---- Quiz (paired with quiz.js) ---------------------------------------- */
+.quiz { margin: 1.4rem 0; }
+.quiz .q {
+  margin: 1.2rem 0; padding: 1rem 1.1rem; border: 1px solid var(--rule);
+  border-radius: 6px; background: #fff;
+}
+.quiz .q-prompt { font-weight: 600; margin-bottom: .7rem; }
+.quiz .opt {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font: inherit; color: inherit; background: #faf8f1;
+  border: 1px solid var(--rule); border-radius: 5px;
+  padding: .5rem .8rem; margin: .35rem 0; transition: background .12s, border-color .12s;
+}
+.quiz .opt:hover:not(:disabled) { background: #f0ede2; }
+.quiz .opt:disabled { cursor: default; opacity: .85; }
+.quiz .opt.correct   { background: #e4f3e8; border-color: var(--good); color: #1d5235; }
+.quiz .opt.incorrect { background: #f7e3e3; border-color: var(--bad);  color: #722; }
+.quiz .feedback {
+  margin-top: .6rem; font-size: .9rem; line-height: 1.45;
+  font-family: ui-sans-serif, system-ui, sans-serif; display: none;
+}
+.quiz .feedback.show { display: block; }
+.quiz .feedback.right { color: var(--good); }
+.quiz .feedback.wrong { color: var(--bad); }
+.quiz-score {
+  margin-top: 1rem; font-family: ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600; color: var(--accent);
+}
+
+/* ---- Footer nav --------------------------------------------------------- */
+.lesson-nav {
+  margin-top: 3.5rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: .8rem;
+  font-family: ui-sans-serif, system-ui, sans-serif; font-size: .9rem;
+}
+.ask-teacher {
+  margin-top: 2.5rem; padding: 1rem 1.2rem; border-radius: 6px;
+  background: #f1f7f7; border: 1px solid #cfe4e4;
+  font-family: ui-sans-serif, system-ui, sans-serif; font-size: .92rem;
+}
+.ask-teacher b { color: var(--accent); }
+
+/* ---- Print -------------------------------------------------------------- */
+@media print {
+  :root { --paper: #fff; }
+  body { max-width: none; padding: 0; font-size: 11pt; }
+  .quiz .opt { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: var(--ink); border: none; }
+  .lesson-nav, .ask-teacher { page-break-inside: avoid; }
+}
