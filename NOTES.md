@@ -25,7 +25,16 @@
 8. Tools: XFLR5/XFOIL hands-on — get a polar for a candidate section.
 9. Cavitation & strength at 8–10 kn; 3D-print material/orientation considerations.
 10. Sizing & optimization: put it together, design a real depressor.
-11. Build + on-water test protocol; measure depth; iterate.
+
+### CAD + CFD track (added session 2 — now a core destination)
+11. CAD basics: model a depressor (foil + body + tow points) — tool TBD (FreeCAD / Fusion 360?).
+12. From 2D section to 3D CAD: lofting a foil, parameterizing for variants.
+13. CFD 101: what a CFD sim actually computes; mesh, boundary conditions, turbulence models, convergence — concepts before clicking.
+14. CFD hands-on: run lift/drag on one depressor in a hobbyist-accessible package (SimScale / OpenFOAM / Autodesk CFD — TBD).
+15. Faster screening methods (panel methods, XFLR5 3D, surrogate/DoE) vs full CFD — when each is worth it.
+16. Design-of-experiments: compare CAD variants in CFD, pick a winner before printing.
+17. Build + on-water test protocol; measure depth; close the loop CFD↔reality; iterate.
 
 ## Resource research
-- Launched research agent (session 1) to populate RESOURCES.md. Awaiting results.
+- Session 1: launched research agent → populated RESOURCES.md (foil theory, sections, XFLR5, otter-board/fishing sources, communities).
+- TODO session 2+: research & vet CAD tools and **hobbyist-accessible CFD** options (FreeCAD/Fusion, OpenFOAM, SimScale, Autodesk CFD), plus tutorials for marine/external-flow CFD. RESOURCES.md has no CAD/CFD entries yet — this is the next research gap.
