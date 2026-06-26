@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CFD Tool Comparison — Hydrodynamic Foils</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .cmp { font-size: .9rem; }
+  .cmp th:first-child { width: 9rem; }
+  .cmp td { vertical-align: top; }
+  .pick { font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 700; }
+  .pick.a { color: var(--accent); }
+  .flow { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin:1rem 0 1.5rem;
+    font-family: ui-sans-serif, system-ui, sans-serif; font-size:.9rem; }
+  .flow .step { background:#f1f7f7; border:1px solid #cfe4e4; border-radius:6px; padding:.5rem .8rem; }
+  .flow .arrow { color: var(--ink-soft); }
+  .verdict { font-family: ui-sans-serif, system-ui, sans-serif; font-size:.85rem; }
+  .tag { display:inline-block; font-family: ui-sans-serif, system-ui, sans-serif; font-size:.66rem;
+    letter-spacing:.06em; text-transform:uppercase; padding:.1rem .45rem; border-radius:4px; font-weight:700; }
+  .tag.free { background:#e4f3e8; color:#1d5235; }
+  .tag.beg  { background:#eef4fb; color:#1f4f7a; }
+  .tag.adv  { background:#fdf3ee; color:#8a3d1d; }
+  .warn { color: var(--accent-2); }
+  @media print { .flow .step { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+
+<div class="course-tag">Hydrodynamic Foils · Reference</div>
+<h1>CFD &amp; Computational Evaluation — Tool Comparison</h1>
+<p class="subtitle">Three tools to evaluate depressor foils, spanning fast→easy→deep. CAD stays in Fusion 360. Pricing verified 2026-06-26.</p>
+
+<div class="callout key">
+  <div class="callout-title">The workflow these three are chosen for</div>
+  <div class="flow">
+    <span class="step"><strong>1. XFLR5</strong><br>screen sections (secs)</span>
+    <span class="arrow">→</span>
+    <span class="step"><strong>2. SimScale</strong><br>compare 3D variants (hrs)</span>
+    <span class="arrow">→</span>
+    <span class="step"><strong>3. OpenFOAM</strong><br>validate winner (deep)</span>
+    <span class="arrow">→</span>
+    <span class="step">3D-print &amp; tow-test<br>→ calibrate trust</span>
+  </div>
+  Your tow-tank is the ground truth. CFD only has to <em>rank variants</em> and not lie — use the on-water result to calibrate how much you trust each tool.
+</div>
+
+<table class="cmp">
+  <thead>
+    <tr><th></th><th>XFLR5</th><th>SimScale</th><th>OpenFOAM / CfdOF</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Role</th>
+      <td><span class="pick">Fast filter</span></td>
+      <td><span class="pick a">Main workhorse ⭐</span></td>
+      <td><span class="pick">Deep validation</span></td>
+    </tr>
+    <tr>
+      <th>Method</th>
+      <td>Panel / VLM + XFOIL.<br><span class="warn">Potential flow, <strong>not</strong> Navier–Stokes.</span></td>
+      <td>True Navier–Stokes RANS (k-omega SST), cloud finite-volume.</td>
+      <td>True Navier–Stokes finite-volume (simpleFoam + k-omega SST).</td>
+    </tr>
+    <tr>
+      <th>Cost / access</th>
+      <td><span class="tag free">free</span> GPL, desktop.</td>
+      <td><span class="tag free">free tier</span> Community: 10 sims, 3,000 core-hrs, 16 cores. <span class="warn">Projects are PUBLIC.</span></td>
+      <td><span class="tag free">free</span> GPL. No limits, no cloud.</td>
+    </tr>
+    <tr>
+      <th>Fusion 360 in</th>
+      <td><span class="warn">No CAD import.</span> Build from 2D <code>.dat</code> sections + planform.</td>
+      <td><strong>One-click add-in</strong> (or STEP/STL). Lowest friction.</td>
+      <td>Export <strong>STEP</strong> → FreeCAD → CfdOF in same app.</td>
+    </tr>
+    <tr>
+      <th>Learning curve</th>
+      <td><span class="tag beg">moderate</span> first polar ~1 h.</td>
+      <td><span class="tag beg">beginner</span> first lift/drag ~2–4 h.</td>
+      <td><span class="tag adv">steep</span> usable in evenings; <em>trustworthy</em> in weeks.</td>
+    </tr>
+    <tr>
+      <th>Lift/drag out?</th>
+      <td>Yes (2D polars; 3D wing forces).</td>
+      <td>Yes — native force &amp; moment coefficients.</td>
+      <td>Yes — <code>forceCoeffs</code> function object.</td>
+    </tr>
+    <tr>
+      <th>Fit for a low-AR depressor in water</th>
+      <td>Re/water fine. <span class="warn">Trust 2D section polars; <strong>distrust 3D low-AR numbers</strong></span> (LLT/VLM over-predict lift on stubby foils).</td>
+      <td>Strong. <span class="warn">Set fluid = water</span> (defaults to air). Use symmetry to fit core budget; resolve boundary layer.</td>
+      <td>Most capable. Single-phase OK <span class="warn">only if fully submerged</span> (near-surface → multiphase, avoid). Steady RANS = relative ranking, not absolute stall.</td>
+    </tr>
+    <tr>
+      <th>Verdict</th>
+      <td class="verdict">Free, instant section screening. Not a 3D answer.</td>
+      <td class="verdict">Best fit to start: real CFD, easy, 1-click from Fusion.</td>
+      <td class="verdict">No-ceiling endgame when you'll invest the time.</td>
+    </tr>
+    <tr>
+      <th>Links</th>
+      <td class="verdict"><a href="https://sourceforge.net/projects/xflr5/">site</a> · <a href="https://sourceforge.net/projects/xflr5/files/Guidelines.pdf/download">guide</a> · <a href="https://sourceforge.net/p/xflr5/discussion/679396/">forum</a></td>
+      <td class="verdict"><a href="https://www.simscale.com/">site</a> · <a href="https://www.simscale.com/product/integrations-partners/fusion-360-cad/">Fusion add-in</a> · <a href="https://www.simscale.com/docs/tutorials/">tutorials</a> · <a href="https://www.simscale.com/forum/">forum</a></td>
+      <td class="verdict"><a href="https://github.com/jaheyns/CfdOF">CfdOF</a> · <a href="https://blog.freecad.org/2025/04/24/tutorial-installing-cfdof-wb-to-begin-exploring-computational-fluid-dynamics/">install</a> · <a href="https://www.cfd-online.com/Forums/openfoam/">forum</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Ruled out (and why)</h2>
+<ul>
+  <li><strong>Fusion 360 Sim Extension</strong> — structural/thermal/molding only. <span class="warn">No external-flow CFD at all.</span> Use Fusion to <em>model</em>, not simulate flow.</li>
+  <li><strong>Autodesk CFD</strong> — still exists, but ~$7,295/yr, no hobbyist tier, separate app from Fusion.</li>
+  <li><strong>SolidWorks Flow Simulation</strong> — real CFD but only inside SolidWorks; no Fusion fit; quote-only.</li>
+  <li><strong>Flow Illustrator / browser toys</strong> — qualitative “artist impression” only; no quantitative lift/drag.</li>
+  <li><em>Possible 4th if on Windows:</em> <strong>Ansys Student</strong> — free, 512k-cell cap; Discovery Live great for instant qualitative ranking. Heavier than the three above to start.</li>
+</ul>
+
+<div class="callout warning">
+  <div class="callout-title">Before you trust any CFD number</div>
+  CFD produces confident-looking results that can be badly wrong. Learn <strong>y+ / near-wall meshing, mesh-independence, and convergence</strong> first:
+  <a href="https://www.youtube.com/channel/UCcqQi9LT0ETkRoUu8eYaEkg">Fluid Mechanics 101 (Wimshurst)</a> —
+  <a href="https://www.youtube.com/watch?v=Jp7FJpLVEPA">Getting Started</a>,
+  <a href="https://www.youtube.com/watch?v=WEpheS_lBJ4">y+</a>.
+  Validate your runs against the <a href="https://tmbwg.github.io/turbmodels/">NASA NACA 0012 case</a>; formalise mesh studies with the Grid Convergence Index (GCI / ASME V&amp;V 20).
+</div>
+
+<div class="ask-teacher">
+  <b>I'm your teacher — ask me anything.</b> Want a Reynolds-number estimate for your chord+speed to set up XFLR5/SimScale correctly, or a walkthrough of your first SimScale run? Just ask.
+</div>
+
+<div class="lesson-nav">
+  <span><a href="glossary.html">📖 Glossary</a></span>
+  <span><a href="../index.html">↑ Course home</a></span>
+</div>
+
+</body>
+</html>

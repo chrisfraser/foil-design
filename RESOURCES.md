@@ -34,6 +34,20 @@
 - [XFOIL (MIT, Mark Drela)](http://web.mit.edu/drela/Public/web/xfoil/) *advanced* + [User Primer](https://web.mit.edu/drela/Public/web/xfoil/xfoil_doc.txt)
   ⚠ Tools default to aircraft Reynolds numbers. At 3–10 kn you're at **lower Re** — set Re to your chord+speed and favour low-Re-tolerant sections.
 
+### CFD & computational evaluation tools — the chosen three
+> CAD is **Fusion 360** (no lessons needed). The trial trio spans the trade-off space: screen fast → simulate easy → validate deep. See the [CFD tool comparison reference](reference/cfd-tools.html). Pricing verified live 2026-06-26.
+- **[XFLR5](https://sourceforge.net/projects/xflr5/)** — *free, beginner→intermediate.* Panel/VLM + XFOIL; **not** Navier–Stokes. Seconds-per-run **section screening**. ⚠ Trust its 2D section polars; **distrust its 3D numbers on a low-AR depressor**. No CAD import (build from `.dat` sections). Docs: [Guidelines PDF](https://sourceforge.net/projects/xflr5/files/Guidelines.pdf/download) · [forum](https://sourceforge.net/p/xflr5/discussion/679396/).
+- **[SimScale](https://www.simscale.com/)** ⭐ *primary CFD, free Community tier, beginner.* Cloud **true Navier–Stokes** RANS (k-omega SST), native lift/drag output. **One-click [Fusion 360 add-in](https://www.simscale.com/product/integrations-partners/fusion-360-cad/)**, ~2–4 h to first result. ⚠ Community projects are **public**; defaults to **air — set fluid = water** (ρ≈997, ν≈1e-6); 16-core budget → use symmetry. [Pricing](https://www.simscale.com/product/pricing/) · [tutorials](https://www.simscale.com/docs/tutorials/) · [forum](https://www.simscale.com/forum/).
+- **[OpenFOAM via FreeCAD CfdOF](https://github.com/jaheyns/CfdOF)** — *free (GPL), advanced.* The no-ceiling powerhouse: `simpleFoam` + k-omega SST + `forceCoeffs`. Import **STEP** from Fusion. ⚠ Steep — *trustworthy* numbers = weeks, not hours; single-phase only valid if foil is **fully submerged** (near-surface needs multiphase). [Install walkthrough](https://blog.freecad.org/2025/04/24/tutorial-installing-cfdof-wb-to-begin-exploring-computational-fluid-dynamics/) · [NACA0012 verification](https://www.openfoam.com/documentation/guides/latest/doc/verification-validation-naca0012-airfoil-2d.html) · [CFD Online forum](https://www.cfd-online.com/Forums/openfoam/).
+  - Bonus zero-install: [AirfoilTools](http://airfoiltools.com/) precomputed XFOIL polars to eyeball sections before committing.
+
+**Ruled out (verified):** Fusion 360 Sim Extension — structural/thermal only, **no external-flow CFD**. Autodesk CFD — exists but ~$7,295/yr, no hobbyist tier, separate app. SolidWorks Flow Sim — no Fusion fit, quote-only. Flow Illustrator — qualitative only, no quantitative lift/drag. *Possible 4th if on Windows:* Ansys Student (free, 512K-cell cap, advanced; Discovery Live good for instant qualitative ranking).
+
+### CFD trust — don't believe pretty-but-wrong results ⭐ do this before relying on any CFD
+- **[Fluid Mechanics 101 — Dr. Aidan Wimshurst (YouTube)](https://www.youtube.com/channel/UCcqQi9LT0ETkRoUu8eYaEkg)** *beginner.* Code-agnostic; teaches the skills that stop you trusting wrong results: [Getting Started with CFD](https://www.youtube.com/watch?v=Jp7FJpLVEPA), [y+ & near-wall meshing](https://www.youtube.com/watch?v=WEpheS_lBJ4), mesh-independence, convergence.
+- **[NASA Turbulence Modeling Resource — NACA 0012 case](https://tmbwg.github.io/turbmodels/)** *advanced.* Canonical validation data to check your own runs against. (Relocated Feb 2026.)
+- **Roache's Grid Convergence Index (GCI) / ASME V&V 20** — the formal method behind a mesh-independence study.
+
 ### Operating in water — Reynolds & cavitation
 - [NASA Glenn — Similarity Parameters (Reynolds & Mach)](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/similarity-parameters/) ⭐ *primary, beginner*
 - [NASA Glenn — Boundary Layer](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/) *beginner*
@@ -59,4 +73,5 @@
 
 ## Gaps
 - No single source yet on **3D-print material/orientation for submerged structural foils** (water absorption, layer-line strength vs hydrodynamic load). Search next.
-- Quantitative **depth-vs-(speed,area,angle)** model for a towed depressor not yet found in one place — may need to derive it from the force balance + otter-board data.
+- Quantitative **depth-vs-(speed,area,angle,line-length)** model for a towed depressor not yet found in one place — may need to derive it from the force balance + otter-board data. (Now a live need: target depth is 3–50 m set by foil angle + line length — see [[MISSION.md]].)
+- ~~CAD/CFD tool resources~~ ✅ filled: CFD trio (XFLR5 / SimScale / OpenFOAM) vetted above; CAD = Fusion 360 (no resources needed).

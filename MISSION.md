@@ -26,6 +26,10 @@ The working method the course is building toward: **model a depressor in CAD, th
 - Surface-piercing / lifting hydrofoils for craft (we want submerged downforce, not boat lift).
 - Electronics, line-counters, downrigger mechanics beyond the foil itself.
 
+## Known parameters
+- **Deployment:** towed behind a boat.
+- **Depth range:** ~3–50 m, set by **foil angle of attack + length of line in the water** (not a single fixed depth). → implies the design should support **adjustable/variable angle**, or a family of foils, to span the range. The depth-vs-(speed, angle, line-length) relationship is a thing we'll want to model.
+
 ## Open questions to resolve early
-- Target depth(s) and towed load (lure + line drag) — needed to size the foil.
+- Towed load: lure weight + line/cable drag at depth — still needed to size the foil.
 - Release/trip mechanism on fish strike? (affects geometry, maybe out of scope.)

@@ -27,13 +27,17 @@
 10. Sizing & optimization: put it together, design a real depressor.
 
 ### CAD + CFD track (added session 2 — now a core destination)
-11. CAD basics: model a depressor (foil + body + tow points) — tool TBD (FreeCAD / Fusion 360?).
-12. From 2D section to 3D CAD: lofting a foil, parameterizing for variants.
-13. CFD 101: what a CFD sim actually computes; mesh, boundary conditions, turbulence models, convergence — concepts before clicking.
-14. CFD hands-on: run lift/drag on one depressor in a hobbyist-accessible package (SimScale / OpenFOAM / Autodesk CFD — TBD).
-15. Faster screening methods (panel methods, XFLR5 3D, surrogate/DoE) vs full CFD — when each is worth it.
-16. Design-of-experiments: compare CAD variants in CFD, pick a winner before printing.
-17. Build + on-water test protocol; measure depth; close the loop CFD↔reality; iterate.
+- **CAD = Fusion 360. User is already proficient — NO CAD lessons needed.** Only touch CAD in service of getting geometry into the evaluation tools.
+- **CFD trio chosen (session 2):** XFLR5 (fast section screening) → SimScale (easy real CFD, 1-click from Fusion) → OpenFOAM/CfdOF (free high-fidelity validation). See reference/cfd-tools.html.
+11. CFD 101: what a CFD sim actually computes; mesh, boundary conditions, turbulence models, y+, convergence — concepts before clicking. Pair with Fluid Mechanics 101 (Wimshurst).
+12. XFLR5 screening: section polars at our Reynolds; rank camber/thickness. (Caveat: distrust its 3D low-AR numbers.)
+13. SimScale hands-on: push a Fusion foil → incompressible water, k-omega SST → read lift/drag. (Caveat: set fluid=water, projects public.)
+14. Verification & trust: mesh-independence, y+, convergence, validate vs NASA NACA0012 — so we don't believe pretty-but-wrong results.
+15. Design-of-experiments: compare 3D variants in SimScale, pick a winner; optionally validate in OpenFOAM/CfdOF.
+16. Build + on-water test protocol; measure depth; close the loop CFD↔reality; calibrate trust in the tools; iterate.
+
+### Known design driver (session 2)
+- Towed behind boat; depth 3–50 m set by **foil angle + line length** → design likely needs **adjustable angle** (or a foil family). Worth modelling depth-vs-(speed,angle,line-length).
 
 ## Resource research
 - Session 1: launched research agent → populated RESOURCES.md (foil theory, sections, XFLR5, otter-board/fishing sources, communities).
