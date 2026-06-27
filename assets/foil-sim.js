@@ -91,9 +91,9 @@
       // defs: arrowheads (right-pointing, orient=auto rotates to line)
       var defs = el("defs");
       defs.innerHTML =
-        '<marker id="fs-aFlow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2b6cb0"/></marker>' +
-        '<marker id="fs-aLift" markerWidth="11" markerHeight="11" refX="9.5" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11 Z" fill="#b5532a"/></marker>' +
-        '<marker id="fs-aDrag" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#6a6a60"/></marker>';
+        '<marker id="fs-aFlow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#2b6cb0"/></marker>' +
+        '<marker id="fs-aLift" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#b5532a"/></marker>' +
+        '<marker id="fs-aDrag" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto"><path d="M0,0 L13,6.5 L0,13 Z" fill="#6a6a60"/></marker>';
       svg.appendChild(defs);
 
       // ground/water tint
@@ -158,8 +158,8 @@
       var ly = up ? cy - liftLen : cy + liftLen;
       if (liftLen > 4) {
         svg.appendChild(el("line", { x1: cx, y1: cy, x2: cx, y2: ly,
-          stroke: "#b5532a", "stroke-width": 4, "marker-end": "url(#fs-aLift)" }));
-        svg.appendChild(el("text", { x: cx + 8, y: up ? ly + 16 : ly - 8,
+          stroke: "#b5532a", "stroke-width": 2.5, "marker-end": "url(#fs-aLift)" }));
+        svg.appendChild(el("text", { x: cx + 12, y: up ? ly - 6 : ly + 18,
           fill: "#b5532a", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-weight": 700 }))
           .textContent = "LIFT " + (up ? "↑" : "↓");
       }
@@ -167,8 +167,8 @@
       // ---- drag vector (along flow = downstream) ----
       var dragLen = p.cd * 300;
       svg.appendChild(el("line", { x1: cx, y1: cy, x2: cx + dragLen, y2: cy,
-        stroke: "#6a6a60", "stroke-width": 3.5, "marker-end": "url(#fs-aDrag)" }));
-      svg.appendChild(el("text", { x: cx + dragLen + 6, y: cy + 16,
+        stroke: "#6a6a60", "stroke-width": 2.5, "marker-end": "url(#fs-aDrag)" }));
+      svg.appendChild(el("text", { x: cx + dragLen + 8, y: cy - 7,
         fill: "#6a6a60", "font-family": "ui-sans-serif,system-ui", "font-size": 12 })).textContent = "drag";
 
       // ---- stall badge ----
