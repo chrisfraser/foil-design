@@ -91,9 +91,9 @@
       // defs: arrowheads (right-pointing, orient=auto rotates to line)
       var defs = el("defs");
       defs.innerHTML =
-        '<marker id="fs-aFlow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#2b6cb0"/></marker>' +
-        '<marker id="fs-aLift" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#b5532a"/></marker>' +
-        '<marker id="fs-aDrag" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto"><path d="M0,0 L13,6.5 L0,13 Z" fill="#6a6a60"/></marker>';
+        '<marker id="fs-aFlow" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto"><path d="M0,0 L11,4.5 L0,9 Z" fill="#2b6cb0"/></marker>' +
+        '<marker id="fs-aLift" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto"><path d="M0,0 L13,5 L0,10 Z" fill="#2f7d4f"/></marker>' +
+        '<marker id="fs-aDrag" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><path d="M0,0 L12,4.5 L0,9 Z" fill="#6a6a60"/></marker>';
       svg.appendChild(defs);
 
       // ground/water tint
@@ -158,9 +158,9 @@
       var ly = up ? cy - liftLen : cy + liftLen;
       if (liftLen > 4) {
         svg.appendChild(el("line", { x1: cx, y1: cy, x2: cx, y2: ly,
-          stroke: "#b5532a", "stroke-width": 2.5, "marker-end": "url(#fs-aLift)" }));
+          stroke: "#2f7d4f", "stroke-width": 2.5, "marker-end": "url(#fs-aLift)" }));
         svg.appendChild(el("text", { x: cx + 12, y: up ? ly - 6 : ly + 18,
-          fill: "#b5532a", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-weight": 700 }))
+          fill: "#2f7d4f", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-weight": 700 }))
           .textContent = "LIFT " + (up ? "↑" : "↓");
       }
 
@@ -188,13 +188,13 @@
       var liftPct = Math.round(Math.max(0, p.cl) / clMax * 100);
       var dragPct = Math.round(Math.min(1, p.cd / 0.5) * 100);
       var dirSentence = up
-        ? "<b>WING</b> — lift points <b style='color:#b5532a'>UP</b>"
-        : "<b>DEPRESSOR</b> — lift points <b style='color:#b5532a'>DOWN</b> (it dives)";
+        ? "<b>WING</b> — lift points <b style='color:#2f7d4f'>UP</b>"
+        : "<b>DEPRESSOR</b> — lift points <b style='color:#2f7d4f'>DOWN</b> (it dives)";
       read.innerHTML =
         "<div class='fs-mode'>" + dirSentence +
           " &nbsp;·&nbsp; <span class='fs-pill " + (p.stalled ? "bad" : "ok") + "'>" +
           (p.stalled ? "stalled" : "attached") + "</span></div>" +
-        "<div class='fs-bar'><span class='fs-key'>Lift</span><span class='fs-track'><i style='width:" + liftPct + "%;background:#b5532a'></i></span></div>" +
+        "<div class='fs-bar'><span class='fs-key'>Lift</span><span class='fs-track'><i style='width:" + liftPct + "%;background:#2f7d4f'></i></span></div>" +
         "<div class='fs-bar'><span class='fs-key'>Drag</span><span class='fs-track'><i style='width:" + dragPct + "%;background:#6a6a60'></i></span></div>";
     }
 
