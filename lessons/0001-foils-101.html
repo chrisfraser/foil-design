@@ -83,6 +83,15 @@ How much force? The biggest lever you control is the <strong>angle of attack</st
   Flat palm, level: almost no vertical force — just drag. Tilt your hand a few degrees and it gets shoved up or down hard. Tilt it to 60° and it just batters backward — that's stall. Your hand is a (bad, flat) foil, and <var>α</var> is the only thing you changed.
 </div>
 
+<h2>Play with it</h2>
+<p>
+Drag the <strong>angle of attack</strong> slider and watch the two force arrows respond: <span style="color:#b5532a;font-weight:600">lift</span> stays perpendicular to the flow, <span style="color:#6a6a60;font-weight:600">drag</span> stays along it. Push the angle past about 14° and the foil <strong>stalls</strong> — lift collapses, the wake turns turbulent. Then hit <strong>Flip to wing / depressor</strong> and notice the <em>only</em> thing that changes is which way the perpendicular force points.
+</p>
+<div id="sim1" class="foil-sim"></div>
+<p style="font-size:.92rem;color:var(--ink-soft);font-family:ui-sans-serif,system-ui,sans-serif">
+Try to answer <em>before</em> you slide: at what angle is lift biggest? What happens to drag as you approach stall? (This is a model for intuition — exact numbers come next lesson.)
+</p>
+
 <h2>Where this is heading (the lift equation)</h2>
 <p>
 The amount of lift is captured by one equation we'll live inside for the next few lessons. Don't memorise it yet — just meet it:
@@ -130,6 +139,8 @@ Read it as a story: force grows with <strong>how dense the fluid is</strong> (wa
   <span>Next: <strong>Lesson 2 — The lift equation, with numbers</strong> (ask me to build it)</span>
 </div>
 
+<script src="../assets/foil-sim.js"></script>
+<script>mountFoilSim("sim1", { mode: "depressor", alpha: 6 });</script>
 <script src="../assets/quiz.js"></script>
 <script>
   mountQuiz("quiz1", [
