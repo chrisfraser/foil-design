@@ -192,6 +192,49 @@ sup.ref a { border: none; color: var(--accent-2); font-weight: 600; }
   .foil-sim { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
+/* ---- Force calculator (paired with force-calc.js) ---------------------- */
+.force-calc {
+  margin: 1.6rem 0; padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid var(--rule); border-radius: 8px; background: #fff;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+.fc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.4rem; }
+@media (max-width: 540px) { .fc-grid { grid-template-columns: 1fr; } }
+.fc-row { display: flex; flex-direction: column; gap: .15rem; }
+.fc-label { display: flex; justify-content: space-between; font-size: .85rem; }
+.fc-label .fc-val { color: var(--accent); font-weight: 600; }
+.fc-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
+.fc-water {
+  margin: .9rem 0 .2rem; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+  background: #eef4f4; color: var(--accent); border: 1px solid #cfe4e4;
+  border-radius: 6px; padding: .45rem .8rem;
+}
+.fc-water:hover { background: #e3eeee; }
+.fc-out { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin-top: 1rem; }
+@media (max-width: 640px) { .fc-out { grid-template-columns: 1fr 1fr; } }
+.fc-card { border: 1px solid var(--rule); border-radius: 6px; padding: .6rem .7rem; background: #faf8f1; }
+.fc-card.good { background: #eef6f0; border-color: #cfe4d6; }
+.fc-card-t { font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); }
+.fc-card-v { font-size: 1.35rem; font-weight: 700; color: var(--ink); margin: .1rem 0; line-height: 1.1; }
+.fc-card.good .fc-card-v { color: var(--good); }
+.fc-card-v .fc-u { font-size: .8rem; font-weight: 500; color: var(--ink-soft); }
+.fc-card-s { font-size: .72rem; color: var(--ink-soft); }
+.fc-eq {
+  margin-top: 1rem; padding: .9rem 1rem; border-radius: 6px;
+  background: #f6f4ec; border: 1px solid var(--rule);
+  font-family: "Cambria Math", Cambria, Georgia, serif; font-size: 1.05rem; line-height: 1.7;
+}
+.fc-eq .fc-eq-title {
+  display: block; font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); font-weight: 700; margin-bottom: .4rem;
+}
+.fc-eq .fc-note {
+  font-family: ui-sans-serif, system-ui, sans-serif; font-size: .78rem;
+  color: var(--ink-soft); margin-top: .5rem; line-height: 1.4;
+}
+@media print { .fc-water, .fc-slider { display: none; } }
+
 /* ---- Footer nav --------------------------------------------------------- */
 .lesson-nav {
   margin-top: 3.5rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);

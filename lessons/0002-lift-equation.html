@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2 — The Lift Equation, With Numbers</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="course-tag">Hydrodynamic Foils &middot; <span class="lesson-no">Lesson 02</span></div>
+<h1>The Lift Equation, With Numbers</h1>
+<p class="subtitle">From “a foil makes a force” to “this foil makes 6.9 kg of downforce at 5 knots.”</p>
+
+<p class="lead">
+In <a href="0001-foils-101.html">Lesson 1</a> you met the lift equation. Now we make it pay: plug in your speed, your foil size, and a shape number, and read out <strong>how many kilograms of pull</strong> your depressor produces. This is the calculation you'll use to size every foil you print.
+</p>
+
+<h2>First: dynamic pressure, ½ρv²</h2>
+<p>
+Before lift, one building block. Moving water carries a “pressure of motion” called <strong>dynamic pressure</strong>:<sup class="ref"><a href="#n1">1</a></sup>
+</p>
+<div class="eq">
+  <var>q</var> = ½ &middot; <var>ρ</var> &middot; <var>v</var>²
+  <span class="where"><var>ρ</var> (rho) = water density · <var>v</var> = speed &nbsp;|&nbsp; result in pascals (<span class="unit">Pa = N/m²</span>)</span>
+</div>
+<p>
+Two things to burn in:
+</p>
+<ul>
+  <li><strong>Water is dense.</strong> <var>ρ</var> ≈ <strong>1025 kg/m³</strong> in seawater (1000 in fresh) — about <strong>800× air</strong>. That single factor is why a foil the size of your hand can haul tackle down dozens of metres.<sup class="ref"><a href="#n2">2</a></sup></li>
+  <li><strong>Speed is squared.</strong> The <var>v</var>² means force is brutally speed-sensitive: go from 5 to 10 knots and dynamic pressure — and every force — <strong>quadruples</strong>.</li>
+</ul>
+
+<div class="callout intuition">
+  <div class="callout-title">Work in metres-per-second</div>
+  The equation needs SI units. Convert knots first: <strong>1 knot = 0.514 m/s</strong>. So 5 kn ≈ 2.57 m/s, and your 3–10 kn range is ≈ <strong>1.54–5.14 m/s</strong>.
+</div>
+
+<h2>The lift equation</h2>
+<p>
+Lift is just dynamic pressure acting over the foil's area, scaled by a shape-and-angle number:
+</p>
+<div class="eq">
+  <var>L</var> = <var>q</var> &middot; <var>A</var> &middot; <var>C<sub>L</sub></var> = ½ &middot; <var>ρ</var> &middot; <var>v</var>² &middot; <var>A</var> &middot; <var>C<sub>L</sub></var>
+  <span class="where"><var>A</var> = planform area (<span class="unit">m²</span>) · <var>C<sub>L</sub></var> = lift coefficient (dimensionless)</span>
+</div>
+<p>
+<var>A</var> you control with a ruler. <var>C<sub>L</sub></var> is the one you can't eyeball — it bundles the foil's <em>section shape</em> and <em>angle of attack</em> into a single number, typically <strong>0.3–1.2</strong> for a working foil before <a href="0001-foils-101.html">stall</a>. Getting an honest <var>C<sub>L</sub></var> for <em>your</em> shape is exactly what the <a href="../reference/cfd-tools.html">computational tools</a> (XFLR5, SimScale) are for — that's a later lesson. For now we'll assume a value to feel the equation.
+</p>
+
+<h2>A worked depressor</h2>
+<p>
+Say a plate-style depressor, <strong>20 cm × 10 cm</strong> (so <var>A</var> = 0.020 m²), running at a moderate angle giving <var>C<sub>L</sub></var> = 1.0, towed at <strong>5 knots</strong> in seawater:
+</p>
+<div class="eq">
+  <var>L</var> = ½ &middot; 1025 &middot; 2.57² &middot; 0.020 &middot; 1.0 ≈ <strong>68 N</strong> ≈ <strong>6.9 kgf</strong>
+</div>
+<p>
+Nearly seven kilograms of downward pull from a hand-sized plate. Now push it to <strong>10 knots</strong> and — because of <var>v</var>² — it leaps to ≈ <strong>271 N ≈ 27.6 kgf</strong>. Same foil, four times the force.
+</p>
+
+<h2>Try it — size your own foil</h2>
+<p>
+Slide speed, area, and the coefficients. Watch the equation rebuild itself, and feel how speed dominates. Aim for a downforce that makes sense for your tackle, at the speed you actually troll.
+</p>
+<div id="calc1" class="force-calc"></div>
+<p style="font-size:.92rem;color:var(--ink-soft);font-family:ui-sans-serif,system-ui,sans-serif">
+The numbers are only as good as <var>C<sub>L</sub></var>/<var>C<sub>D</sub></var> — placeholders until you measure them in a tool. The point now is the <em>shape</em> of the relationship.
+</p>
+
+<h2>Drag is the same equation</h2>
+<p>
+Swap <var>C<sub>L</sub></var> for a drag coefficient <var>C<sub>D</sub></var> and you get the <strong>tow load</strong> — the force your line and rod must hold:
+</p>
+<div class="eq">
+  <var>D</var> = ½ &middot; <var>ρ</var> &middot; <var>v</var>² &middot; <var>A</var> &middot; <var>C<sub>D</sub></var>
+</div>
+<p>
+<var>C<sub>D</sub></var> is much smaller than <var>C<sub>L</sub></var> for a good foil. Their ratio <strong><var>L</var>/<var>D</var></strong> (in the calculator) is the efficiency: <em>downforce won per unit of drag paid</em>. A high <var>L</var>/<var>D</var> means deep dive for little tow load — the whole game when you design the section later.
+</p>
+
+<div class="callout key">
+  <div class="callout-title">The one win from this lesson</div>
+  Downforce is <strong><var>L</var> = ½ρv²·A·C<sub>L</sub></strong>. Density makes water foils punchy; <strong>speed is squared</strong> (2× speed → 4× force); area is your ruler; <strong>C<sub>L</sub></strong> is the shape-and-angle number you'll get from a tool. Drag is the same formula with C<sub>D</sub>, and <strong>L/D</strong> is efficiency.
+</div>
+
+<div class="callout warning">
+  <div class="callout-title">Next thread to pull</div>
+  Two loose ends: (1) where does <var>C<sub>L</sub></var> actually come from for a real shape? → the <a href="../reference/cfd-tools.html">CFD/XFLR5 tools</a>, and you'll need a <strong>Reynolds number</strong> to read them right. (2) This downforce doesn't set depth on its own — depth is a <strong>force balance</strong> against line tension and drag. That's Lesson 3.
+</div>
+
+<h2>Check yourself</h2>
+<p>Recall first, slide later.</p>
+<div id="quiz2" class="quiz"></div>
+
+<div class="primary-source">
+  <div class="callout-title">Primary source — do this next</div>
+  <p style="margin:.3rem 0 .5rem">
+    Read <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/">NASA Glenn — The Lift Equation</a>. It derives each term and shows the same formula you just used. Then re-open <a href="https://www.nasa.gov/stem-content/foilsim/">FoilSim</a> and watch the lift number move as you change speed and area.
+  </p>
+</div>
+
+<div class="ask-teacher">
+  <b>I'm your teacher — ask me anything.</b> Want me to estimate a realistic C<sub>L</sub> and C<sub>D</sub> for a specific plate or NACA section at your speed, work out the foil area you need for a target downforce, or compute your Reynolds number to set up XFLR5? Just ask.
+</div>
+
+<hr style="border:none;border-top:1px solid var(--rule);margin:2.5rem 0 0">
+<h3>Notes &amp; citations</h3>
+<ol class="cite">
+  <li id="n1">Dynamic pressure ½ρv² and its role in the lift equation: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/">NASA Glenn, The Lift Equation</a>.</li>
+  <li id="n2">Water vs air density (~800×) and identical lift math in both fluids: see course <a href="../RESOURCES.md">RESOURCES</a> note and <a href="https://en.wikipedia.org/wiki/Foil_(fluid_mechanics)">Foil (fluid mechanics)</a>.</li>
+</ol>
+
+<div class="lesson-nav">
+  <span><a href="0001-foils-101.html">← Lesson 1</a> · <a href="../reference/glossary.html">📖 Glossary</a></span>
+  <span><a href="../index.html">↑ Course home</a> · Next: <strong>Lesson 3 — What sets the dive depth</strong></span>
+</div>
+
+<script src="../assets/force-calc.js"></script>
+<script>mountForceCalc("calc1", { speed: 5, area: 200, cl: 1.0, cd: 0.12, salt: true });</script>
+<script src="../assets/quiz.js"></script>
+<script>
+  mountQuiz("quiz2", [
+    {
+      q: "Doubling the trolling speed changes the downforce by a factor of:",
+      options: ["exactly two times", "roughly four times", "about eight times"],
+      answer: 1,
+      explain: "Force depends on v², so 2× speed → 2² = 4× force. Speed is the strongest lever you have."
+    },
+    {
+      q: "A hand-sized foil works underwater mainly because water is:",
+      options: ["far denser than air", "much faster than air", "thicker to push"],
+      answer: 0,
+      explain: "ρ ≈ 1025 kg/m³, about 800× air. Dynamic pressure ½ρv² scales with that density."
+    },
+    {
+      q: "In L = ½ρv²·A·C_L, the shape-and-angle term is:",
+      options: ["the area term A", "the coefficient C_L", "the density term ρ"],
+      answer: 1,
+      explain: "C_L bundles section shape and angle of attack into one dimensionless number — measured in a tool."
+    },
+    {
+      q: "Lift produced by the foil always points:",
+      options: ["along the towing line", "across the water flow", "down toward seabed"],
+      answer: 1,
+      explain: "Recall from Lesson 1: lift is perpendicular to the flow. A depressor merely aims that across-flow force downward."
+    }
+  ]);
+</script>
+
+</body>
+</html>
