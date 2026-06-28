@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13 · Sizing &amp; Optimization</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 3 · Build &amp; Test · Lesson 13</p>
+  <h1 class="lesson-title">Sizing &amp; Optimization</h1>
+  <p class="lesson-sub">Every thread of this course finally ties into one real part: a foil sized for <em>your</em>
+  speed, <em>your</em> depth, and <em>your</em> tackle.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~15 minutes</span><span class="sep">•</span>
+    <span>🧮 Design backwards from requirements</span><span class="sep">•</span>
+    <span class="tag ocean">The capstone — turning theory into a buildable foil</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>You've collected all the pieces: the <a href="0002-lift-equation.html">lift equation</a> (Lesson 2),
+    <a href="0004-coefficients-polars-stall.html">L/D and polars</a> (Lessons 4–5), <a href="0006-aspect-ratio.html">aspect
+    ratio</a> (Lesson 6), <a href="0007-reynolds-number.html">Reynolds number</a> (Lesson 7), CFD-measured
+    coefficients (Phase 2), and the <a href="0003-dive-depth.html">dive-depth force balance</a> (Lesson 3). This is
+    where they stop being separate facts and become <strong>one design</strong>. The trick is to stop thinking about
+    parts and start from <strong>requirements</strong> — then let the equations hand you the foil.</p>
+  </div>
+
+  <h2><span class="num">1</span>Start from requirements, not parts</h2>
+  <p>The beginner mistake is to start with a shape — “I'll make a NACA something at 10°” — and ask what it does. The
+  designer does the opposite: writes down what the job demands, then solves for the foil. Four numbers define the job:</p>
+  <ul>
+    <li><strong>Trolling speed <var>v</var></strong> — the speed you actually fish at, somewhere in your
+    <strong>3–10 kn</strong> band. Everything scales with ½ρ<var>v</var>², so commit to a number.</li>
+    <li><strong>Target depth</strong> — how deep you want the lure to track, in metres.</li>
+    <li><strong>Downforce <var>L</var></strong> — enough to track deep and steady against your lure/tackle drag, but
+    <em>not</em> so much it rips the rod down or buries the gear. Match it to your terminal tackle.</li>
+    <li><strong>Tow-load limit</strong> — the most your line, rod, cleat or downrigger can safely hold. This is a
+    hard ceiling, and at speed it's the number that breaks gear, not the downforce.</li>
+  </ul>
+  <p>Write those four down first. Design backwards from them and the foil almost falls out of the maths.</p>
+
+  <h2><span class="num">2</span>The design chain, step by step</h2>
+  <p>Here's the whole course as one procedure. Each step leans on a lesson you've already done:</p>
+  <ol class="steps">
+    <li><strong>Pick a section.</strong> Choose a foil <a href="0005-foil-sections.html">section</a> (Lesson 5). That
+    gives you an operating <var>C<sub>L</sub></var> and a <var>C<sub>D</sub></var>, hence a <strong>2-D L/D</strong>
+    you can screen quickly in XFLR5 at <em>your</em> <a href="0007-reynolds-number.html">Reynolds number</a>
+    (Lessons 7/9).<span class="cite"><a href="#n1">1</a></span></li>
+    <li><strong>Choose the angle of attack.</strong> Read the <a href="0004-coefficients-polars-stall.html">polar</a>
+    (Lesson 4) and sit at the angle for <strong>peak L/D, comfortably below stall</strong>. That fixes
+    <var>C<sub>L</sub></var> and <var>C<sub>D</sub></var>.</li>
+    <li><strong>Size the area</strong> from the lift equation. Solve <var>L</var> = ½ρ<var>v</var>²·<var>A</var>·<var>C<sub>L</sub></var>
+    for area (see the formula below). Bigger area = more downforce — but also more drag, more tow load, and a bigger
+    part to print.</li>
+    <li><strong>Set the aspect ratio.</strong> Higher <a href="0006-aspect-ratio.html">AR</a> (Lesson 6) cuts induced
+    drag and lifts real L/D — but a long thin foil is weaker and harder to print. Depressors compromise <em>low</em>.
+    Remember the <strong>3-D L/D is worse than the 2-D screening value</strong> because of induced drag.</li>
+    <li><strong>Verify in CFD.</strong> Run the 3-D shape in SimScale/OpenFOAM (Phase 2) for the real coefficients —
+    and trust the number only after it passes <a href="0011-verification-and-trust.html">Lesson 11</a>'s gates
+    (converged, mesh-independent, validated).</li>
+    <li><strong>Predict the depth.</strong> Feed the verified L/D and your line length into the
+    <a href="0003-dive-depth.html">dive geometry</a> (Lesson 3): <var>θ</var> = arctan(L/D), depth = <var>ℓ</var>·sin
+    <var>θ</var> — then knock it down by your real-world factor <var>η</var> for line drag and weight.</li>
+  </ol>
+
+  <h2><span class="num">3</span>Sizing the area — the key equation</h2>
+  <p>Step 3 is the heart of it. Take the lift equation from Lesson 2 and turn it inside out: you know the downforce
+  you <em>want</em>, so solve for the area that delivers it.</p>
+
+  <div class="formula">
+    <span class="var">A</span> <span class="op">=</span> <span class="var">downforce</span> <span class="op">/</span>
+    (½ <span class="op">·</span> <span class="var">ρ</span> <span class="op">·</span> <span class="var">v</span>²
+    <span class="op">·</span> <span class="var">C<sub>L</sub></span>)
+    <small><span class="var">ρ</span> = water density (≈1025 salt, 1000 fresh) · <span class="var">v</span> = speed (m/s) ·
+    <span class="var">C<sub>L</sub></span> = lift coeff. from step 2 &nbsp;|&nbsp; result in m²</small>
+  </div>
+
+  <p>Read it as a balancing act. A higher <var>C<sub>L</sub></var> (more camber or more angle) lets you hit the same
+  downforce with a <em>smaller</em> foil — but it costs L/D, brings stall closer, and raises
+  <a href="0012-cavitation-strength-printing.html">cavitation</a> risk (Lesson 12). A bigger area is gentler on
+  <var>C<sub>L</sub></var> but adds drag and tow load and uses more filament. There is no single best — there's the
+  best <em>for your four numbers</em>.</p>
+
+  <h2><span class="num">4</span>It's a balancing act, not a single answer</h2>
+  <p>Every knob trades against another:</p>
+  <ul>
+    <li><strong>More area</strong> → more downforce, but more drag and a higher tow load.</li>
+    <li><strong>More camber / higher <var>C<sub>L</sub></var></strong> → more lift per area, but lower L/D, earlier
+    stall, and more cavitation risk.</li>
+    <li><strong>Higher aspect ratio</strong> → better L/D, but a weaker part that's harder to print and tow.</li>
+  </ul>
+  <p>Because the optimum depends on your speed, depth, tackle and printer, the smart move isn't to guess once — it's a
+  mini <strong>design-of-experiments</strong>. Sketch <strong>2–3 candidate designs</strong>, run each through CFD,
+  and pick the winner against your requirements. Two or three honest 3-D runs beat a month of arguing on paper.</p>
+
+  <h2><span class="num">5</span>Design it — the capstone calculator</h2>
+  <p>This is the course's capstone tool. It chains everything: the lift equation for downforce, the drag equation for
+  tow load, L/D, and the dive geometry for the depth you'll actually run. Dial in <strong>your</strong> speed and
+  <strong>your</strong> target depth, then hunt for an <strong>area + coefficients</strong> combination that delivers
+  both — while keeping the tow load under your gear's limit.</p>
+
+  <div id="sizing13" class="cs-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">A worked target to try: <em>“about 7 kgf of
+  downforce and roughly 25 m of depth at 5 kn.”</em> Start near C<sub>L</sub> 0.9 / C<sub>D</sub> 0.13, then trade
+  area against C<sub>L</sub> until the cards line up — and watch the tow load while you do it.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p><strong>Design backwards from requirements.</strong> Fix your four numbers — speed, target depth, downforce,
+    tow-load limit — then: pick a section and angle for <strong>peak L/D below stall</strong>, size the area from
+    <strong>A = downforce / (½ρv²·C<sub>L</sub>)</strong>, compromise aspect ratio for strength, verify the 3-D
+    numbers in CFD, and predict depth via Lesson 3. It's a <strong>balance tuned to your conditions</strong>, not a
+    single right answer — so run 2–3 candidates and pick the winner.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>A design on screen is only a <strong>hypothesis</strong>. Every number here — even a CFD result that passed all
+    three gates — is a prediction until water votes on it. The only verdict that counts is the tow: print it, run it,
+    measure the real depth, and calibrate your <var>η</var>. That's the finale —
+    <a href="0014-build-and-test.html">Lesson 14</a>.</p>
+  </div>
+
+  <h2><span class="num">6</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">The right way to start a depressor design is to…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — write down speed, target depth, downforce and tow-load limit first, then let the equations hand you the foil.">write down your requirements and design backwards from them</button>
+      <button class="opt" data-feedback="That's starting from a part and asking what it does — the beginner mistake. Start from the job, not the shape.">pick a section and angle first, then see what depth it gives</button>
+      <button class="opt" data-feedback="Maximum downforce isn't the goal — too much rips the rod down and blows past your tow-load limit. Match it to the job.">maximise downforce regardless of the tackle</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">To size the foil area for a target downforce, you use…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Correct — rearrange the lift equation: A = downforce / (½ρv²·C_L). You know the force you want, so solve for area.">A = downforce / (½ρv²·C<sub>L</sub>)</button>
+      <button class="opt" data-feedback="depth = ℓ·sin θ predicts how deep you run — it doesn't size the foil's area.">depth = ℓ · sin θ</button>
+      <button class="opt" data-feedback="tan θ = L/D gives the trail angle, not the area. Area comes from rearranging the lift equation.">tan θ = L/D</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">Pushing C<sub>L</sub> higher to shrink the foil mainly costs you…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — more camber/angle lifts C_L but lowers L/D, brings stall closer, and raises cavitation risk. It's a trade.">L/D, stall margin, and cavitation headroom</button>
+      <button class="opt" data-feedback="Density doesn't change with C_L — ρ is a property of the water, not the foil.">water density</button>
+      <button class="opt" data-feedback="A higher C_L lets you use a SMALLER area for the same downforce, not a bigger one. The cost is L/D and stall margin.">a much larger area</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">When you take a 2-D XFLR5 L/D into the real 3-D foil, expect the L/D to…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Correct — induced drag from the finite span makes the 3-D L/D worse than the 2-D screening value. Verify in CFD.">drop, because finite-span induced drag adds in</button>
+      <button class="opt" data-feedback="It doesn't improve — a real finite wing pays induced drag that the 2-D section never sees, so L/D falls.">improve, because 3-D foils are more efficient</button>
+      <button class="opt" data-feedback="It changes — the 2-D value ignores induced drag, so the 3-D number is lower. Don't treat them as identical.">stay exactly the same as the 2-D value</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>Design <strong>backwards from requirements</strong>: speed, target depth, downforce, tow-load limit.</li>
+      <li>The chain: section → angle (peak L/D below stall) → <strong>area = downforce/(½ρv²·C<sub>L</sub>)</strong> →
+      aspect ratio (compromise for strength) → verify in CFD → predict depth (Lesson 3).</li>
+      <li>The <strong>3-D L/D is worse than the 2-D</strong> screening value because of induced drag.</li>
+      <li>It's a <strong>balance</strong>: area vs drag, C<sub>L</sub> vs L/D and stall, AR vs strength — run 2–3
+      candidates and pick the winner.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://www.fao.org/4/x0083e/x0083e00.htm" target="_blank" rel="noopener">FAO — Otter Board Design and Performance</a></div>
+      <div class="desc">The industrial cousin of your depressor, sized in exactly this requirement-first way: pick a section, set the area for the spreading/depressing force you need, and balance it against warp load. Then open the capstone calculator above and size a foil for your own four numbers.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to size a foil area for your exact speed and target
+    downforce, suggest a section and angle for peak L/D at your Reynolds number, or lay out a 2–3 candidate
+    design-of-experiments to run through CFD? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#planform-area">planform area</a>,
+    <a href="../reference/glossary.html#lift-coefficient">lift coefficient</a>,
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>,
+    <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a>,
+    <a href="../reference/glossary.html#induced-drag">induced drag</a>,
+    <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>.
+    Builds toward → <b>Lesson 14</b> (print it, tow it, measure the depth).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Requirement-first foil/depressor sizing — set area and section for a target force, balanced against tow (warp) load: FAO, <a href="https://www.fao.org/4/x0083e/x0083e00.htm" target="_blank" rel="noopener">Otter Board Design and Performance</a>.</li>
+    <li id="n2">Lift/drag equation and design terms used to size the area: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/" target="_blank" rel="noopener">NASA Glenn — The Lift Equation</a>; see also course <a href="../RESOURCES.md">RESOURCES</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0012-cavitation-strength-printing.html">
+      <div class="dir">← Lesson 12</div>
+      <div class="ttl">Cavitation, Strength &amp; Printing</div>
+    </a>
+    <a class="next" href="0014-build-and-test.html">
+      <div class="dir">Next · Lesson 14</div>
+      <div class="ttl">Build + On-Water Test →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 13 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/sizing-sim.js"></script>
+<script>mountSizingSim("sizing13", { speed: 5, area: 200, cl: 0.9, cd: 0.13, line: 30, eta: 0.7, salt: true });</script>
+</body>
+</html>

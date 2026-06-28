@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>14 · Build + On-Water Test</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 3 · Build &amp; Test · Lesson 14</p>
+  <h1 class="lesson-title">Build &amp; On-Water Test</h1>
+  <p class="lesson-sub">Every number you've computed has been a <em>prediction</em>. The water is where they get
+  graded — and where you finally close the loop.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~14 minutes</span><span class="sep">•</span>
+    <span>🧮 One ratio, measured not modelled</span><span class="sep">•</span>
+    <span class="tag ocean">The finale: prediction meets reality</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>You've come a long way: you understand how a foil makes force, you can compute its L/D by hand, you can run it
+    through CFD and tell a trustworthy number from a pretty one (<a href="0011-verification-and-trust.html">Lesson
+    11</a>), and you've sized and printed a real part (<a href="0012-cavitation-strength-printing.html">Lesson 12</a>,
+    <a href="0013-sizing-optimization.html">Lesson 13</a>). Now comes the only test that counts. This lesson takes your
+    design to the water, teaches a <strong>measurement-first protocol</strong>, and shows you how to back out your
+    rig's <strong>real-world factor η</strong> — the single number that makes your <a href="0003-dive-depth.html">Lesson
+    3</a> depth model finally tell the truth. Then you reconcile hand-calc vs CFD vs reality, and you iterate. That's
+    the whole course, closed into a loop you own.</p>
+  </div>
+
+  <h2><span class="num">1</span>Print &amp; rig — the last mile before the water</h2>
+  <p>Lesson 12 covered strength and printing in depth, so this is brief. Three things turn a printed shape into a
+  towable depressor:</p>
+  <ul>
+    <li><strong>Print orientation &amp; material.</strong> Use the orientation and material you settled on in
+    <a href="0012-cavitation-strength-printing.html">Lesson 12</a> — layers running so the tow load works
+    <em>across</em> them, not peeling them apart. A tough filament (PETG / nylon / ASA) survives impacts and water far
+    better than brittle PLA.</li>
+    <li><strong>Smooth and seal the surface.</strong> Layer lines are roughness, and roughness trips the
+    <a href="../reference/glossary.html#boundary-layer">boundary layer</a> and adds drag at the low
+    <a href="../reference/glossary.html#reynolds-number">Reynolds numbers</a> a small foil runs at. Sand the working
+    faces and seal the print (epoxy or primer) so it doesn't soak up water and so the section you designed is the
+    section that flies.</li>
+    <li><strong>A solid tow point.</strong> Fit a real bolt or swivel where your design put the tow eye — captured in
+    the print or through a metal insert, not a glued tab. Put it at the spot your geometry expects; moving the tow
+    point changes the effective <a href="../reference/glossary.html#angle-of-attack">angle of attack</a>.</li>
+  </ul>
+  <p>If your design has an <strong>adjustable angle</strong>, treat it as a lever. A steeper angle raises
+  <var>C<sub>L</sub></var> (more downforce) but usually <em>lowers</em> L/D once you push past the polar's sweet spot
+  (<a href="0004-coefficients-polars-stall.html">Lesson 4</a>) — and from Lesson 3, lower L/D means a shallower line
+  angle. So on the water you have exactly <strong>two practical depth knobs</strong>: the foil's angle (which sets
+  L/D) and the <strong>line length</strong> you let out. Hold one fixed while you change the other, or you'll never
+  know which did what.</p>
+
+  <h2><span class="num">2</span>A measurement-first test protocol</h2>
+  <p>The cardinal rule of this whole lesson: <strong>you cannot improve what you don't measure.</strong> A test that
+  produces a feeling (“seemed deep enough”) produces nothing. A test that produces numbers feeds straight back into
+  your model. Run it like this:</p>
+
+  <div class="steps">
+    <ol>
+      <li><strong>Mark the line at known intervals.</strong> Paint or tape the towline every 5&nbsp;m, or clip on a
+      cheap depth/temperature logger. Without a depth reading you have no data — just vibes.</li>
+      <li><strong>Tow at a steady, known speed.</strong> Use GPS speed-over-ground and hold it. Let out a
+      <em>known</em> length of line. Change one variable at a time — this is an experiment, not a fishing trip.</li>
+      <li><strong>Record speed, line out, and depth</strong> for several combinations: a few speeds × a few line
+      lengths. A small table of (v, ℓ, depth) is the entire payload of the day.</li>
+      <li><strong>Watch for problems</strong> while you tow: <em>porpoising</em> or wandering (instability); the foil
+      <em>planing up</em> to the surface (too little downforce or too much line drag); <em>vibration or buzzing</em>
+      (possible <a href="../reference/glossary.html#cavitation">cavitation</a>, Lesson 12); or the rig
+      <em>pulling alarmingly hard</em> (tow load — remember from Lesson 2 it grows with v², not depth).</li>
+    </ol>
+  </div>
+
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">Tip: recover the foil and inspect it between
+  runs. Surface pitting or a chalky etched patch is the fingerprint of cavitation; a bent tow point is a tow-load
+  warning.</p>
+
+  <h2><span class="num">3</span>Close the loop — calibrate η</h2>
+  <p>Now the payoff. Your Lesson 3 model says the <em>ideal</em> depth is <var>ℓ</var>·sin&nbsp;θ, where
+  θ&nbsp;=&nbsp;arctan(L/D) from your foil's lift-to-drag ratio. Reality always falls short of that ceiling because of
+  line drag and net weight. The ratio of what you measured to what the model promised <em>is</em> your rig's
+  real-world factor — the single number that bundles every loss together:</p>
+
+  <div class="formula">
+    <span class="var">η</span> <span class="op">=</span> depth<sub>measured</sub> <span class="op">/</span>
+    (<span class="var">ℓ</span> <span class="op">·</span> sin <span class="var">θ</span>)
+    <small><span class="var">θ</span> = arctan(L/D) · <span class="var">η</span> typically lands around 0.5–0.8 for a
+    real towed rig</small>
+  </div>
+
+  <p>This is the same <strong>real-world factor</strong> slider you met back in Lesson 3 — except now you're not
+  guessing it, you're <em>measuring</em> it. Plug in your foil's L/D, the line you let out, and the depth you actually
+  recorded, and read off η. Then feed that η back into the Lesson 3 model and every future depth prediction for
+  <em>your</em> rig becomes honest.</p>
+
+  <h2><span class="num">4</span>Calibrate η on the water</h2>
+  <p>After your first tow, drop your numbers in below. The tool backs out η from what you measured and tells you how
+  much line to let out next time to hit a target depth — using <em>your</em> calibrated η, not the textbook ideal.</p>
+
+  <div id="calib14" class="cs-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">Carry η back to <a href="0003-dive-depth.html">Lesson
+  3</a>'s depth simulator: set its real-world factor to the value you just measured and the “ceiling” model becomes a
+  prediction you can plan a trip around.</p>
+
+  <h2><span class="num">5</span>Calibrate trust in the tools</h2>
+  <p>You now hold <strong>three estimates of the same foil</strong>, made completely differently:</p>
+  <ul>
+    <li>your <strong>hand calc</strong> — the lift equation and force balance from Lessons 2–4;</li>
+    <li>your <strong>CFD result</strong> — the verified, mesh-independent number from Phase 2; and</li>
+    <li><strong>reality</strong> — what the water just told you.</li>
+  </ul>
+  <p>Lay them side by side. <strong>Where they agree, trust the toolchain</strong> — you can now predict a foil before
+  you ever build it. <strong>Where they diverge, you've learned something specific</strong> about your model: a
+  hand-calc that over-predicts depth is usually missing
+  <a href="../reference/glossary.html#induced-drag">induced drag</a> (finite span, Lesson 6) or
+  <a href="../reference/glossary.html#reynolds-number">low-Re</a> losses; a model that beats reality is almost always
+  forgetting <strong>line drag</strong> (which is exactly what η absorbs). This reconciliation — three independent
+  numbers, forced to face each other — is the scientific payoff of the entire course.</p>
+
+  <h2><span class="num">6</span>Iterate — the loop doesn't end</h2>
+  <p>You now own a repeatable design cycle. Change <em>one</em> thing — section, area, aspect ratio, angle, or line —
+  re-predict with your now-calibrated model, re-print if needed, and re-test. Each turn tightens the gap between what
+  you predict and what you get. That's not a footnote to the course; it <em>is</em> the course:</p>
+  <p style="font-family:var(--sans);text-align:center;font-weight:600;color:var(--ink)">
+  understand → compute → print → test → iterate ↺</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>The water is the only judge that matters. <strong>Measure</strong> depth against speed and line length, back out
+    your rig's real-world factor <strong>η = measured / (ℓ · sin θ)</strong>, and <strong>feed it into the Lesson 3
+    model</strong> so predictions go honest. Then <strong>reconcile</strong> hand-calc vs CFD vs reality — agreement
+    earns trust, disagreement teaches you (usually induced drag, low-Re, or line drag). You now have a
+    <strong>closed design loop</strong>: understand → compute → print → test → iterate.</p>
+  </div>
+
+  <div class="callout build">
+    <div class="callout-label">🏁 You've closed the loop</div>
+    <p>That's the whole course. You can now <strong>design</strong> a hydrodynamic foil from first principles,
+    <strong>compute</strong> its forces by hand and verify them in CFD, <strong>print</strong> a part that survives the
+    tow, and <strong>test</strong> it in a way that actually tells you something. Most importantly, you can
+    <strong>close the gap</strong> between prediction and reality and keep closing it. The loop is yours now — every
+    foil you build will be a little truer than the last. Go turn it. 🎣</p>
+  </div>
+
+  <h2><span class="num">7</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">On the water, the two practical knobs that set how deep your depressor runs are…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — angle sets the foil's L/D (and therefore the line angle), and line length sets the hypotenuse. Those are the two depth levers from Lesson 3.">the foil's angle (its L/D) and the length of line let out</button>
+      <button class="opt" data-feedback="Speed cancels out of the depth geometry — both L and D scale with v², so the angle holds. Speed sets tow load, not depth.">the trolling speed and the foil's weight</button>
+      <button class="opt" data-feedback="Water temperature barely moves depth; the levers are L/D (via angle) and line length.">water temperature and line colour</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">Your rig's real-world factor η is computed as…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Correct — η = depth_measured / (ℓ · sin θ). It's the ratio of what you actually got to the ideal the L/D model promised.">the depth you measured divided by ℓ · sin θ</button>
+      <button class="opt" data-feedback="η isn't a force ratio — that's L/D. η compares measured depth to the ideal predicted depth.">your downforce divided by your drag</button>
+      <button class="opt" data-feedback="η is measured, not assumed. The whole point is to back it out from a real tow, not pick it from a chart.">a fixed 0.7 you read off a table</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">Your hand calc and CFD both predict deeper than the water actually delivered. The most likely culprit is…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — neither the lift equation nor a foil-only CFD run includes the towline's own drag, which bows the line and lifts the foil. That's exactly what η absorbs.">line drag, which neither model included</button>
+      <button class="opt" data-feedback="If both independent tools agree with each other but not reality, the missing physics is shared and external — the line — not a solver bug.">a bug in the CFD solver only</button>
+      <button class="opt" data-feedback="Lift isn't weaker in water — it's stronger. The shortfall comes from the line, captured by η.">lift being weaker underwater</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">A persistent buzzing vibration felt through the line at high speed most likely means…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — vibration plus surface pitting points to cavitation (Lesson 12): vapour pockets forming and collapsing on low-pressure regions of the foil.">possible cavitation on the foil's low-pressure side</button>
+      <button class="opt" data-feedback="A good tow point doesn't buzz; sustained vibration at speed is a hydrodynamic signal, classically cavitation.">the swivel is simply well-greased</button>
+      <button class="opt" data-feedback="Higher L/D doesn't cause vibration. Buzzing at speed is a cavitation flag, not an efficiency one.">your L/D is too high</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>Prep the print for water — orientation/material (Lesson 12), a sealed smooth surface, and a solid tow point.</li>
+      <li>Test <strong>measurement-first</strong>: mark the line or log depth, hold a known GPS speed, change one variable at a time, and record (v, ℓ, depth).</li>
+      <li>Back out your rig's real-world factor <strong>η = depth<sub>measured</sub> / (ℓ · sin θ)</strong> and feed it into the Lesson 3 model.</li>
+      <li>Reconcile <strong>hand-calc vs CFD vs reality</strong> — agreement earns trust; divergence reveals induced drag, low-Re, or line-drag losses.</li>
+      <li>You hold a <strong>closed loop</strong>: understand → compute → print → test → iterate. Change one thing, re-predict, re-test.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://www.fao.org/4/x0083e/x0083e00.htm" target="_blank" rel="noopener">FAO — Otter Board Design and Performance</a></div>
+      <div class="desc">The industrial version of exactly what you're doing: towing depressors and measuring their spread and depth against warp (line) length and tension, then reconciling predicted geometry with what the gear actually did. Read the testing chapters as a template for your own (v, ℓ, depth) trials, then re-open the Lesson 3 simulator with your measured η.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to lay out a (speed × line-length) test grid for your foil,
+    help you back out η from a day's measurements, reconcile your hand-calc, CFD and on-water numbers, or pick the one
+    variable to change for the next iteration? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>,
+    <a href="../reference/glossary.html#depressor">depressor</a>,
+    <a href="../reference/glossary.html#cavitation">cavitation</a>,
+    <a href="../reference/glossary.html#induced-drag">induced drag</a>,
+    <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>.
+    Closes the loop on → <b>Lesson 3</b> (the depth model and its real-world factor η).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Towed-depressor depth/spread measured against warp length and tension, treated as a calibrated force balance: FAO, <a href="https://www.fao.org/4/x0083e/x0083e00.htm" target="_blank" rel="noopener">Otter Board Design and Performance</a>.</li>
+    <li id="n2">Practical depth-vs-speed-vs-line behaviour of diving planers and downriggers, and the value of marking the line / logging depth: see a downrigger or diving-planer depth guide (e.g. manufacturer dive-curve charts) and course <a href="../RESOURCES.md">RESOURCES</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0013-sizing-optimization.html">
+      <div class="dir">← Lesson 13</div>
+      <div class="ttl">Sizing &amp; Optimization</div>
+    </a>
+    <a class="next" href="../index.html">
+      <div class="dir">Course home</div>
+      <div class="ttl">You've finished the course →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 14 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/calib-calc.js"></script>
+<script>mountCalibCalc("calib14", { ld: 5, line: 30, measured: 20, target: 25 });</script>
+</body>
+</html>

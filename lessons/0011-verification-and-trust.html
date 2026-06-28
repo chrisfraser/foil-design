@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11 · Verification &amp; Trust</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 2 · CAD &amp; CFD · Lesson 11</p>
+  <h1 class="lesson-title">Verification &amp; Trust</h1>
+  <p class="lesson-sub">A CFD result isn't a fact — it's a claim. This lesson is how you make it earn your belief
+  before you cut metal (or filament).</p>
+  <div class="lesson-meta">
+    <span>⏱ ~13 minutes</span><span class="sep">•</span>
+    <span>🧮 Reading convergence, no calculus</span><span class="sep">•</span>
+    <span class="tag ocean">The skill that separates real results from pretty pictures</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>In <a href="0010-simscale-hands-on.html">Lesson 10</a> you got a number out of SimScale. Here's the
+    uncomfortable truth: a CFD solver will <em>always</em> give you a confident, beautifully-coloured number — even
+    when it's badly wrong. The whole value of CFD collapses if you can't tell a trustworthy result from a plausible
+    fiction. This lesson is the discipline that earns trust: <strong>mesh-independence</strong>,
+    <strong>y+</strong>, <strong>convergence</strong>, and <strong>validation</strong> against a known answer.</p>
+  </div>
+
+  <h2><span class="num">1</span>Three different words people muddle</h2>
+  <p>“It converged” gets thrown around as if it meant “it's right.” It doesn't. Keep these straight:</p>
+  <ul>
+    <li><strong>Converged</strong> — the solver's <a href="../reference/glossary.html#residual">residuals</a> have
+    settled and the forces stopped wandering <em>for this mesh</em>. Necessary, but the weakest bar.</li>
+    <li><strong>Mesh-independent</strong> — refine the mesh and the answer <em>stops changing</em>. Now you're reading
+    the equation's answer, not your grid's.</li>
+    <li><strong>Validated</strong> — your setup reproduces a <em>known, real</em> answer (experiment or trusted data)
+    for a similar case. Only now does the number describe the world.</li>
+  </ul>
+  <p>A result can be perfectly converged, on a coarse mesh, validated against nothing — and completely wrong. All
+  three gates, every time.</p>
+
+  <h2><span class="num">2</span>Mesh-independence: refine until it stops moving</h2>
+  <p>A mesh that's too coarse can't resolve the steep pressure and velocity changes near the foil, so it
+  systematically <strong>over-reads the drag</strong>. The fix isn't to guess — it's to run the same case at two or
+  three refinements and watch the coefficient settle onto a plateau. The plateau value is your answer; the gap
+  between coarse and plateau is your error.</p>
+
+  <p>Drag the refinement slider. Watch the drag fall toward the grid-independent line and the error shrink — and
+  notice that the <strong>first few levels lie to you by tens of percent</strong>.</p>
+  <div id="mesh11" class="cs-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">Qualitative model of a grid-refinement study.
+  Real practice: at least three meshes, and you stop when the change between the two finest is small (a percent or
+  two) compared to the precision you need.</p>
+
+  <h2><span class="num">3</span>y+ : are your wall cells in the right place?</h2>
+  <p>Drag and stall are born in the <a href="../reference/glossary.html#boundary-layer">boundary layer</a>, the thin
+  sheared film on the foil surface. Whether your mesh resolves it is measured by
+  <strong><a href="../reference/glossary.html#y-plus">y+</a></strong>, a dimensionless wall distance for the first
+  cell. The rule of thumb: <strong>y+ ≈ 1</strong> to resolve the layer directly (or a controlled higher range if you
+  lean on wall functions). A y+ of 50 with a model that wanted 1 means your drag is wrong no matter how converged the
+  run looks — that's why the calculator above flags it.</p>
+
+  <h2><span class="num">4</span>Validation: reproduce a known answer first</h2>
+  <p>Before you trust CFD on <em>your</em> novel depressor — which has no “right answer” to check against — prove your
+  whole setup on a case that <em>does</em>. The classic is the <strong>NACA 0012</strong> section, measured to death
+  in wind tunnels and curated by NASA's Turbulence Modeling Resource.<span class="cite"><a href="#n1">1</a></span>
+  Run it with your mesh strategy, turbulence model and y+, and check you land on the published lift and drag. If you
+  can't reproduce a known foil, you have no business believing your unknown one.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p><strong>Converged ≠ mesh-independent ≠ validated.</strong> Earn trust in this order: drive residuals down
+    (converged), refine the mesh until the answer stops moving (mesh-independent) with <strong>y+ ≈ 1</strong>, then
+    reproduce a <strong>known case</strong> (validated). And always sanity-check against your hand calc from
+    Lessons 2–7. A number that fails any gate is decoration, not data.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>You can now tell a real number from a pretty one — which means you're finally ready to <strong>commit to a
+    design and build it</strong>. Phase 3 starts with what actually breaks a foil at speed: cavitation, structural
+    load, and the realities of 3D-printing a part you'll tow at 10 knots — <a href="0012-cavitation-strength-printing.html">Lesson 12</a>.</p>
+  </div>
+
+  <h2><span class="num">5</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">Your CFD run's residuals have flattened out. That tells you the result is…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — converged means settled for THIS mesh. It's necessary but the weakest gate; mesh-independence and validation still have to pass.">converged for this mesh — but maybe still wrong</button>
+      <button class="opt" data-feedback="No — convergence says nothing about whether the mesh is fine enough or matches reality. Those are separate gates.">correct and ready to trust</button>
+      <button class="opt" data-feedback="Convergence and validation are different things. A converged run can disagree wildly with experiment.">automatically validated against experiment</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">As you refine the mesh from coarse to fine, the computed drag typically…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — coarse meshes can't resolve the gradients and over-read drag; it falls toward a grid-independent plateau as you refine.">starts too high and settles toward a plateau</button>
+      <button class="opt" data-feedback="It shouldn't keep changing forever — that would mean you never reach mesh-independence. It plateaus.">keeps rising without ever settling</button>
+      <button class="opt" data-feedback="A coarse mesh usually over-reads drag, not under-reads it; and it converges to a plateau, not away.">starts too low and runs off the chart</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">A wall y+ of about 1 matters because it means your mesh…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Correct — y+ ≈ 1 puts the first cell inside the boundary layer so it's resolved, which is where drag and stall come from.">resolves the boundary layer where drag is born</button>
+      <button class="opt" data-feedback="y+ is about wall-cell spacing, not the size of the outer domain. It governs boundary-layer resolution.">is big enough far from the foil</button>
+      <button class="opt" data-feedback="y+ doesn't measure convergence speed; it measures how close the first cell sits to the wall.">will converge in fewer iterations</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">Why validate against a NACA 0012 before simulating your own depressor?</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Exactly — it has trusted measured data, so if your setup can't reproduce it, your novel-foil numbers can't be trusted either.">it has a known answer, so it proves your setup</button>
+      <button class="opt" data-feedback="It's not that 0012 is similar in shape — it's that it has a trusted reference answer to check your method against.">because it's the same shape as a depressor</button>
+      <button class="opt" data-feedback="Validation isn't about speed; it's about proving your method reproduces a known, measured result.">because it makes the solver run faster</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li><strong>Converged</strong> (residuals settled) ≠ <strong>mesh-independent</strong> (answer stops changing) ≠ <strong>validated</strong> (matches a known case).</li>
+      <li>Coarse meshes <strong>over-read drag</strong>; refine until the coefficient plateaus.</li>
+      <li>Target <strong>y+ ≈ 1</strong> so the boundary layer is resolved.</li>
+      <li><strong>Validate</strong> your method on NACA 0012 before trusting your own foil — and sanity-check every result by hand.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://turbmodels.larc.nasa.gov/naca0012_val.html" target="_blank" rel="noopener">NASA Turbulence Modeling Resource — 2D NACA 0012 validation</a></div>
+      <div class="desc">The canonical validation case: geometry, conditions, grids, and trusted lift/drag to check your own setup against. The gold standard for “does my CFD actually work?” before you simulate anything novel.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to lay out a three-mesh refinement study for your foil,
+    estimate the first-cell height for y+ ≈ 1 at your Reynolds number, or walk the NACA 0012 validation with you?
+    Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#mesh">mesh</a>,
+    <a href="../reference/glossary.html#residual">residual / convergence</a>,
+    <a href="../reference/glossary.html#y-plus">y+</a>,
+    <a href="../reference/glossary.html#boundary-layer">boundary layer</a>,
+    <a href="../reference/glossary.html#rans">RANS / turbulence model</a>.
+    Builds toward → <b>Lesson 12</b> (Phase 3: what breaks a foil at speed).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">NASA Langley Turbulence Modeling Resource — <a href="https://turbmodels.larc.nasa.gov/naca0012_val.html" target="_blank" rel="noopener">2D NACA 0012 Airfoil Validation Case</a>: grids, conditions and trusted force coefficients for verifying a CFD setup.</li>
+    <li id="n2">Verification &amp; validation overview: NASA Glenn / AIAA guidance on CFD V&amp;V; see also course <a href="../reference/cfd-tools.html">CFD tools</a> page.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0010-simscale-hands-on.html">
+      <div class="dir">← Lesson 10</div>
+      <div class="ttl">SimScale Hands-On</div>
+    </a>
+    <a class="next" href="0012-cavitation-strength-printing.html">
+      <div class="dir">Next · Lesson 12</div>
+      <div class="ttl">Cavitation, Strength &amp; Printing →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 11 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/mesh-sim.js"></script>
+<script>mountMeshSim("mesh11", { level: 3 });</script>
+</body>
+</html>

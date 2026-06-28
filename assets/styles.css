@@ -376,6 +376,43 @@ pre code { background: none; padding: 0; color: inherit; }
 .ds-eq b { color: #ffd479; }
 .ds-eq .ds-note { font-family: var(--sans); font-size: .78rem; color: #8fb9c6; margin-top: .5rem; line-height: 1.4; }
 
+/* ---- Shared widgets: mesh / cavitation / sizing / calibration (.cs-*) --- */
+.cs-sim {
+  margin: 1.6rem 0; padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid var(--rule); border-top: 4px solid var(--surface);
+  border-radius: var(--radius); background: #fff; box-shadow: var(--shadow);
+  font-family: var(--sans);
+}
+.cs-fig svg { display: block; width: 100%; height: auto; }
+.cs-svg-t { font-family: var(--sans); font-size: 11px; fill: var(--ink-faint); }
+.cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.4rem; margin-top: 1rem; }
+@media (max-width: 540px) { .cs-grid { grid-template-columns: 1fr; } }
+.cs-row { display: flex; flex-direction: column; gap: .15rem; }
+.cs-label { display: flex; justify-content: space-between; font-size: .85rem; gap: .8rem; }
+.cs-label .cs-val { color: var(--ocean-deep); font-weight: 600; white-space: nowrap; }
+.cs-slider { width: 100%; accent-color: var(--ocean); cursor: pointer; }
+.cs-toggle {
+  margin: .8rem 0 .2rem; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+  background: #e7f5f7; color: var(--ocean-deep); border: 1px solid #bfe2e8; border-radius: 6px; padding: .45rem .8rem;
+}
+.cs-toggle:hover { background: #d8eef1; }
+.cs-out { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin-top: 1rem; }
+@media (max-width: 640px) { .cs-out { grid-template-columns: 1fr 1fr; } }
+.cs-card { border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .65rem; background: var(--paper); }
+.cs-card.good { background: #eef7ef; border-color: #cfe6d3; }
+.cs-card.warn { background: #fff7e6; border-color: #ecdcae; }
+.cs-card.bad  { background: #fdf0ec; border-color: #f0cfc4; }
+.cs-card-t { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); }
+.cs-card-v { font-size: 1.25rem; font-weight: 700; color: var(--ink); margin: .1rem 0; line-height: 1.1; }
+.cs-card.good .cs-card-v { color: var(--kelp); }
+.cs-card.warn .cs-card-v { color: #8a6d1e; }
+.cs-card.bad .cs-card-v { color: var(--coral); }
+.cs-card-s { font-size: .7rem; color: var(--ink-faint); }
+.cs-verdict { margin-top: 1rem; padding: .7rem .9rem; border-radius: 8px; font-size: .88rem; line-height: 1.45; border: 1px solid var(--rule); background: var(--paper); }
+.cs-verdict.good { background: #eef7ef; color: #245c30; border-color: #cfe6d3; }
+.cs-verdict.warn { background: #fff7e6; color: #8a6d1e; border-color: #ecdcae; }
+.cs-verdict.bad  { background: #fdf0ec; color: #8d2f1a; border-color: #f0cfc4; }
+
 /* ---- Step list (numbered workflow steps) -------------------------------- */
 .steps { list-style: none; counter-reset: step; padding: 0; margin: 1.6rem 0; display: grid; gap: .9rem; }
 .steps > li { position: relative; counter-increment: step; padding: .9rem 1rem .95rem 3.2rem; background: #fff; border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow); }

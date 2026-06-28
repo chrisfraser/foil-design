@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12 · Cavitation, Strength &amp; Printing</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 3 · Build &amp; Test · Lesson 12</p>
+  <h1 class="lesson-title">Cavitation, Strength &amp; Printing</h1>
+  <p class="lesson-sub">Two ways a perfectly-designed foil betrays you in the real water: the flow boils, or the
+  part snaps. Here's how to see both coming before you tow.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~14 minutes</span><span class="sep">•</span>
+    <span>🧮 One formula, plenty of intuition</span><span class="sep">•</span>
+    <span class="tag ocean">Where physics meets the print bed</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>In <a href="0011-verification-and-trust.html">Lesson 11</a> you learned to trust a number. Now you're committing
+    to a design and making it real — and reality has two failure modes the lift equation never mentioned. First the
+    <strong>flow itself can break</strong>: push hard enough and the water on your foil literally boils, a wreck called
+    <a href="../reference/glossary.html#cavitation">cavitation</a>. Second the <strong>part can break</strong>: a
+    3D-printed foil towed at 10 knots carries a real, growing load, and FDM plastic has a grain you have to respect.
+    This lesson is both — when each one bites, and how to stay clear.</p>
+  </div>
+
+  <h2><span class="num">1</span>Cavitation: when the water boils on your foil</h2>
+  <p>You already know a foil makes lift by running a <em>low-pressure</em> region over its suction side. Drop that
+  pressure far enough and something strange happens: water doesn't need to be hot to boil — it boils when the local
+  pressure falls below its <strong>vapour pressure</strong> (a tiny ≈ 2.3 kPa for cool water). The flow flashes into
+  vapour bubbles, which sweep downstream into higher pressure and <strong>collapse violently</strong>. That collapse
+  wrecks your lift, shakes the rig with vibration and noise, and — over time — hammers tiny pits into the surface.
+  <span class="cite"><a href="#n1">1</a></span> It is the foil's equivalent of the flow giving up, except instead of
+  gently separating it detonates.</p>
+
+  <h2><span class="num">2</span>The cavitation number σ: one ratio that predicts it</h2>
+  <p>Whether you cavitate comes down to a tug-of-war: the <strong>ambient pressure</strong> trying to keep water
+  liquid, versus the <strong>dynamic pressure</strong> (½ρv²) the flow uses to carve out low-pressure zones. Bottle
+  that ratio into the <a href="../reference/glossary.html#cavitation-number">cavitation number</a>, σ:</p>
+
+  <div class="formula">
+    <span class="var">σ</span> <span class="op">=</span>
+    (<span class="var">p<sub>atm</sub></span> <span class="op">+</span> <span class="var">ρ</span> <span class="op">·</span>
+    <span class="var">g</span> <span class="op">·</span> <span class="var">d</span> <span class="op">−</span>
+    <span class="var">p<sub>v</sub></span>) <span class="op">/</span>
+    (½ <span class="op">·</span> <span class="var">ρ</span> <span class="op">·</span> <span class="var">v</span>²)
+    <small><span class="var">p<sub>atm</sub></span> atmospheric pressure (≈ 101 kPa) &nbsp;·&nbsp;
+    <span class="var">ρ·g·d</span> water pressure at depth <span class="var">d</span> &nbsp;·&nbsp;
+    <span class="var">p<sub>v</sub></span> vapour pressure (≈ 2.3 kPa) &nbsp;·&nbsp;
+    <span class="var">½ρv²</span> dynamic pressure <span class="var">q</span></small>
+  </div>
+
+  <p>Read the top as "how much pressure is holding the water together" and the bottom as "how hard the flow is pulling
+  it apart." The foil cavitates when its suction peak — the deepest dip in its pressure coefficient,
+  <strong>|C<sub>p,min</sub>|</strong> — exceeds σ. A gently-loaded foil might peak at |C<sub>p,min</sub>| ≈ 1; a
+  hard-working, heavily-cambered one at 3 or more. Compare that number to σ and you have your answer.</p>
+
+  <h2><span class="num">3</span>The counter-intuitive levers</h2>
+  <p>This is the part worth tattooing on the inside of your eyelids, because two of the three levers run
+  <em>backwards</em> from intuition:</p>
+  <ul>
+    <li><strong>Deeper is safer.</strong> Every metre down adds <var>ρ·g·d</var> to the numerator, so σ <em>rises</em>
+    and the extra ambient pressure squashes the bubbles before they form. Going deep protects you.</li>
+    <li><strong>Faster is riskier.</strong> Speed sits in the denominator as <var>v²</var>, so σ <em>falls</em> fast as
+    you speed up — double the speed and the dynamic pressure quadruples. The top of your speed range is the danger
+    zone.</li>
+    <li><strong>A harder-working foil cavitates sooner.</strong> More <a href="../reference/glossary.html#camber">camber</a>
+    or a higher C<sub>L</sub> deepens the suction peak (bigger |C<sub>p,min</sub>|), so it punches through σ earlier.
+    Working the foil hard for lift costs you cavitation margin.</li>
+  </ul>
+
+  <p>Play with the calculator. Start at the default — it's safe. Then push <strong>SPEED up</strong> and
+  <strong>DEPTH down</strong> and watch σ fall toward the threshold; finally raise the suction peak
+  <strong>|C<sub>p,min</sub>|</strong> to model a hard-working foil and tip it into cavitation. The verdict and margin
+  card tell you how much room you have.</p>
+  <div id="cav12" class="cs-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">A first-order σ model: it captures the
+  fast/shallow/high-load trade-off cleanly, but real onset also depends on surface finish, the exact pressure
+  distribution and Reynolds number.</p>
+
+  <h2><span class="num">4</span>Honest reality: for us, it's an edge case</h2>
+  <p>Don't let the drama scare you off. At trolling speeds of <strong>3–10 knots</strong>, cavitation is usually a
+  <strong>minor</strong> risk for a sensibly-designed depressor. It only bites in one specific corner: <strong>fast,
+  shallow, and highly loaded</strong> — exactly the corner of the calculator where σ collapses. The worst case is a
+  heavily-cambered foil run flat-out near the surface at 10 knots. Tow deeper, ease off the camber, or back off the
+  throttle and the problem evaporates. Treat it as a corner to respect, not a constant threat. One caveat: a
+  <strong>rough print or a nicked leading edge trips it earlier</strong> — a low-pressure dimple at a surface flaw
+  seeds the first bubble. Which is a perfect hand-off to the second half of this lesson: finish quality.</p>
+
+  <h2><span class="num">5</span>The load your part actually carries</h2>
+  <p>Back in <a href="0002-lift-equation.html">Lesson 2</a> you saw the tow load can be <strong>tens of
+  kilograms-force</strong> — and crucially it scales with <var>v²</var>. The part that feels solid at 5 knots sees
+  roughly <strong>4× that load at 10 knots</strong>. Your foil is a little <strong>cantilever beam</strong>: held at
+  one end (the tow attachment / root) with the water pressing along its span. Bending stress is highest right at the
+  <strong>root</strong>, where the leverage is greatest. Here a piece of earlier geometry pays off — the low-aspect-ratio,
+  stubby planform from <a href="0006-aspect-ratio.html">Lesson 6</a> has a <strong>short moment arm</strong>, so the
+  same load makes less bending stress than a long slender wing would. Stubby is strong.</p>
+
+  <h2><span class="num">6</span>Print orientation is (almost) everything</h2>
+  <p>Here's the single biggest mistake people make printing a structural part: ignoring the grain. FDM prints are
+  <strong>weakest between layers</strong> — the bond across layer lines is far weaker than the plastic within a layer,
+  so parts <a href="../reference/glossary.html#cavitation">delaminate</a> by peeling apart along those lines.
+  <span class="cite"><a href="#n2">2</a></span> The rule: <strong>orient the part so the main bending load runs along
+  the layers, not across them.</strong></p>
+  <p>Concretely: don't print a thin foil lying flat on the bed, because then the root-bending load pulls directly on
+  the weakest interlayer bond and peels it open. Print it <strong>on edge</strong> (span roughly vertical) so the
+  layers stack across the chord and the bending stress runs <em>through</em> solid material, or otherwise choose the
+  orientation that puts the strongest grain at the root.</p>
+
+  <h2><span class="num">7</span>Material, infill &amp; finish</h2>
+  <p>For a part you tow in (often salt) water and leave in the sun, skip brittle PLA. Reach for:</p>
+  <ul>
+    <li><strong>PETG or ASA/ABS</strong> — tough, water- and UV-tolerant, far less likely to shatter on a snag than
+    PLA. For the serious version, <strong>nylon or fibre-filled</strong> filament.</li>
+    <li><strong>Infill where it counts</strong> — high infill or solid near the <strong>root</strong> and the
+    <strong>leading edge</strong> (the loaded, impact-prone regions); the trailing edge can run thinner to save weight
+    and print time.</li>
+    <li><strong>Smooth the surface</strong> — sand and/or coat it. Roughness both adds drag <em>and</em> seeds
+    cavitation, so finish is doing double duty.</li>
+  </ul>
+
+  <h2><span class="num">8</span>A practical build checklist</h2>
+  <p>Pulling the structural rules together into the order you'll actually use them:</p>
+  <ol class="steps">
+    <li><span class="step-title">Thicken the section</span><span class="step-detail">A fuller section (from
+    <a href="0005-foil-sections.html">Lesson 5</a>) buys both bending strength and printability — thin trailing edges
+    are fragile and hard to print well.</span></li>
+    <li><span class="step-title">Fillet the root</span><span class="step-detail">Add a generous fillet where the foil
+    meets the strut/tow point; sharp inside corners are stress concentrators that crack first.</span></li>
+    <li><span class="step-title">Embed the tow point</span><span class="step-detail">Consider a metal rod or bolt
+    moulded into the print to carry the tow load instead of trusting plastic threads.</span></li>
+    <li><span class="step-title">Orient for the grain</span><span class="step-detail">Print on edge so layers run across
+    the chord and the root-bending load stays in solid material, not across layer lines.</span></li>
+    <li><span class="step-title">Seal &amp; smooth</span><span class="step-detail">Coat against water ingress and sand
+    the surface — protects the part and removes cavitation-seeding roughness.</span></li>
+  </ol>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>Cavitation is a <strong>fast-shallow-high-load edge risk</strong> set by
+    <strong>σ = (p<sub>atm</sub> + ρgd − p<sub>v</sub>) / ½ρv²</strong> — <strong>deeper = safer, faster =
+    riskier</strong>, and it bites when |C<sub>p,min</sub>| &gt; σ. And a printed foil must survive a
+    <strong>v²-scaling tow load</strong>, so choose a <strong>tough material</strong>, <strong>orient the layers
+    across the bending load</strong>, <strong>beef up the root</strong>, and <strong>finish the surface smooth</strong>.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>You now know what survives the water — both the flow and the part. The missing piece is putting an actual number
+    on it: <strong>sizing a real depressor</strong> for <em>your</em> boat speed, <em>your</em> target depth and
+    <em>your</em> tackle. That's <a href="0013-sizing-optimization.html">Lesson 13</a>.</p>
+  </div>
+
+  <h2><span class="num">9</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">To lower the risk of cavitation on a towed foil, you should tow it…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — depth adds ρ·g·d to the numerator, raising σ, so more ambient pressure squashes the bubbles. Deeper is safer.">deeper, where ambient pressure is higher</button>
+      <button class="opt" data-feedback="Backwards — shallower means less ambient pressure, lower σ, and more cavitation risk. Depth protects you.">shallower, near the surface</button>
+      <button class="opt" data-feedback="Speed sits in the denominator as v²; going faster lowers σ and raises risk, it doesn't help.">faster, to push past the bubbles</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">A foil cavitates when…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Correct — when the suction peak |C_p,min| exceeds the cavitation number σ, the local pressure drops below vapour pressure and the flow boils.">its suction peak |C<sub>p,min</sub>| exceeds the cavitation number σ</button>
+      <button class="opt" data-feedback="It's the other way — cavitation happens when |C_p,min| is BIGGER than σ, not smaller.">|C<sub>p,min</sub>| drops below σ</button>
+      <button class="opt" data-feedback="Water temperature barely matters here; vapour-pressure cavitation is driven by local pressure falling below p_v, set by speed, depth and loading.">the water gets above its boiling temperature</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">The tow load on your foil scales with v², which means going from 5 to 10 knots…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — doubling speed quadruples the load (2² = 4), so a part that's fine at 5 kn faces ~4× the force at 10 kn.">roughly quadruples the load on the part</button>
+      <button class="opt" data-feedback="No — the load goes with v², not linearly, so doubling speed is 4×, not 2×.">roughly doubles the load</button>
+      <button class="opt" data-feedback="The load grows strongly with speed (v²); it certainly doesn't stay the same.">leaves the load unchanged</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">Because FDM prints are weakest between layers, you should orient a foil so that…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Exactly — keep the bending load running along/through the layers, not pulling across the weak interlayer bond, so it can't peel apart at the root.">the main bending load runs along the layers, not across them</button>
+      <button class="opt" data-feedback="Printing flat so the root load pulls across the layer lines is the classic failure — that peels the layers apart.">it prints flat with the load pulling across the layer lines</button>
+      <button class="opt" data-feedback="Print time and bed contact don't drive strength here; layer orientation relative to the bending load does.">it has the largest possible contact with the bed</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li><strong>Cavitation</strong> is water boiling at low pressure on the foil; bubbles collapse and wreck lift, add noise, and pit the surface.</li>
+      <li><strong>σ = (p<sub>atm</sub> + ρgd − p<sub>v</sub>) / ½ρv²</strong>; the foil cavitates when <strong>|C<sub>p,min</sub>| &gt; σ</strong>.</li>
+      <li>Levers: <strong>deeper = safer</strong>, <strong>faster = riskier</strong>, <strong>harder-working = sooner</strong> — a fast/shallow/high-load edge case for us.</li>
+      <li>The tow load <strong>scales with v²</strong>; the foil is a cantilever with peak stress at the <strong>root</strong>, and a stubby low-AR planform helps.</li>
+      <li>Print in a <strong>tough material</strong>, <strong>orient layers across the bending load</strong>, <strong>beef up the root</strong>, and <strong>finish smooth</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://en.wikipedia.org/wiki/Cavitation" target="_blank" rel="noopener">Cavitation — overview &amp; the cavitation number</a></div>
+      <div class="desc">The physics of vapour-pressure cavitation, bubble collapse and erosion, plus the definition of the cavitation number σ you used above. Read it alongside a print-strength guide such as Prusa's on layer adhesion and orientation to connect the flow side to the part side.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to work out the cavitation margin for your speed and target
+    depth, estimate the root bending stress on your foil at 10 knots, or recommend a material and print orientation for
+    your specific shape? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#cavitation">cavitation</a>,
+    <a href="../reference/glossary.html#cavitation-number">cavitation number</a>,
+    <a href="../reference/glossary.html#camber">camber</a>,
+    <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>.
+    Builds on → <b>Lessons 2, 5 &amp; 6</b> (loads, sections, aspect ratio). Builds toward → <b>Lesson 13</b> (sizing a real depressor).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Cavitation physics, vapour-pressure onset, bubble collapse and erosion, and the cavitation number σ: <a href="https://en.wikipedia.org/wiki/Cavitation" target="_blank" rel="noopener">Cavitation (Wikipedia)</a>; see also <a href="https://oceanservice.noaa.gov/facts/cavitation.html" target="_blank" rel="noopener">NOAA Ocean Service — What is cavitation?</a></li>
+    <li id="n2">FDM layer adhesion, interlayer weakness and print orientation for structural strength: <a href="https://blog.prusa3d.com/how-to-improve-your-3d-prints-with-annealing_31088/" target="_blank" rel="noopener">Prusa Knowledge Base / blog — strength &amp; orientation</a>; and the general guidance that parts are weakest across layer lines, so load should run along the layers.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0011-verification-and-trust.html">
+      <div class="dir">← Lesson 11</div>
+      <div class="ttl">Verification &amp; Trust</div>
+    </a>
+    <a class="next" href="0013-sizing-optimization.html">
+      <div class="dir">Next · Lesson 13</div>
+      <div class="ttl">Sizing &amp; Optimization →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 12 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/cav-calc.js"></script>
+<script>mountCavCalc("cav12", { speed: 8, depth: 10, cpmin: 2.0, salt: true });</script>
+</body>
+</html>
