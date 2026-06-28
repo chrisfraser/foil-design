@@ -3,78 +3,145 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hydrodynamic Foils — a course on designing fishing depressors</title>
-<link rel="stylesheet" href="assets/style.css">
+<title>Hydrodynamic Foils · Design, compute & print a fishing depressor</title>
+<meta name="description" content="An interactive, project-based course on hydrodynamic foils: understand lift and drag, design a depressor in CAD, evaluate it with CFD, then 3D-print and water-test it. Theory first, then the build.">
+<link rel="stylesheet" href="assets/styles.css">
 <style>
-  .hero { margin: 1rem 0 2.5rem; }
-  .index-list { list-style: none; padding: 0; margin: 1rem 0; }
-  .index-list li {
-    border: 1px solid var(--rule); border-radius: 6px; background: #fff;
-    padding: .9rem 1.1rem; margin: .6rem 0; transition: border-color .12s, background .12s;
-  }
-  .index-list li:hover { border-color: var(--accent); background: #f6fbfb; }
-  .index-list a { border: none; font-weight: 600; font-size: 1.08rem; }
-  .index-list .desc { display:block; color: var(--ink-soft); font-size: .9rem; margin-top: .15rem;
-    font-family: ui-sans-serif, system-ui, sans-serif; }
-  .index-list .badge { float: right; font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-  .soon { opacity: .55; }
-  .soon a { color: var(--ink-soft); cursor: default; }
+  .lesson-card .code { min-width: 2.6rem; }
+  .reference-strip { background: linear-gradient(165deg,#0a3d5c,var(--ocean)); color:#eaf6f8; border-radius:var(--radius); padding:1.4rem 1.5rem; margin:1rem 0; box-shadow:var(--shadow); display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap; }
+  .reference-strip .big { font-size:2rem; }
+  .reference-strip h3 { margin:0 0 .25rem; color:#fff; font-family:var(--serif); font-weight:600; font-size:1.3rem; }
+  .reference-strip p { margin:0; color:#cfe6ec; font-family:var(--sans); font-size:.9rem; max-width:34rem; }
+  .reference-strip a.cta { margin-left:auto; background:var(--sand); color:#2a1e02; font-family:var(--sans); font-weight:700; text-decoration:none; padding:.6rem 1.1rem; border-radius:8px; white-space:nowrap; }
+  .reference-strip a.cta:hover { background:#e0b85a; }
+  @media (max-width:40rem){ .reference-strip a.cta{ margin-left:0; } }
 </style>
 </head>
 <body>
 
-<div class="course-tag">A learn-by-building course</div>
-<h1 class="hero">Hydrodynamic Foils</h1>
-<p class="subtitle">Understanding underwater foils well enough to design, compute, 3D-print, and water-test fishing <em>depressors</em> — towed wings that drive a lure deep while trolling.</p>
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="#phase-1">Theory</a>
+      <a href="#phase-2">CAD &amp; CFD</a>
+      <a href="#phase-3">Build</a>
+      <a href="reference/glossary.html">Glossary</a>
+      <a href="reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
 
-<div class="callout intuition">
-  <div class="callout-title">The whole idea in one line</div>
-  A depressor is an <strong>upside-down wing</strong>: it makes a force <em>perpendicular</em> to the flow — point that force down, and your lure dives.
-</div>
+<section class="hero">
+  <div class="wrap-wide">
+    <p class="kicker">A learn-by-building course · trolling depressors</p>
+    <h1>Design a foil.<br>Drive your lure deep.</h1>
+    <p>From the physics of a single force across the flow, to a depressor you design in CAD, evaluate in CFD,
+    3D-print, and test on the water. <strong>Theory first</strong> — build the intuition and the equations —
+    <strong>then compute, print, and iterate</strong>. Every claim cited; every concept a toy you can play with.</p>
+  </div>
+</section>
 
-<h2>Lessons</h2>
-<ul class="index-list">
-  <li>
-    <span class="badge">Lesson 01</span>
-    <a href="lessons/0001-foils-101.html">A Depressor Is an Upside-Down Wing</a>
-    <span class="desc">Lift = force across the flow · drag = the toll along it · angle of attack · stall · meet the lift equation.</span>
-  </li>
-  <li>
-    <span class="badge">Lesson 02</span>
-    <a href="lessons/0002-lift-equation.html">The Lift Equation, With Numbers</a>
-    <span class="desc">Dynamic pressure ½ρv² · compute real downforce in kgf · the speed² lever · live force calculator.</span>
-  </li>
-  <li class="soon">
-    <span class="badge">Lesson 03</span>
-    <a>What Sets the Dive Depth <em>— coming soon</em></a>
-    <span class="desc">Depth as a force balance: downforce vs line tension, drag, and line length.</span>
-  </li>
-</ul>
+<main class="wrap-wide">
 
-<h2>Reference</h2>
-<ul class="index-list">
-  <li>
-    <span class="badge">Glossary</span>
-    <a href="reference/glossary.html">Course Glossary</a>
-    <span class="desc">The shared vocabulary — foil, lift/drag, angle of attack, camber, aspect ratio, Reynolds number, cavitation.</span>
-  </li>
-  <li>
-    <span class="badge">CFD tools</span>
-    <a href="reference/cfd-tools.html">CFD &amp; Computational Evaluation — Tool Comparison</a>
-    <span class="desc">XFLR5 vs SimScale vs OpenFOAM for evaluating depressor foils from Fusion 360 — fast → easy → deep.</span>
-  </li>
-</ul>
+  <div class="callout mission" style="margin-top:2rem">
+    <div class="callout-label">◎ The mission</div>
+    <p>Understand underwater foils well enough to <strong>design, compute, 3D-print, and water-test a fishing
+    depressor</strong> — a towed wing that drives a lure deep while trolling at 3–10 knots. The course runs the full
+    loop: <strong>understand → compute → print → test → iterate</strong>, with CAD in Fusion 360 and a vetted CFD
+    trio for evaluating designs before they hit the water.
+    <a href="reference/glossary.html">Glossary</a> · <a href="reference/cfd-tools.html">CFD Tools</a> ·
+    <a href="MISSION.md">Mission</a> · <a href="RESOURCES.md">Resources</a></p>
+  </div>
 
-<h2>Course documents</h2>
-<ul class="index-list">
-  <li><a href="MISSION.md">Mission</a><span class="desc">Why this course exists and what success looks like.</span></li>
-  <li><a href="RESOURCES.md">Resources</a><span class="desc">Vetted sources (NASA, Airfoil Tools, XFLR5, FAO Otter Board manual) and communities.</span></li>
-</ul>
+  <!-- ===================== PHASE 1 — THEORY ===================== -->
+  <div class="phase" id="phase-1">
+    <div class="phase-head">
+      <span class="ph-n">Phase 1</span>
+      <h2>Foil Theory &amp; Foundations</h2>
+      <span class="ph-tag">no hardware · pen, paper &amp; the interactives on this site</span>
+    </div>
+    <p class="phase-intro">The whole conceptual arc — why a foil makes force, how much, at what cost, and what sets
+    your dive depth — before any CAD or CFD. CFD numbers are meaningless until you can sanity-check them by hand.</p>
+    <ul class="lesson-list">
+      <a class="lesson-card" href="lessons/0001-foils-101.html">
+        <span class="code">01</span>
+        <span><span class="t">A Depressor Is an Upside-Down Wing</span>
+        <span class="d">Force across the flow (lift) vs the toll along it (drag) · angle of attack · stall · an interactive foil.</span></span>
+        <span class="status-pill ready">Ready</span>
+      </a>
+      <a class="lesson-card" href="lessons/0002-lift-equation.html">
+        <span class="code">02</span>
+        <span><span class="t">The Lift Equation, With Numbers</span>
+        <span class="d">Dynamic pressure ½ρv² · compute real downforce in kgf · the speed² lever · a live force calculator.</span></span>
+        <span class="status-pill ready">Ready</span>
+      </a>
+      <a class="lesson-card" href="lessons/0003-dive-depth.html">
+        <span class="code">03</span>
+        <span><span class="t">What Sets the Dive Depth</span>
+        <span class="d">Depth as a force balance · the line trails at the L/D angle · depth = ℓ·sin θ · why speed cancels · depth visualiser.</span></span>
+        <span class="status-pill ready">Ready</span>
+      </a>
+      <li class="lesson-card todo"><span class="code">04</span><span><span class="t">Coefficients, Polars &amp; Stall</span><span class="d">Where L/D comes from: C_L, C_D, reading a polar curve, and the angle where a foil quits.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">05</span><span><span class="t">Foil Sections: Flat Plate vs Cambered</span><span class="d">Why camber buys more lift for less drag, what thickness does, and meeting the NACA families.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">06</span><span><span class="t">Aspect Ratio &amp; Induced Drag</span><span class="d">Why short, stubby depressors leak lift at the tips — the biggest efficiency penalty you'll face.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">07</span><span><span class="t">Reynolds Number in Water</span><span class="d">The one number that says which polar to trust — and why water at 5 kn ≠ a wind-tunnel.</span></span><span class="status-pill soon">Soon</span></li>
+    </ul>
+  </div>
 
-<div class="ask-teacher">
-  <b>This is a living course.</b> Lessons are added over time, each a single tangible win tied to building a real depressor. Start with Lesson 01.
-</div>
+  <!-- ===================== PHASE 2 — CAD & CFD ===================== -->
+  <div class="phase" id="phase-2">
+    <div class="phase-head">
+      <span class="ph-n">Phase 2</span>
+      <h2>CAD &amp; Computational Evaluation</h2>
+      <span class="ph-tag">free / hobbyist tools · model in Fusion, evaluate in CFD</span>
+    </div>
+    <p class="phase-intro">Turn theory into a design you can measure. Get a foil's real L/D from software, then learn to
+    distrust pretty-but-wrong results until they pass a hand-check. The toolchain is XFLR5 → SimScale → OpenFOAM.</p>
+    <div class="reference-strip">
+      <span class="big">🧰</span>
+      <div>
+        <h3>The CFD Tool Comparison</h3>
+        <p>XFLR5 (fast section screening) → SimScale (easy real CFD, one click from Fusion) → OpenFOAM/CfdOF
+        (free high-fidelity validation). What each is for, and where each lies to you.</p>
+      </div>
+      <a class="cta" href="reference/cfd-tools.html">Open the Tool Comparison →</a>
+    </div>
+    <ul class="lesson-list">
+      <li class="lesson-card todo"><span class="code">08</span><span><span class="t">CFD 101: What a Sim Actually Computes</span><span class="d">Mesh, boundary conditions, turbulence models, y+, convergence — the concepts before you click anything.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">09</span><span><span class="t">XFLR5 Screening</span><span class="d">Pull section polars at your Reynolds number; rank camber and thickness — and know what XFLR5 gets wrong.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">10</span><span><span class="t">SimScale Hands-On</span><span class="d">Push a Fusion foil into real 3-D CFD: incompressible water, k-ω SST, read lift and drag off the result.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">11</span><span><span class="t">Verification &amp; Trust</span><span class="d">Mesh-independence, y+, convergence, validate against NASA NACA0012 — so you believe only what's earned.</span></span><span class="status-pill soon">Soon</span></li>
+    </ul>
+  </div>
 
+  <!-- ===================== PHASE 3 — BUILD & TEST ===================== -->
+  <div class="phase" id="phase-3">
+    <div class="phase-head">
+      <span class="ph-n">Phase 3</span>
+      <h2>Build &amp; On-Water Test</h2>
+      <span class="ph-tag">the payoff · print, deploy, measure, iterate</span>
+    </div>
+    <p class="phase-intro">Pick a winning design, print it strong enough to survive 8–10 kn, then close the loop:
+    measure the real dive depth and calibrate how much to trust the tools.</p>
+    <ul class="lesson-list">
+      <li class="lesson-card todo"><span class="code">12</span><span><span class="t">Cavitation, Strength &amp; Printing</span><span class="d">What breaks a foil at speed, and how print material and orientation decide whether yours survives.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">13</span><span><span class="t">Sizing &amp; Optimization</span><span class="d">Put it all together: size a real depressor for your speed, target depth, and tow gear.</span></span><span class="status-pill soon">Soon</span></li>
+      <li class="lesson-card todo"><span class="code">14</span><span><span class="t">Build + On-Water Test Protocol</span><span class="d">Measure dive depth, close the loop CFD↔reality, calibrate trust in the tools, iterate.</span></span><span class="status-pill soon">Soon</span></li>
+    </ul>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-label">⌁ How this works</div>
+    <p>I build the next lesson when you're ready for it, pitched to what you've just learned. We're working through
+    <strong>Phase 1 (theory)</strong> now. Done with a lesson, want it deeper, or want to jump ahead to a tool?
+    Tell me in chat — I'm your teacher.</p>
+  </div>
+
+  <p class="pagefoot">
+    Hydrodynamic Foils — a personal course built with <a href="https://claude.com/claude-code">Claude Code</a><br>
+    Mission: design, compute, 3D-print &amp; water-test a fishing depressor — from first principles.
+  </p>
+</main>
 </body>
 </html>

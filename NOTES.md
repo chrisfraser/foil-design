@@ -15,10 +15,10 @@
 - Reuse assets/shared stylesheet. Cite resources heavily.
 
 ## Curriculum sketch (provisional — revise as we go)
-1. ✅/▶ Foils 101: force perpendicular to flow; a depressor is just a wing flipped to push down. Lift & drag, angle of attack.
-2. The lift/drag equations + dynamic pressure (½ρv²); compute downforce for a flat plate.
-3. The depressor force balance: what sets the dive depth (downforce vs line tension/buoyancy/drag).
-4. Coefficients & polars: Cl, Cd, L/D; reading a polar; stall.
+1. ✅ Foils 101: force perpendicular to flow; a depressor is just a wing flipped to push down. Lift & drag, angle of attack.
+2. ✅ The lift/drag equations + dynamic pressure (½ρv²); compute downforce for a flat plate.
+3. ✅ The depressor force balance: what sets the dive depth (tan θ = L/D, depth = ℓ·sin θ, speed cancels). depth-sim.js interactive.
+4. ▶ Coefficients & polars: Cl, Cd, L/D; reading a polar; stall.
 5. Foil sections: flat plate vs cambered NACA; why camber; thickness.
 6. Aspect ratio & induced drag (depressors are low-AR — big effect).
 7. Reynolds number in water; scaling; why water ≠ air.

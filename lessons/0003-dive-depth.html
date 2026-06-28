@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 · What Sets the Dive Depth</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 1 · Theory · Lesson 03</p>
+  <h1 class="lesson-title">What Sets the Dive Depth</h1>
+  <p class="lesson-sub">Your depressor doesn't sink — it <em>flies</em> down on a leash, and stops where the forces
+  balance.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~12 minutes</span><span class="sep">•</span>
+    <span>🧮 Trigonometry of one triangle</span><span class="sep">•</span>
+    <span class="tag ocean">Turns force into depth</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>In <a href="0002-lift-equation.html">Lesson 2</a> you computed the downforce a foil makes. But downforce alone
+    doesn't tell you how deep your lure runs. A depressor isn't a sinker — it's a wing on a string, and it settles at
+    the depth where <strong>three forces balance</strong>. This lesson turns “6.9 kg of downforce” into “runs at
+    29 m,” and reveals a result that surprises almost everyone: <strong>speed barely changes the depth</strong>.</p>
+  </div>
+
+  <h2><span class="num">1</span>It's a tug-of-war between three forces</h2>
+  <p>Picture the depressor mid-troll. Three forces act on it:</p>
+  <ul>
+    <li><strong>Downforce <var>L</var></strong> — the foil's lift, aimed <em>down</em> (Lesson 2). This drives it deep.</li>
+    <li><strong>Drag <var>D</var></strong> — the toll along the flow, pointing <em>back</em>, away from the boat.</li>
+    <li><strong>Line tension <var>T</var></strong> — the towline, pulling <em>up and forward</em> toward the boat.</li>
+  </ul>
+  <p>(There's also weight and buoyancy, usually small for a thin printed foil — we'll fold those into a correction at
+  the end.) When the depressor stops diving and tracks steadily, these forces are in <strong>equilibrium</strong>:
+  they cancel. The line tension must exactly oppose the combination of downforce and drag.</p>
+
+  <div class="callout intuition">
+    <div class="callout-label">△ The force triangle</div>
+    <p>Downforce points down, drag points back, and the line must pull opposite their sum. So the line can't hang
+    straight down and it can't lie flat — it settles at the one angle where its pull cancels both. That angle is the
+    whole secret to depth.</p>
+  </div>
+
+  <h2><span class="num">2</span>The line trails at the L/D angle</h2>
+  <p>Here's the move. For the line to balance the foil, its <em>upward</em> pull must equal the downforce
+  <var>L</var>, and its <em>forward</em> pull must equal the drag <var>D</var>. Divide one by the other and the
+  tension cancels, leaving the angle the line makes below horizontal:</p>
+
+  <div class="formula">
+    tan <span class="var">θ</span> <span class="op">=</span> <span class="var">L</span> <span class="op">/</span> <span class="var">D</span>
+    <small><span class="var">θ</span> = angle the towline trails below horizontal ·
+    <span class="var">L</span>/<span class="var">D</span> = the foil's lift-to-drag ratio (Lesson 2)</small>
+  </div>
+
+  <p>Read that again — it's the punchline of the whole lesson. <strong>The towline trails at the angle whose tangent
+  is your foil's L/D.</strong> A sleek foil with L/D = 6 pulls the line down to <var>θ</var> ≈ 80°: steep, almost
+  straight down. A draggy flat plate at L/D = 2 only manages <var>θ</var> ≈ 63°. Better foils don't just pull harder
+  — they pull <em>steeper</em>.</p>
+
+  <h2><span class="num">3</span>Depth = line length × sin θ</h2>
+  <p>Once you know the angle, depth is pure geometry. The line is the hypotenuse; the depth is the vertical side:</p>
+
+  <div class="formula">
+    depth <span class="op">=</span> <span class="var">ℓ</span> <span class="op">·</span> sin <span class="var">θ</span>
+    <small><span class="var">ℓ</span> = length of line let out · combine with <span class="var">θ</span> = arctan(L/D) above</small>
+  </div>
+
+  <p>So depth has exactly <strong>two knobs</strong>: how steep the line trails (your foil's L/D) and how much line
+  you let out (<var>ℓ</var>). Want deeper? Let out more line, or build a higher-L/D foil. That's the lever — and it's
+  why the same depressor can fish 3 m or 50 m just by paying out line.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ Wait — where did speed go?</div>
+    <p>Look back: <strong>v isn't in either equation.</strong> Both <var>L</var> and <var>D</var> grow with ½ρv²
+    (Lesson 2), so when you take the ratio L/D, the v² <strong>cancels</strong>. Trolling faster makes both forces
+    bigger together — the <em>angle</em> stays put, so the depth stays put. Speed doesn't set depth; it sets
+    <strong>tow load</strong>. This is why a depressor holds its depth across a range of trolling speeds.</p>
+  </div>
+
+  <h2><span class="num">4</span>A worked dive</h2>
+  <p>Take the foil from Lesson 2: at 5 knots it made <strong>L ≈ 68 N</strong> of downforce. Say its drag is
+  <strong>D ≈ 14 N</strong>, so <var>L</var>/<var>D</var> ≈ 5. You've let out <strong>30 m</strong> of line:</p>
+
+  <div class="formula">
+    <span class="var">θ</span> <span class="op">=</span> arctan(5) <span class="op">≈</span> <span class="var">79°</span>
+    &nbsp;&nbsp;<span class="op">→</span>&nbsp;&nbsp; depth <span class="op">=</span> 30 <span class="op">·</span>
+    sin(79°) <span class="op">≈</span> <span class="var">29 m</span>
+  </div>
+
+  <p>Now double the speed to 10 knots. Downforce leaps to ≈ 271 N and drag to ≈ 56 N — both <strong>4×</strong>
+  bigger — but L/D is <em>still 5</em>, <var>θ</var> is <em>still 79°</em>, and the depth is <em>still ≈ 29 m</em>.
+  All that the extra speed bought you is a tow load that went from ≈ 70 N to ≈ 280 N. Same depth, four times the
+  strain on your gear.</p>
+
+  <h2><span class="num">5</span>Try it — drive the depth</h2>
+  <p>Change the foil's efficiency and the line you pay out, and watch the line angle and depth respond. Notice
+  there's deliberately <strong>no speed slider</strong> — that's the lesson. Then pull down the “real-world factor”
+  to see how line drag and weight rob you of depth.</p>
+
+  <div id="depth1" class="depth-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">The straight-line model is the <em>ceiling</em>.
+  Reality always falls short of it — the next section says why.</p>
+
+  <h2><span class="num">6</span>Why reality runs shallower</h2>
+  <p>The clean model assumes a weightless, drag-free line. Two things spoil that, both making you run
+  <strong>shallower</strong> than <var>ℓ</var> · sin θ:</p>
+  <ul>
+    <li><strong>Line drag.</strong> The towline is long and moving fast through dense water, so it has its own drag —
+    often a lot. That drag bows the line into a curve and lifts the depressor, sometimes badly. Thin line and short
+    scope help; this is the single biggest real-world loss.<span class="cite"><a href="#n1">1</a></span></li>
+    <li><strong>Weight vs buoyancy.</strong> A printed foil plus hardware has some net weight (or buoyancy) that
+    nudges the balance. Small next to a punchy foil's downforce, but not zero — and it matters at low speed when
+    forces are weak.</li>
+  </ul>
+  <p>That's what the <strong>real-world factor</strong> in the tool stands in for. In practice you'll get maybe
+  50–80% of the ideal depth, and the only way to know <em>your</em> number is to measure it — paint depth marks on
+  the line, or clip on a cheap depth/temperature logger, and calibrate. That measured factor is gold: it's how you'll
+  later check whether a CFD prediction is trustworthy.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>Depth is a <strong>force balance</strong>, not a sink rate. The towline trails at <strong>tan θ = L/D</strong>,
+    and <strong>depth = ℓ · sin θ</strong>. Two knobs set depth: <strong>foil L/D</strong> and <strong>line let
+    out</strong>. <strong>Speed cancels</strong> — it sets tow load, not depth. Real depth runs shallower (line drag,
+    weight); calibrate the gap by measuring.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>Everything now rides on one number: <strong>L/D</strong>. Where does it come from for a real shape, and how do
+    you make it big? That means understanding <strong>lift and drag coefficients</strong>, the <strong>polar</strong>
+    curve, and where a foil <strong>stalls</strong> — Lesson 4. After that: foil sections, aspect ratio, Reynolds
+    number, and finally the CAD→CFD tools to pin down L/D for <em>your</em> design.</p>
+  </div>
+
+  <h2><span class="num">7</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 5</div>
+    <div class="q-text">A depressor settles at its running depth when…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — equilibrium: downforce, drag, and line tension cancel. It's a force balance, not a sink rate.">it stops accelerating downward and the forces balance</button>
+      <button class="opt" data-feedback="Downforce doesn't need to “beat” drag — they're perpendicular components, both balanced by the line.">the downforce finally exceeds the drag</button>
+      <button class="opt" data-feedback="The line is only vertical if drag were zero. With real drag it always trails at an angle.">the line runs completely vertical</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 5</div>
+    <div class="q-text">The angle the towline trails below horizontal is set by…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="No — speed cancels out. Both L and D scale with ½ρv², so the angle doesn't depend on v.">the trolling speed</button>
+      <button class="opt" data-correct data-feedback="Correct: tan θ = L/D. The line balances downforce against drag, so their ratio fixes the angle.">the foil's L/D ratio (tan θ = L/D)</button>
+      <button class="opt" data-feedback="Weight nudges it slightly, but the first-order angle is set by L/D — a hydrodynamic ratio.">the weight of the foil</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 5</div>
+    <div class="q-text">You double the trolling speed and change nothing else. The depth…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="No — that would be true if depth tracked force, but it tracks the L/D angle, which is speed-independent.">roughly doubles</button>
+      <button class="opt" data-correct data-feedback="Right — L and D both scale with ½ρv², so v² cancels in L/D. The angle (and depth) hold; only tow load rises (4×).">stays about the same</button>
+      <button class="opt" data-feedback="Force quadruples, yes — but depth follows the angle, not the force. The angle is unchanged.">quadruples, like the force</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 5</div>
+    <div class="q-text">The two knobs that actually set depth are…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Speed cancels and area affects force not angle — neither sets depth directly.">speed and foil area</button>
+      <button class="opt" data-correct data-feedback="Correct: depth = ℓ · sin(arctan(L/D)). Higher L/D steepens the line; more line lengthens the hypotenuse.">foil L/D and length of line let out</button>
+      <button class="opt" data-feedback="Those set C_L and the forces, but the depth geometry only cares about L/D and line length.">water density and angle of attack</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 5 of 5</div>
+    <div class="q-text">Real depressors usually run shallower than ℓ · sin θ mainly because…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Density is already in the model and doesn't cause the shortfall. The culprit is the line itself.">water is denser than the model assumes</button>
+      <button class="opt" data-correct data-feedback="Right — line drag (and some net weight) bows the warp and lifts the foil. You calibrate the gap by measuring.">the towline has its own drag and bows upward</button>
+      <button class="opt" data-feedback="Lift isn't weaker underwater — it's stronger. The shortfall comes from line drag, not the foil.">lift is weaker underwater</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>Dive depth is a <strong>force balance</strong> of downforce, drag, and line tension — not a sink rate.</li>
+      <li>The towline trails at <strong>tan θ = L/D</strong>, and <strong>depth = ℓ · sin θ</strong>.</li>
+      <li>Two knobs set depth: <strong>foil L/D</strong> and <strong>line let out</strong>.</li>
+      <li><strong>Speed cancels</strong> — it sets tow load, not depth.</li>
+      <li>Real depth runs shallower from line drag and weight; <strong>measure to calibrate</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · read this next</div>
+      <div class="title"><a href="https://www.fao.org/4/x0083e/x0083e00.htm" target="_blank" rel="noopener">FAO — Otter Board Design and Performance</a></div>
+      <div class="desc">Otter boards are industrial depressors; this manual treats spread/depth as exactly this force balance against warp (line) tension. Then re-open Lesson 2's calculator, change only speed, and watch L and D rise <em>together</em> while their ratio holds.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to estimate the L/D of a specific plate or NACA section,
+    work out how much line you need for a target depth, include the line's own drag with a proper sag model, or factor
+    in the net weight of a printed foil? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>,
+    <a href="../reference/glossary.html#drag">drag</a>,
+    <a href="../reference/glossary.html#depressor">depressor</a>.
+    Builds toward → <b>Lesson 04</b> (where L/D comes from: coefficients, polars &amp; stall).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Towline (warp) drag bowing the line and reducing depth, treated as a force balance against warp tension: FAO, <a href="https://www.fao.org/4/x0083e/x0083e00.htm" target="_blank" rel="noopener">Otter Board Design and Performance</a>; see also course <a href="../RESOURCES.md">RESOURCES</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0002-lift-equation.html">
+      <div class="dir">← Lesson 02</div>
+      <div class="ttl">The Lift Equation, With Numbers</div>
+    </a>
+    <a class="next" href="../index.html">
+      <div class="dir">Next · Lesson 04</div>
+      <div class="ttl">Coefficients, Polars &amp; Stall (soon)</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 03 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/depth-sim.js"></script>
+<script>mountDepthSim("depth1", { ld: 5, line: 30, eta: 1.0 });</script>
+</body>
+</html>

@@ -3,179 +3,243 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lesson 1 — A Depressor Is an Upside-Down Wing</title>
-<link rel="stylesheet" href="../assets/style.css">
+<title>01 · A Depressor Is an Upside-Down Wing</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
 </head>
 <body>
 
-<div class="course-tag">Hydrodynamic Foils &middot; <span class="lesson-no">Lesson 01</span></div>
-<h1>A Depressor Is an Upside-Down Wing</h1>
-<p class="subtitle">The one idea the whole course hangs from: a foil makes a force <em>across</em> the flow — point that force down, and it dives.</p>
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
 
-<p class="lead">
-Your depressor and an aeroplane wing are the <strong>same machine</strong>. A wing pushes air down and gets shoved <em>up</em>. Turn it over, tow it through water, and it pushes water up and gets shoved <em>down</em> — dragging your lure deep. Everything else you'll learn is just <em>how much</em> force, and <em>at what cost</em>.
-</p>
+<main class="wrap">
+  <p class="kicker">Phase 1 · Theory · Lesson 01</p>
+  <h1 class="lesson-title">A Depressor Is an Upside-Down Wing</h1>
+  <p class="lesson-sub">The one idea the whole course hangs from: a foil makes a force <em>across</em> the flow —
+  point that force down, and it dives.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~10 minutes</span><span class="sep">•</span>
+    <span>🧮 No equations yet — intuition first</span><span class="sep">•</span>
+    <span class="tag ocean">The foundation</span>
+  </div>
 
-<h2>The two forces a foil makes</h2>
-<p>
-When water flows past an angled foil, the foil bends that flow. By Newton's third law, the redirected water pushes back on the foil. We split that single push into two components, defined <em>relative to the oncoming flow</em>:
-</p>
-<ul>
-  <li><strong>Lift</strong> — the part <em>perpendicular</em> to the flow. This is the useful force. (Yes, it's still called "lift" even when we aim it downward.<sup class="ref"><a href="#n1">1</a></sup>)</li>
-  <li><strong>Drag</strong> — the part <em>along</em> the flow. This is the toll: the force you must tow against.</li>
-</ul>
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>Everything else in this course — the lift equation, dive depth, CFD, the printed part — is just
+    <em>how much</em> force a foil makes and <em>at what cost</em>. But none of it means anything until one idea is
+    rock-solid: a foil makes a force <strong>perpendicular to the flow</strong>, and a depressor simply aims that
+    force at the lake-bed. Get this and the rest is bookkeeping.</p>
+  </div>
 
-<figure>
-<svg viewBox="0 0 640 300" role="img" aria-label="A wing produces upward lift; flipping it produces downward force for a depressor.">
-  <!-- LEFT: normal wing -->
-  <text x="105" y="28" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="13" fill="#5a5a52">WING — lift up</text>
-  <!-- flow arrows -->
-  <g stroke="#2b6cb0" stroke-width="2" fill="none">
-    <line x1="15" y1="120" x2="70" y2="120" marker-end="url(#fa)"/>
-    <line x1="15" y1="150" x2="70" y2="150" marker-end="url(#fa)"/>
-    <line x1="15" y1="180" x2="70" y2="180" marker-end="url(#fa)"/>
-  </g>
-  <text x="20" y="205" font-family="ui-sans-serif,system-ui" font-size="11" fill="#2b6cb0">flow</text>
-  <!-- wing section (cambered, lift up): convex on top -->
-  <path d="M 95 165 Q 150 130 205 150 Q 155 162 95 165 Z" fill="#1f6f78" opacity="0.9"/>
-  <!-- lift up -->
-  <line x1="150" y1="145" x2="150" y2="80" stroke="#2f7d4f" stroke-width="3" marker-end="url(#ra)"/>
-  <text x="158" y="95" font-family="ui-sans-serif,system-ui" font-size="13" fill="#2f7d4f" font-weight="700">LIFT</text>
-  <!-- drag -->
-  <line x1="205" y1="152" x2="250" y2="152" stroke="#5a5a52" stroke-width="2.5" marker-end="url(#da)"/>
-  <text x="214" y="172" font-family="ui-sans-serif,system-ui" font-size="11" fill="#5a5a52">drag</text>
+  <h2><span class="num">1</span>Your depressor and a wing are the same machine</h2>
+  <p>A wing pushes air down and gets shoved <em>up</em>. Turn it over, tow it through water, and it pushes water up
+  and gets shoved <em>down</em> — dragging your lure deep. That's the entire conceptual leap. A
+  <strong>depressor</strong> is an aeroplane wing flipped upside-down and put to work in a denser fluid.</p>
 
-  <!-- divider -->
-  <line x1="320" y1="40" x2="320" y2="260" stroke="#d8d4c6" stroke-width="1" stroke-dasharray="4 4"/>
+  <h2><span class="num">2</span>The two forces a foil makes</h2>
+  <p>When water flows past an angled foil, the foil bends that flow. By Newton's third law, the redirected water
+  pushes back on the foil. We split that single push into two components, defined <em>relative to the oncoming
+  flow</em>:</p>
+  <ul>
+    <li><strong>Lift</strong> — the part <em>perpendicular</em> to the flow. This is the useful force. (Yes, it's
+    still called "lift" even when we aim it downward.<span class="cite"><a href="#n1">1</a></span>)</li>
+    <li><strong>Drag</strong> — the part <em>along</em> the flow. This is the toll: the force you must tow against.</li>
+  </ul>
 
-  <!-- RIGHT: depressor (flipped) -->
-  <text x="455" y="28" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="13" fill="#5a5a52">DEPRESSOR — force down</text>
-  <g stroke="#2b6cb0" stroke-width="2" fill="none">
-    <line x1="345" y1="120" x2="400" y2="120" marker-end="url(#fa)"/>
-    <line x1="345" y1="150" x2="400" y2="150" marker-end="url(#fa)"/>
-    <line x1="345" y1="180" x2="400" y2="180" marker-end="url(#fa)"/>
-  </g>
-  <text x="350" y="205" font-family="ui-sans-serif,system-ui" font-size="11" fill="#2b6cb0">flow</text>
-  <!-- flipped section: convex on bottom -->
-  <path d="M 425 150 Q 480 170 535 150 Q 485 138 425 150 Z" fill="#1f6f78" opacity="0.9"/>
-  <!-- force down -->
-  <line x1="480" y1="158" x2="480" y2="225" stroke="#2f7d4f" stroke-width="3" marker-end="url(#ra)"/>
-  <text x="488" y="210" font-family="ui-sans-serif,system-ui" font-size="13" fill="#2f7d4f" font-weight="700">"LIFT" ↓</text>
-  <line x1="535" y1="150" x2="580" y2="150" stroke="#5a5a52" stroke-width="2.5" marker-end="url(#da)"/>
-  <text x="544" y="170" font-family="ui-sans-serif,system-ui" font-size="11" fill="#5a5a52">drag</text>
+  <figure class="frame">
+  <svg viewBox="0 0 640 300" role="img" aria-label="A wing produces upward lift; flipping it produces downward force for a depressor.">
+    <text x="105" y="28" text-anchor="middle" font-family="var(--sans)" font-size="13" fill="#76838d">WING — lift up</text>
+    <g stroke="#2a9db0" stroke-width="2" fill="none">
+      <line x1="15" y1="120" x2="70" y2="120" marker-end="url(#fa)"/>
+      <line x1="15" y1="150" x2="70" y2="150" marker-end="url(#fa)"/>
+      <line x1="15" y1="180" x2="70" y2="180" marker-end="url(#fa)"/>
+    </g>
+    <text x="20" y="205" font-family="var(--sans)" font-size="11" fill="#2a9db0">flow</text>
+    <path d="M 95 165 Q 150 130 205 150 Q 155 162 95 165 Z" fill="#0b6b7a" opacity="0.9"/>
+    <line x1="150" y1="145" x2="150" y2="80" stroke="#3f7d4e" stroke-width="3" marker-end="url(#ra)"/>
+    <text x="158" y="95" font-family="var(--sans)" font-size="13" fill="#3f7d4e" font-weight="700">LIFT</text>
+    <line x1="205" y1="152" x2="250" y2="152" stroke="#44515b" stroke-width="2.5" marker-end="url(#da)"/>
+    <text x="214" y="172" font-family="var(--sans)" font-size="11" fill="#44515b">drag</text>
 
-  <defs>
-    <marker id="fa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2b6cb0"/></marker>
-    <marker id="ra" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto"><path d="M0,0 L12,5 L0,10 Z" fill="#2f7d4f"/></marker>
-    <marker id="da" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#5a5a52"/></marker>
-  </defs>
-</svg>
-<figcaption>Same physics, flipped. The useful force (green) is always perpendicular to the flow; drag (grey) always points downstream. A depressor just aims the perpendicular force at the lake-bed.</figcaption>
-</figure>
+    <line x1="320" y1="40" x2="320" y2="260" stroke="#ddd8c8" stroke-width="1" stroke-dasharray="4 4"/>
 
-<h2>The control knob: angle of attack</h2>
-<p>
-How much force? The biggest lever you control is the <strong>angle of attack</strong>, <var>α</var> — the angle between the foil's chord line and the oncoming flow.<sup class="ref"><a href="#n2">2</a></sup> Tilt the foil more into the flow and (up to a point) it makes more lift. Tilt too far and the flow can't follow the surface any more: it <em>separates</em>, lift collapses, drag spikes. That breakdown is <strong>stall</strong>, and it sets the maximum useful angle.
-</p>
+    <text x="455" y="28" text-anchor="middle" font-family="var(--sans)" font-size="13" fill="#76838d">DEPRESSOR — force down</text>
+    <g stroke="#2a9db0" stroke-width="2" fill="none">
+      <line x1="345" y1="120" x2="400" y2="120" marker-end="url(#fa)"/>
+      <line x1="345" y1="150" x2="400" y2="150" marker-end="url(#fa)"/>
+      <line x1="345" y1="180" x2="400" y2="180" marker-end="url(#fa)"/>
+    </g>
+    <text x="350" y="205" font-family="var(--sans)" font-size="11" fill="#2a9db0">flow</text>
+    <path d="M 425 150 Q 480 170 535 150 Q 485 138 425 150 Z" fill="#0b6b7a" opacity="0.9"/>
+    <line x1="480" y1="158" x2="480" y2="225" stroke="#3f7d4e" stroke-width="3" marker-end="url(#ra)"/>
+    <text x="488" y="210" font-family="var(--sans)" font-size="13" fill="#3f7d4e" font-weight="700">"LIFT" ↓</text>
+    <line x1="535" y1="150" x2="580" y2="150" stroke="#44515b" stroke-width="2.5" marker-end="url(#da)"/>
+    <text x="544" y="170" font-family="var(--sans)" font-size="11" fill="#44515b">drag</text>
 
-<div class="callout intuition">
-  <div class="callout-title">Hand-out-the-car-window</div>
-  Flat palm, level: almost no vertical force — just drag. Tilt your hand a few degrees and it gets shoved up or down hard. Tilt it to 60° and it just batters backward — that's stall. Your hand is a (bad, flat) foil, and <var>α</var> is the only thing you changed.
-</div>
+    <defs>
+      <marker id="fa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2a9db0"/></marker>
+      <marker id="ra" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto"><path d="M0,0 L12,5 L0,10 Z" fill="#3f7d4e"/></marker>
+      <marker id="da" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#44515b"/></marker>
+    </defs>
+  </svg>
+  <figcaption>Same physics, flipped. The useful force (<b>green</b>) is always perpendicular to the flow; drag
+  (<b>grey</b>) always points downstream. A depressor just aims the perpendicular force at the lake-bed.</figcaption>
+  </figure>
 
-<h2>Play with it</h2>
-<p>
-Drag the <strong>angle of attack</strong> slider and watch the two force arrows respond: <span style="color:#2f7d4f;font-weight:600">lift</span> stays perpendicular to the flow, <span style="color:#6a6a60;font-weight:600">drag</span> stays along it. Push the angle past about 14° and the foil <strong>stalls</strong> — lift collapses, the wake turns turbulent. Then hit <strong>Flip to wing / depressor</strong> and notice the <em>only</em> thing that changes is which way the perpendicular force points.
-</p>
-<div id="sim1" class="foil-sim"></div>
-<p style="font-size:.92rem;color:var(--ink-soft);font-family:ui-sans-serif,system-ui,sans-serif">
-Try to answer <em>before</em> you slide: at what angle is lift biggest? What happens to drag as you approach stall? (This is a model for intuition — exact numbers come next lesson.)
-</p>
+  <h2><span class="num">3</span>The control knob: angle of attack</h2>
+  <p>How much force? The biggest lever you control is the <strong>angle of attack</strong>, <var>α</var> — the angle
+  between the foil's chord line and the oncoming flow.<span class="cite"><a href="#n2">2</a></span> Tilt the foil more
+  into the flow and (up to a point) it makes more lift. Tilt too far and the flow can't follow the surface any more:
+  it <em>separates</em>, lift collapses, drag spikes. That breakdown is <strong>stall</strong>, and it sets the
+  maximum useful angle.</p>
 
-<h2>Where this is heading (the lift equation)</h2>
-<p>
-The amount of lift is captured by one equation we'll live inside for the next few lessons. Don't memorise it yet — just meet it:
-</p>
-<div class="eq">
-  <var>L</var> = ½ &middot; <var>ρ</var> &middot; <var>v</var>² &middot; <var>A</var> &middot; <var>C<sub>L</sub></var>
-  <span class="where">
-    <var>L</var> force &nbsp;·&nbsp; <var>ρ</var> water density &nbsp;·&nbsp; <var>v</var> speed &nbsp;·&nbsp; <var>A</var> foil area &nbsp;·&nbsp; <var>C<sub>L</sub></var> lift coefficient (shape &amp; angle)
-  </span>
-</div>
-<p>
-Read it as a story: force grows with <strong>how dense the fluid is</strong> (water is ~800× denser than air — why a tiny foil works underwater), with <strong>speed squared</strong> (double the trolling speed → 4× the force), with <strong>area</strong>, and with a <strong>shape-and-angle number</strong> <var>C<sub>L</sub></var> that we'll learn to look up and tune.<sup class="ref"><a href="#n3">3</a></sup>
-</p>
+  <div class="callout intuition">
+    <div class="callout-label">✋ Hand-out-the-car-window</div>
+    <p>Flat palm, level: almost no vertical force — just drag. Tilt your hand a few degrees and it gets shoved up or
+    down hard. Tilt it to 60° and it just batters backward — that's stall. Your hand is a (bad, flat) foil, and
+    <var>α</var> is the only thing you changed.</p>
+  </div>
 
-<div class="callout key">
-  <div class="callout-title">The one win from this lesson</div>
-  A foil makes a force <strong>perpendicular to the flow</strong> (lift) plus a toll <strong>along the flow</strong> (drag). A depressor aims the perpendicular force <strong>down</strong>. The main knob is the <strong>angle of attack</strong>; push it too far and the foil <strong>stalls</strong>.
-</div>
+  <h2><span class="num">4</span>Play with it</h2>
+  <p>Drag the <strong>angle of attack</strong> slider and watch the two force arrows respond:
+  <span style="color:#3f7d4e;font-weight:600">lift</span> stays perpendicular to the flow,
+  <span style="color:#44515b;font-weight:600">drag</span> stays along it. Push the angle past about 14° and the foil
+  <strong>stalls</strong> — lift collapses, the wake turns turbulent. Then hit
+  <strong>Flip to wing / depressor</strong> and notice the <em>only</em> thing that changes is which way the
+  perpendicular force points.</p>
 
-<h2>Check yourself</h2>
-<p>No peeking — recalling it now is what makes it stick.</p>
-<div id="quiz1" class="quiz"></div>
+  <div id="sim1" class="foil-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">Try to answer <em>before</em> you slide: at what
+  angle is lift biggest? What happens to drag as you approach stall? (This is a model for intuition — exact numbers
+  come next lesson.)</p>
 
-<div class="primary-source">
-  <div class="callout-title">Primary source — do this next</div>
-  <p style="margin:.3rem 0 .5rem">
-    Read <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/learn-about-aerodynamics/">NASA Glenn — Beginner's Guide to Aeronautics (Aerodynamics)</a>, then play with <a href="https://www.nasa.gov/stem-content/foilsim/">NASA FoilSim</a>: drag the <em>angle</em> and <em>speed</em> sliders and watch lift respond. Trustworthy, illustrated, no calculus.
-  </p>
-</div>
+  <h2><span class="num">5</span>Where this is heading — the lift equation</h2>
+  <p>The amount of lift is captured by one equation we'll live inside for the next few lessons. Don't memorise it yet
+  — just meet it:</p>
 
-<div class="ask-teacher">
-  <b>I'm your teacher — ask me anything.</b> Confused why drag is defined relative to the flow and not to gravity? Want to see the palm-in-the-window idea drawn out, or jump ahead to plugging numbers into the lift equation? Just ask in the chat.
-</div>
+  <div class="formula">
+    <span class="var">L</span> <span class="op">=</span> ½ <span class="op">·</span> <span class="var">ρ</span>
+    <span class="op">·</span> <span class="var">v</span>² <span class="op">·</span> <span class="var">A</span>
+    <span class="op">·</span> <span class="var">C<sub>L</sub></span>
+    <small><span class="var">L</span> force &nbsp;·&nbsp; <span class="var">ρ</span> water density &nbsp;·&nbsp;
+    <span class="var">v</span> speed &nbsp;·&nbsp; <span class="var">A</span> foil area &nbsp;·&nbsp;
+    <span class="var">C<sub>L</sub></span> lift coefficient (shape &amp; angle)</small>
+  </div>
 
-<hr style="border:none;border-top:1px solid var(--rule);margin:2.5rem 0 0">
-<h3>Notes &amp; citations</h3>
-<ol class="cite">
-  <li id="n1">"Lift" is the standard name for the flow-perpendicular force regardless of direction — see <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/">NASA Glenn, The Lift Equation</a>.</li>
-  <li id="n2">Angle of attack &amp; stall: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/learn-about-aerodynamics/">NASA Glenn, Aerodynamics index</a>.</li>
-  <li id="n3">Lift equation &amp; the role of density, speed², area, C<sub>L</sub>: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/">NASA Glenn, The Lift Equation</a>.</li>
-</ol>
+  <p>Read it as a story: force grows with <strong>how dense the fluid is</strong> (water is ~800× denser than air —
+  why a tiny foil works underwater), with <strong>speed squared</strong> (double the trolling speed → 4× the force),
+  with <strong>area</strong>, and with a <strong>shape-and-angle number</strong> <var>C<sub>L</sub></var> that we'll
+  learn to look up and tune.<span class="cite"><a href="#n3">3</a></span></p>
 
-<div class="lesson-nav">
-  <span><a href="../reference/glossary.html">📖 Glossary</a></span>
-  <span>Next: <strong>Lesson 2 — The lift equation, with numbers</strong> (ask me to build it)</span>
-</div>
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>A foil makes a force <strong>perpendicular to the flow</strong> (lift) plus a toll <strong>along the
+    flow</strong> (drag). A depressor aims the perpendicular force <strong>down</strong>. The main knob is the
+    <strong>angle of attack</strong>; push it too far and the foil <strong>stalls</strong>.</p>
+  </div>
+
+  <h2><span class="num">6</span>Check yourself</h2>
+  <p>No peeking — recalling it now is what makes it stick.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 3</div>
+    <div class="q-text">A foil's <strong>lift</strong> force points in which direction?</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Not quite — lift is defined relative to the flow, not gravity. On a depressor the perpendicular force actually points down.">Straight up toward the surface</button>
+      <button class="opt" data-correct data-feedback="Right: lift is perpendicular to the oncoming flow. A depressor aims that perpendicular force downward.">Perpendicular to the oncoming flow</button>
+      <button class="opt" data-feedback="That's drag (the toll along the flow), not lift. Lift is the perpendicular component.">Backward along the towing line</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 3</div>
+    <div class="q-text">Which change multiplies the foil's force by about <strong>four</strong>?</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — force scales with speed squared (½ρv²·A·C_L), so doubling v gives roughly 4× the force.">Doubling the trolling boat speed</button>
+      <button class="opt" data-feedback="Angle helps lift, but only linearly up to stall — nowhere near a clean ×4, and it eventually collapses.">Doubling the foil's angle once</button>
+      <button class="opt" data-feedback="Saltiness changes density by only a few percent — a tiny effect, not a ×4 one.">Doubling the water's saltiness</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 3</div>
+    <div class="q-text">Pushing the angle of attack too far causes the foil to…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Cavitation is a different failure (vapour bubbles at high speed) — covered much later. The angle limit here is stall.">Cavitate and boil the water</button>
+      <button class="opt" data-feedback="No — past a critical angle lift collapses rather than growing. That breakdown is the whole point of stall.">Make steadily ever more lift</button>
+      <button class="opt" data-correct data-feedback="Correct: past a critical angle the flow detaches, lift collapses and drag spikes — that's stall.">Stall as the flow separates</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>A foil makes <strong>lift</strong> (perpendicular to the flow) and <strong>drag</strong> (along it).</li>
+      <li>A <strong>depressor is a flipped wing</strong> — it aims the perpendicular force downward.</li>
+      <li>The main control is the <strong>angle of attack</strong>; too much causes <strong>stall</strong>.</li>
+      <li>Force grows with density, <strong>speed²</strong>, area, and a shape-and-angle number <var>C<sub>L</sub></var>.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · read this next</div>
+      <div class="title"><a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/learn-about-aerodynamics/" target="_blank" rel="noopener">NASA Glenn — Beginner's Guide to Aerodynamics</a></div>
+      <div class="desc">Trustworthy, illustrated, no calculus. Then play with <a href="https://www.nasa.gov/stem-content/foilsim/" target="_blank" rel="noopener">NASA FoilSim</a>: drag the angle and speed sliders and watch lift respond.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Confused why drag is defined relative to the flow and not to
+    gravity? Want the palm-in-the-window idea drawn out, or to jump straight to plugging numbers into the lift
+    equation? Just ask in chat. Confused beats stuck.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#foil">foil</a>,
+    <a href="../reference/glossary.html#lift">lift</a>,
+    <a href="../reference/glossary.html#drag">drag</a>,
+    <a href="../reference/glossary.html#angle-of-attack">angle of attack</a>,
+    <a href="../reference/glossary.html#stall">stall</a>.
+    Builds toward → <b>Lesson 02</b> (the lift equation, with real numbers).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">"Lift" is the standard name for the flow-perpendicular force regardless of direction — <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/" target="_blank" rel="noopener">NASA Glenn, The Lift Equation</a>.</li>
+    <li id="n2">Angle of attack &amp; stall — <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/learn-about-aerodynamics/" target="_blank" rel="noopener">NASA Glenn, Aerodynamics index</a>.</li>
+    <li id="n3">Lift equation &amp; the role of density, speed², area, C<sub>L</sub> — <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/" target="_blank" rel="noopener">NASA Glenn, The Lift Equation</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="../index.html">
+      <div class="dir">← Course home</div>
+      <div class="ttl">All lessons</div>
+    </a>
+    <a class="next" href="0002-lift-equation.html">
+      <div class="dir">Next · Lesson 02</div>
+      <div class="ttl">The Lift Equation, With Numbers →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 01 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
 
 <script src="../assets/foil-sim.js"></script>
 <script>mountFoilSim("sim1", { mode: "depressor", alpha: 6 });</script>
-<script src="../assets/quiz.js"></script>
-<script>
-  mountQuiz("quiz1", [
-    {
-      q: "A foil's LIFT force points in which direction?",
-      options: [
-        "Straight up toward the surface",
-        "Perpendicular to the oncoming flow",
-        "Backward along the towing line"
-      ],
-      answer: 1,
-      explain: "Lift is defined relative to the flow, not gravity. A depressor aims that perpendicular force downward."
-    },
-    {
-      q: "Which change multiplies the foil's force by about four?",
-      options: [
-        "Doubling the trolling boat speed",
-        "Doubling the foil's angle once",
-        "Doubling the water's saltiness"
-      ],
-      answer: 0,
-      explain: "Force scales with speed squared (½ρv²A·CL), so doubling v gives roughly 4× the force."
-    },
-    {
-      q: "Pushing the angle of attack too far causes the foil to:",
-      options: [
-        "Cavitate and boil the water",
-        "Make steadily ever more lift",
-        "Stall as the flow separates"
-      ],
-      answer: 2,
-      explain: "Past a critical angle the flow detaches, lift collapses and drag spikes — that's stall."
-    }
-  ]);
-</script>
-
 </body>
 </html>

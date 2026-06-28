@@ -91,33 +91,33 @@
       // defs: arrowheads (right-pointing, orient=auto rotates to line)
       var defs = el("defs");
       defs.innerHTML =
-        '<marker id="fs-aFlow" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto"><path d="M0,0 L11,4.5 L0,9 Z" fill="#2b6cb0"/></marker>' +
-        '<marker id="fs-aLift" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto"><path d="M0,0 L13,5 L0,10 Z" fill="#2f7d4f"/></marker>' +
-        '<marker id="fs-aDrag" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><path d="M0,0 L12,4.5 L0,9 Z" fill="#6a6a60"/></marker>';
+        '<marker id="fs-aFlow" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto"><path d="M0,0 L11,4.5 L0,9 Z" fill="#2a9db0"/></marker>' +
+        '<marker id="fs-aLift" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="10" refX="12" refY="5" orient="auto"><path d="M0,0 L13,5 L0,10 Z" fill="#3f7d4e"/></marker>' +
+        '<marker id="fs-aDrag" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="9" refX="11" refY="4.5" orient="auto"><path d="M0,0 L12,4.5 L0,9 Z" fill="#44515b"/></marker>';
       svg.appendChild(defs);
 
       // ground/water tint
-      svg.appendChild(el("rect", { x: 0, y: 0, width: W, height: H, fill: "#f3f8f9" }));
+      svg.appendChild(el("rect", { x: 0, y: 0, width: W, height: H, fill: "#f3fbfc" }));
 
       // ---- flow streamlines (upstream always smooth) ----
       var ys = [-72, -36, 0, 36, 72];
       ys.forEach(function (dy) {
         var y = cy + dy;
-        var up1 = el("line", { x1: 14, y1: y, x2: 168, y2: y, stroke: "#2b6cb0",
+        var up1 = el("line", { x1: 14, y1: y, x2: 168, y2: y, stroke: "#2a9db0",
           "stroke-width": 2, "marker-end": "url(#fs-aFlow)", opacity: 0.85 });
         svg.appendChild(up1);
         if (!p.stalled) {
-          svg.appendChild(el("line", { x1: 430, y1: y, x2: 586, y2: y, stroke: "#2b6cb0",
+          svg.appendChild(el("line", { x1: 430, y1: y, x2: 586, y2: y, stroke: "#2a9db0",
             "stroke-width": 2, "marker-end": "url(#fs-aFlow)", opacity: 0.85 }));
         } else {
           // turbulent wake
           var amp = 7 + Math.abs(dy) * 0.12 + (a - STALL) * 0.8;
           var d = "M 418 " + y, x = 418;
           for (var i = 0; i < 9; i++) { x += 19; d += " Q " + (x - 9) + " " + (y - amp) + " " + x + " " + y + " Q " + (x + 9 - 19) + " " + (y + amp) + " " + x + " " + y; }
-          svg.appendChild(el("path", { d: d, fill: "none", stroke: "#c2622f", "stroke-width": 2, opacity: 0.7 }));
+          svg.appendChild(el("path", { d: d, fill: "none", stroke: "#c1492b", "stroke-width": 2, opacity: 0.7 }));
         }
       });
-      svg.appendChild(el("text", { x: 16, y: cy - 86, fill: "#2b6cb0",
+      svg.appendChild(el("text", { x: 16, y: cy - 86, fill: "#2a9db0",
         "font-family": "ui-sans-serif,system-ui", "font-size": 12 })).textContent = "water flow →";
 
       // ---- flow reference line through pivot (dashed) ----
@@ -133,10 +133,10 @@
         " Q " + P(48, -5) + " " + P(half, 0) +
         " Q " + P(46, 4) + " " + P(0, 6) +
         " Q " + P(-46, 8) + " " + P(-half, 0) + " Z";
-      g.appendChild(el("path", { d: path, fill: "#1f6f78", opacity: 0.92 }));
+      g.appendChild(el("path", { d: path, fill: "#0b6b7a", opacity: 0.92 }));
       // chord line
       g.appendChild(el("line", { x1: cx - half, y1: cy, x2: cx + half, y2: cy,
-        stroke: "#0e3b40", "stroke-width": 1, "stroke-dasharray": "2 3", opacity: 0.7 }));
+        stroke: "#0a3d5c", "stroke-width": 1, "stroke-dasharray": "2 3", opacity: 0.7 }));
       svg.appendChild(g);
 
       // ---- angle-of-attack arc at leading edge ----
@@ -147,10 +147,10 @@
       if (a > 0) {
         var sweep = rotDeg >= 0 ? 1 : 0;
         svg.appendChild(el("path", { d: "M " + s0[0] + " " + s0[1] + " A " + r + " " + r + " 0 0 " + sweep + " " + s1[0] + " " + s1[1],
-          fill: "none", stroke: "#0e3b40", "stroke-width": 1.5 }));
+          fill: "none", stroke: "#0a3d5c", "stroke-width": 1.5 }));
         var midR = (rad) / 2;
         svg.appendChild(el("text", { x: LE[0] + (r + 12) * Math.cos(midR), y: LE[1] + (r + 12) * Math.sin(midR) + 4,
-          fill: "#0e3b40", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-style": "italic" })).textContent = "α";
+          fill: "#0a3d5c", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-style": "italic" })).textContent = "α";
       }
 
       // ---- lift vector (perpendicular to flow = vertical) ----
@@ -158,23 +158,23 @@
       var ly = up ? cy - liftLen : cy + liftLen;
       if (liftLen > 4) {
         svg.appendChild(el("line", { x1: cx, y1: cy, x2: cx, y2: ly,
-          stroke: "#2f7d4f", "stroke-width": 2.5, "marker-end": "url(#fs-aLift)" }));
+          stroke: "#3f7d4e", "stroke-width": 2.5, "marker-end": "url(#fs-aLift)" }));
         svg.appendChild(el("text", { x: cx + 12, y: up ? ly - 6 : ly + 18,
-          fill: "#2f7d4f", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-weight": 700 }))
+          fill: "#3f7d4e", "font-family": "ui-sans-serif,system-ui", "font-size": 13, "font-weight": 700 }))
           .textContent = "LIFT " + (up ? "↑" : "↓");
       }
 
       // ---- drag vector (along flow = downstream) ----
       var dragLen = p.cd * 300;
       svg.appendChild(el("line", { x1: cx, y1: cy, x2: cx + dragLen, y2: cy,
-        stroke: "#6a6a60", "stroke-width": 2.5, "marker-end": "url(#fs-aDrag)" }));
+        stroke: "#44515b", "stroke-width": 2.5, "marker-end": "url(#fs-aDrag)" }));
       svg.appendChild(el("text", { x: cx + dragLen + 8, y: cy - 7,
-        fill: "#6a6a60", "font-family": "ui-sans-serif,system-ui", "font-size": 12 })).textContent = "drag";
+        fill: "#44515b", "font-family": "ui-sans-serif,system-ui", "font-size": 12 })).textContent = "drag";
 
       // ---- stall badge ----
       if (p.stalled) {
         var badge = el("g", {});
-        badge.appendChild(el("rect", { x: W - 168, y: 14, width: 154, height: 26, rx: 5, fill: "#b23b3b" }));
+        badge.appendChild(el("rect", { x: W - 168, y: 14, width: 154, height: 26, rx: 5, fill: "#c1492b" }));
         badge.appendChild(el("text", { x: W - 91, y: 31, fill: "#fff", "text-anchor": "middle",
           "font-family": "ui-sans-serif,system-ui", "font-size": 12, "font-weight": 700 }));
         badge.lastChild.textContent = "STALLED — flow separated";
@@ -188,14 +188,14 @@
       var liftPct = Math.round(Math.max(0, p.cl) / clMax * 100);
       var dragPct = Math.round(Math.min(1, p.cd / 0.5) * 100);
       var dirSentence = up
-        ? "<b>WING</b> — lift points <b style='color:#2f7d4f'>UP</b>"
-        : "<b>DEPRESSOR</b> — lift points <b style='color:#2f7d4f'>DOWN</b> (it dives)";
+        ? "<b>WING</b> — lift points <b style='color:#3f7d4e'>UP</b>"
+        : "<b>DEPRESSOR</b> — lift points <b style='color:#3f7d4e'>DOWN</b> (it dives)";
       read.innerHTML =
         "<div class='fs-mode'>" + dirSentence +
           " &nbsp;·&nbsp; <span class='fs-pill " + (p.stalled ? "bad" : "ok") + "'>" +
           (p.stalled ? "stalled" : "attached") + "</span></div>" +
-        "<div class='fs-bar'><span class='fs-key'>Lift</span><span class='fs-track'><i style='width:" + liftPct + "%;background:#2f7d4f'></i></span></div>" +
-        "<div class='fs-bar'><span class='fs-key'>Drag</span><span class='fs-track'><i style='width:" + dragPct + "%;background:#6a6a60'></i></span></div>";
+        "<div class='fs-bar'><span class='fs-key'>Lift</span><span class='fs-track'><i style='width:" + liftPct + "%;background:#3f7d4e'></i></span></div>" +
+        "<div class='fs-bar'><span class='fs-key'>Drag</span><span class='fs-track'><i style='width:" + dragPct + "%;background:#44515b'></i></span></div>";
     }
 
     slider.addEventListener("input", draw);
