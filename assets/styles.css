@@ -234,6 +234,7 @@ pre code { background: none; padding: 0; color: inherit; }
 .hero { background: linear-gradient(165deg, var(--abyss), var(--ocean-deep) 60%, var(--ocean)); color: #eaf6f8; padding: clamp(2.5rem, 8vw, 5rem) 0 clamp(2rem, 6vw, 3.5rem); }
 .hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.1rem, 1rem + 4vw, 3.6rem); line-height: 1.05; margin: .2rem 0 .6rem; }
 .hero p { font-size: 1.18rem; color: #c7e6ec; max-width: 38rem; }
+.hero strong { color: #ffffff; }   /* override global dark strong — hero sits on a dark gradient */
 .hero .kicker { color: var(--surface); }
 
 .track { margin: 2.6rem 0; }
@@ -375,14 +376,72 @@ pre code { background: none; padding: 0; color: inherit; }
 .ds-eq b { color: #ffd479; }
 .ds-eq .ds-note { font-family: var(--sans); font-size: .78rem; color: #8fb9c6; margin-top: .5rem; line-height: 1.4; }
 
+/* ---- Polar explorer / AR / Reynolds widgets (shared card chrome) -------- */
+.polar-sim, .ar-sim, .re-calc {
+  margin: 1.6rem 0; padding: 1.1rem 1.2rem 1.2rem;
+  border: 1px solid var(--rule); border-top: 4px solid var(--surface);
+  border-radius: var(--radius); background: #fff; box-shadow: var(--shadow);
+  font-family: var(--sans);
+}
+.ps-fig svg, .ar-fig svg, .rc-fig svg { display: block; width: 100%; height: auto; }
+.ps-tick, .ar-svg-t, .rc-svg-t { font-family: var(--sans); font-size: 11px; fill: var(--ink-faint); }
+.ps-axl { font-family: var(--sans); font-size: 12px; fill: var(--ink-soft); font-weight: 600; }
+.ps-note { font-family: var(--sans); font-size: 11px; font-weight: 600; fill: var(--ink-soft); }
+.ds-muted { fill: #9aa; }
+
+/* segmented controls + chips */
+.ps-controls { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: .9rem; }
+.ps-controls2 { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: .7rem; }
+.ps-seg { display: inline-flex; flex-wrap: wrap; gap: .3rem; }
+.ps-seg button {
+  font: inherit; font-size: .8rem; cursor: pointer; padding: .35rem .7rem;
+  border: 1.5px solid var(--rule); background: var(--paper); color: var(--ink-soft);
+  border-radius: 7px; transition: border-color .12s, background .12s;
+}
+.ps-seg button:hover { border-color: var(--ocean); }
+.ps-seg button.on { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+.ps-sec button.on { background: var(--chip, var(--ocean)); border-color: var(--chip, var(--ocean)); color: #fff; }
+.ps-cmp { font-size: .82rem; color: var(--ink-soft); display: inline-flex; align-items: center; gap: .35rem; cursor: pointer; }
+.ps-slabel { display: flex; align-items: center; gap: .6rem; font-size: .85rem; flex: 1 1 14rem; }
+.ps-slabel .ps-aval { color: var(--ocean-deep); font-weight: 700; min-width: 2.8rem; }
+.ps-slider { flex: 1; accent-color: var(--ocean); cursor: pointer; }
+
+/* sliders for AR / Re */
+.ar-grid, .rc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.4rem; margin-bottom: 1rem; }
+@media (max-width: 540px) { .ar-grid, .rc-grid { grid-template-columns: 1fr; } }
+.ar-row, .rc-row { display: flex; flex-direction: column; gap: .15rem; }
+.ar-label, .rc-label { display: flex; justify-content: space-between; font-size: .85rem; }
+.ar-label .ar-val, .rc-label .rc-val { color: var(--ocean-deep); font-weight: 600; }
+.ar-slider, .rc-slider { width: 100%; accent-color: var(--ocean); cursor: pointer; }
+.rc-temp {
+  margin: .2rem 0 .6rem; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+  background: #e7f5f7; color: var(--ocean-deep); border: 1px solid #bfe2e8; border-radius: 6px; padding: .45rem .8rem;
+}
+.rc-temp:hover { background: #d8eef1; }
+
+/* readout cards (shared shape across the three) */
+.ps-out, .ar-out, .rc-out { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin-top: 1rem; }
+.rc-out { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 640px) { .ps-out, .ar-out, .rc-out { grid-template-columns: 1fr 1fr; } }
+.ps-card, .ar-card, .rc-card { border: 1px solid var(--rule); border-radius: 6px; padding: .55rem .65rem; background: var(--paper); }
+.ps-card.good, .ar-card.good, .rc-card.good { background: #eef7ef; border-color: #cfe6d3; }
+.ps-card.bad,  .ar-card.bad,  .rc-card.bad  { background: #fdf0ec; border-color: #f0cfc4; }
+.rc-card.warn { background: #fff7e6; border-color: #ecdcae; }
+.ps-card-t, .ar-card-t, .rc-card-t { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); }
+.ps-card-v, .ar-card-v, .rc-card-v { font-size: 1.25rem; font-weight: 700; color: var(--ink); margin: .1rem 0; line-height: 1.1; }
+.ps-card.good .ps-card-v, .ar-card.good .ar-card-v, .rc-card.good .rc-card-v { color: var(--kelp); }
+.ps-card.bad .ps-card-v, .ar-card.bad .ar-card-v { color: var(--coral); }
+.rc-card.warn .rc-card-v { color: #8a6d1e; }
+.ps-card-s, .ar-card-s, .rc-card-s { font-size: .7rem; color: var(--ink-faint); }
+
 /* ---- Print -------------------------------------------------------------- */
 @media print {
   :root { --paper: #fff; }
   body { font-size: 11pt; color: #000; }
   .topbar, .lesson-nav, .pagefoot { display: none; }
-  .callout, .sourcebox, .calc, .quiz, .frame, .foil-sim, .force-calc, .depth-sim { box-shadow: none; break-inside: avoid; }
+  .callout, .sourcebox, .calc, .quiz, .frame, .foil-sim, .force-calc, .depth-sim, .polar-sim, .ar-sim, .re-calc { box-shadow: none; break-inside: avoid; }
   a { color: #000; text-decoration: underline; }
   .formula, pre, .fc-eq, .ds-eq { background: #f2f2f2; color: #000; border: 1px solid #999; }
-  .fs-slider, .fc-slider, .ds-slider, .fc-water, .fs-toggle { display: none; }
+  .fs-slider, .fc-slider, .ds-slider, .fc-water, .fs-toggle, .ps-slider, .ar-slider, .rc-slider, .rc-temp { display: none; }
   h2, h3 { break-after: avoid; }
 }
