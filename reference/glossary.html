@@ -138,6 +138,32 @@
     <dd>A dimensionless measure of how close the flow is to cavitating. Lower σ = more likely to cavitate.</dd>
   </dl>
 
+  <h2><span class="num">6</span>Computation &amp; CFD</h2>
+  <dl class="gloss">
+    <dt id="mesh">Mesh (grid)</dt>
+    <dd>The division of the water around the foil into many small cells where a CFD solver computes velocity and
+    pressure. Too coarse misses the physics; too fine is slow. Refined near the surface to capture the boundary layer.</dd>
+
+    <dt id="boundary-layer">Boundary layer</dt>
+    <dd>The thin sheared layer of fluid right against the foil surface, where viscosity drags the flow from zero (at
+    the wall) up to the free-stream speed. Where skin-friction drag and stall/separation originate. Its state
+    (laminar vs turbulent) depends on the <a href="#reynolds-number">Reynolds number</a>.</dd>
+
+    <dt id="rans">RANS &amp; turbulence model <span class="sym">e.g. k-ω SST</span></dt>
+    <dd>Reynolds-Averaged Navier–Stokes: the common CFD approach that solves for the averaged flow and uses a
+    <em>turbulence model</em> (k-ω SST is a good default for foils) to approximate the effect of turbulence rather
+    than resolving every eddy. An approximation, not ground truth.</dd>
+
+    <dt id="residual">Residual / convergence</dt>
+    <dd>Residuals measure how far the current numerical solution is from satisfying the equations; they should fall as
+    the run iterates. A solution is <em>converged</em> when residuals plateau and the lift/drag forces stop changing —
+    only then is the result meaningful. See also <a href="#mesh">mesh</a>.</dd>
+
+    <dt id="y-plus">y+ (wall spacing)</dt>
+    <dd>A dimensionless measure of how close the first mesh cell sits to the wall. Target y+ ≈ 1 to resolve the
+    <a href="#boundary-layer">boundary layer</a> (or use wall functions). The wrong y+ gives the wrong drag.</dd>
+  </dl>
+
   <div class="crosslinks">
     <b>Back to:</b> <a href="../lessons/0001-foils-101.html">Lesson 1 · A Depressor Is an Upside-Down Wing</a> ·
     <a href="cfd-tools.html">CFD tool comparison</a>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>07 · Reynolds Number in Water</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 1 · Theory · Lesson 07</p>
+  <h1 class="lesson-title">Reynolds Number in Water</h1>
+  <p class="lesson-sub">The polars from the last few lessons are only true at one speed-and-size — and a single number
+  tells you which polar to trust for <em>your</em> foil.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~13 minutes</span><span class="sep">•</span>
+    <span>🧮 One formula, one log scale</span><span class="sep">•</span>
+    <span class="tag math">The number that picks your polar</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p><a href="0004-coefficients-polars-stall.html">Lesson 4</a> taught you to read a polar, and Lessons 5–6 showed
+    what <em>shapes</em> it. But every polar carries a hidden footnote: <strong>“valid at this Reynolds number only.”</strong>
+    Pick a polar measured at the wrong Re and it will quietly lie to you — promising less drag and more lift than your
+    small, slow depressor can ever deliver. This lesson hands you the one number that matches a polar to your conditions,
+    so the curves you read are the curves you'll actually get.</p>
+  </div>
+
+  <h2><span class="num">1</span>What the Reynolds number actually is</h2>
+  <p>The <a href="../reference/glossary.html#reynolds-number">Reynolds number</a> is a single dimensionless ratio: the
+  strength of <strong>inertial forces</strong> (the flow's momentum, wanting to barrel straight on) against
+  <strong>viscous forces</strong> (the fluid's internal stickiness, wanting to smooth everything out).<span class="cite"><a href="#n1">1</a></span>
+  High Re means inertia wins and viscosity is a thin afterthought; low Re means stickiness dominates the flow near the
+  surface.</p>
+
+  <div class="formula">
+    <span class="var">Re</span> <span class="op">=</span>
+    <span class="var">v</span> <span class="op">·</span> <span class="var">L</span> <span class="op">/</span> <span class="var">ν</span>
+    <span class="op">=</span>
+    <span class="var">ρ</span> <span class="op">·</span> <span class="var">v</span> <span class="op">·</span> <span class="var">L</span>
+    <span class="op">/</span> <span class="var">μ</span>
+    <small><span class="var">v</span> speed &nbsp;·&nbsp; <span class="var">L</span> length scale — use the foil
+    <a href="../reference/glossary.html#chord">chord</a> &nbsp;·&nbsp; <span class="var">ν</span> kinematic viscosity
+    &nbsp;·&nbsp; <span class="var">ρ</span> density &nbsp;·&nbsp; <span class="var">μ</span> dynamic viscosity
+    (<span class="var">ν</span> = <span class="var">μ</span>/<span class="var">ρ</span>)</small>
+  </div>
+
+  <p>For water the kinematic viscosity is <strong>ν ≈ 1.0×10⁻⁶ m²/s</strong> at about 20 °C, rising to
+  <strong>≈ 1.3×10⁻⁶ m²/s</strong> in colder ~10 °C water.<span class="cite"><a href="#n2">2</a></span> Because Re has
+  no units, it lets you compare a fish-sized foil and a ship's rudder on the same scale — what matters is the
+  <em>combination</em> of speed, size and fluid, not any one of them alone.</p>
+
+  <h2><span class="num">2</span>Why it governs the boundary layer — and your drag</h2>
+  <p>Re matters because it controls the thin film of slowed water hugging the foil: the
+  <strong>boundary layer</strong>. It decides whether that layer stays <em>laminar</em> (smooth, low-friction, but
+  fragile) or trips <em>turbulent</em> (messier but stickier to the surface), and — crucially — when it
+  <strong>separates</strong> and triggers <a href="../reference/glossary.html#stall">stall</a>.</p>
+  <p>At <strong>low Re</strong> the boundary layer is thick, sluggish, and prone to letting go early, often forming a
+  <em>laminar separation bubble</em> that fattens the wake.<span class="cite"><a href="#n3">3</a></span> The penalty is
+  blunt: <strong>higher drag and a lower C<sub>L,max</sub></strong> than the glossy textbook polars promise. So a polar
+  measured at Re = 3×10⁶ is simply the wrong document if your foil runs at Re = 2×10⁵ — same shape, different animal.</p>
+
+  <h2><span class="num">3</span>A worked number for a real depressor</h2>
+  <p>Take a typical small depressor: a <strong>100 mm</strong> chord towed at <strong>5 knots</strong>
+  (≈ 2.57 m/s) through 20 °C water. Drop it into the formula:</p>
+
+  <div class="formula">
+    <span class="var">Re</span> <span class="op">=</span>
+    2.57 <span class="op">·</span> 0.1 <span class="op">/</span> 1.0×10⁻⁶
+    <span class="op">≈</span> <span class="var">2.6×10⁵</span>
+    <small><span class="var">v</span> = 2.57 m/s &nbsp;·&nbsp; <span class="var">L</span> = 0.1 m &nbsp;·&nbsp;
+    <span class="var">ν</span> = 1.0×10⁻⁶ m²/s</small>
+  </div>
+
+  <p>That ≈ <strong>2.6×10⁵</strong> sits squarely in the <strong>low-Re foil regime</strong> (~1×10⁵–5×10⁵) — exactly
+  the awkward band where real foils underperform their high-Re polars. This is not an edge case; it's where most
+  trolling depressors live.</p>
+
+  <h2><span class="num">4</span>Why water isn't air at the “same” speed</h2>
+  <p>People assume water, being denser and stickier, must put you at a higher Re than air. The opposite per-unit-speed:
+  air's kinematic viscosity (ν ≈ 1.5×10⁻⁵ m²/s) is about <strong>15× larger</strong> than water's, so for the
+  <em>same</em> v and L, <strong>water gives roughly 15× the Reynolds number</strong> air would. Good news — except our
+  depressors are so small and slow that even with that 15× boost we're <em>still</em> down in the low-Re band where care
+  is needed. The lesson isn't “water is high-Re”; it's <strong>always match the polar's Re to your own Re</strong>,
+  whatever fluid you're in.</p>
+
+  <h2><span class="num">5</span>Explore where your foil lands</h2>
+  <p>Set the calculator to <em>your</em> trolling speed and <em>your</em> chord, then toggle the water temperature and
+  watch Re slide along the log scale. Find which band you land in — most small, slow depressors come to rest in the
+  <span style="color:#c9a14a;font-weight:600">low-Re foil regime</span> (~1×10⁵–5×10⁵), the band where high-Re polars
+  over-predict performance. Push the chord or speed up and watch the marker march toward the better-behaved bands.</p>
+
+  <div id="re7" class="re-calc"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">A bigger chord or a faster tow buys you a higher
+  Re and generally cleaner, lower-drag flow — one more reason size and speed quietly help. But you can't always have
+  them, so the practical move is to read polars <em>at the Re you've got</em>.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p><strong>Re = v·L/ν</strong> decides which polar applies. Small, slow depressors live at <strong>low Re</strong>
+    (~10⁵–10⁵·⁵), where real drag is higher and C<sub>L,max</sub> lower than textbook high-Re polars promise.
+    <strong>Always match the polar's Reynolds number to your own.</strong></p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>Now you can find the <em>right</em> polar — but those still come from someone else's shape. The next step is to
+    <strong>compute real polars for your own foil</strong>, at your own Re. That's <a href="../index.html#phase-2">Phase 2</a>:
+    we start with what a <strong>CFD simulation actually does</strong> in <a href="0008-cfd-101.html">Lesson 8</a>.</p>
+  </div>
+
+  <h2><span class="num">6</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">The Reynolds number is the ratio of…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — Re = v·L/ν compares the flow's inertia to the fluid's viscous stickiness. High Re, inertia wins; low Re, viscosity dominates.">inertial forces to viscous forces</button>
+      <button class="opt" data-feedback="That's the lift-to-drag ratio (L/D), a different number entirely. Re is about inertia vs viscosity.">lift force to drag force</button>
+      <button class="opt" data-feedback="Density and speed both appear in Re, but it's not their ratio — it's inertia (ρ·v·L) over viscosity (μ).">water density to towing speed</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">A 100 mm-chord foil at 5 kn (≈2.57 m/s) in 20 °C water sits at roughly…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Too high by an order of magnitude — that's keelboat/ship territory. Plug in: 2.57 × 0.1 ÷ 1.0×10⁻⁶.">Re ≈ 3×10⁶, textbook territory</button>
+      <button class="opt" data-correct data-feedback="Correct — 2.57 × 0.1 ÷ 1.0×10⁻⁶ ≈ 2.6×10⁵, right in the awkward low-Re foil regime.">Re ≈ 2.6×10⁵, the low-Re regime</button>
+      <button class="opt" data-feedback="Too low — that's down near model gliders. Recompute: v·L/ν with v=2.57, L=0.1, ν=1.0×10⁻⁶.">Re ≈ 5×10³, deep laminar</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">At the <strong>low</strong> Reynolds numbers our depressors run at, a high-Re textbook polar tends to…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — low Re means a thick, easily-separating boundary layer: more drag and a lower C_L,max than the high-Re polar shows.">over-predict performance — real drag is higher, C<sub>L,max</sub> lower</button>
+      <button class="opt" data-feedback="No — the curves genuinely shift with Re; a polar is only valid at the Re it was measured at.">apply unchanged — polars don't move with Re</button>
+      <button class="opt" data-feedback="Backwards — at low Re you get more drag and less max lift, not less drag and more lift.">under-predict drag and over-deliver lift</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">For the <em>same</em> speed and chord, how does water's Reynolds number compare to air's?</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — water's ν is ~15× smaller than air's, so Re is ~15× higher; but our small slow foils are still in the low-Re band.">about 15× higher, because water's ν is ~15× smaller</button>
+      <button class="opt" data-feedback="No — denser and stickier doesn't mean lower Re. The smaller kinematic viscosity ν pushes Re up, not down.">about 15× lower, because water is denser</button>
+      <button class="opt" data-feedback="Re depends on the fluid through ν, so it changes — water and air at the same v and L are not the same Re.">identical — Re ignores the fluid</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li><strong>Re = v·L/ν</strong> is the ratio of inertial to viscous forces — a dimensionless flow-similarity number.</li>
+      <li>Re governs the <strong>boundary layer</strong>: low Re → thick, early-separating layer → higher drag, lower C<sub>L,max</sub>.</li>
+      <li>A polar is valid at <strong>one Re only</strong>; always match it to your conditions.</li>
+      <li>A 100 mm foil at 5 kn ≈ <strong>2.6×10⁵</strong> — the low-Re regime where most depressors live.</li>
+      <li>Water gives ~15× air's Re at equal v and L, but small slow foils are still low-Re.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/reynolds-number/" target="_blank" rel="noopener">NASA Glenn — Reynolds Number</a></div>
+      <div class="desc">The clean definition of Re as inertia-over-viscosity, with the boundary-layer story. Then revisit a polar
+      database (e.g. <a href="http://airfoiltools.com/" target="_blank" rel="noopener">Airfoil Tools</a>) and pull the
+      curves at the Re you just computed — not the highest one on offer.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to compute the Re for your exact speed and chord, explain what
+    a laminar separation bubble does to drag, or help you pick the right polar from a multi-Re chart? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>,
+    <a href="../reference/glossary.html#chord">chord</a>,
+    <a href="../reference/glossary.html#drag-coefficient">drag coefficient</a>,
+    <a href="../reference/glossary.html#lift-coefficient">lift coefficient</a>,
+    <a href="../reference/glossary.html#stall">stall</a>,
+    <a href="../reference/glossary.html#polar">polar</a>.
+    Builds toward → <b>Lesson 08</b> (CFD 101: computing your own polars).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Reynolds number as the ratio of inertial to viscous forces — <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/reynolds-number/" target="_blank" rel="noopener">NASA Glenn, Reynolds Number</a>.</li>
+    <li id="n2">Kinematic viscosity of water (ν ≈ 1.0×10⁻⁶ m²/s at 20 °C, ~1.3×10⁻⁶ at 10 °C) — <a href="https://en.wikipedia.org/wiki/Viscosity#Water" target="_blank" rel="noopener">Viscosity of water</a>.</li>
+    <li id="n3">Low-Reynolds-number boundary layers, separation bubbles and the performance penalty — <a href="https://en.wikipedia.org/wiki/Laminar_flow#Laminar_flow_in_aerodynamics" target="_blank" rel="noopener">low-Re airfoil behaviour</a>; see also <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/boundary-layer/" target="_blank" rel="noopener">NASA Glenn, Boundary Layer</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0006-aspect-ratio.html">
+      <div class="dir">← Lesson 06</div>
+      <div class="ttl">Aspect Ratio &amp; Induced Drag</div>
+    </a>
+    <a class="next" href="0008-cfd-101.html">
+      <div class="dir">Next · Lesson 08</div>
+      <div class="ttl">CFD 101 →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 07 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/re-calc.js"></script>
+<script>mountReCalc("re7", { speed: 5, chord: 100 });</script>
+</body>
+</html>

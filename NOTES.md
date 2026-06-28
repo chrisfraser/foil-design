@@ -36,6 +36,11 @@
 15. Design-of-experiments: compare 3D variants in SimScale, pick a winner; optionally validate in OpenFOAM/CfdOF.
 16. Build + on-water test protocol; measure depth; close the loop CFD↔reality; calibrate trust in the tools; iterate.
 
+### Build status (session 3)
+- **Site numbering** (decoupled from this sketch): Phase 1 Theory = lessons **01–07** (01 foils-101, 02 lift-eq, 03 dive-depth, 04 coefficients/polars/stall, 05 sections, 06 aspect-ratio, 07 Reynolds); Phase 2 CAD&CFD = **08–10** (08 CFD-101, 09 XFLR5, 10 SimScale). All **01–10 built & live**. Remaining "Soon": 11 Verification & Trust, 12 Cavitation/strength/printing, 13 Sizing & optimization, 14 Build + on-water test.
+- New interactive widgets (session 3): `polar-sim.js` (3-view polar explorer, used in 04/05/09), `ar-sim.js` (aspect-ratio/induced-drag, L06), `re-calc.js` (Reynolds, L07). Lessons 08 & 10 use static inline-SVG diagrams (no JS widget).
+- Deployed: GitHub Pages at https://chrisfraser.github.io/foil-design/ (repo chrisfraser/foil-design).
+
 ### Known design driver (session 2)
 - Towed behind boat; depth 3–50 m set by **foil angle + line length** → design likely needs **adjustable angle** (or a foil family). Worth modelling depth-vs-(speed,angle,line-length).
 

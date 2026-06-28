@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 · SimScale Hands-On</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 2 · CAD &amp; CFD · Lesson 10</p>
+  <h1 class="lesson-title">SimScale Hands-On</h1>
+  <p class="lesson-sub">Push your Fusion 360 depressor into real 3-D water CFD — in a browser tab, for free — and finally
+  get honest lift and drag for the actual shape you drew.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~16 minutes</span><span class="sep">•</span>
+    <span>🖱 A click-path, not a calculation</span><span class="sep">•</span>
+    <span class="tag build">From CAD model to real CFD</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p><a href="0009-xflr5-screening.html">Lesson 9</a> used XFLR5 to <em>screen</em> sections fast — but it's 2-D,
+    and it can't be trusted on the short, stubby, low-<a href="../reference/glossary.html#aspect-ratio">aspect-ratio</a>
+    shape a real depressor actually is. The tip vortices and <a href="../reference/glossary.html#induced-drag">induced
+    drag</a> from <a href="0006-aspect-ratio.html">Lesson 6</a> live in the third dimension, and 2-D screening
+    pretends they don't exist. <strong>SimScale</strong> is the easiest step up: browser-based 3-D CFD that takes your
+    Fusion 360 part and tows it through real water. This lesson is the click-path — and the four ways beginners get a
+    confident wrong answer.</p>
+  </div>
+
+  <h2><span class="num">1</span>Why SimScale for your first real 3-D run</h2>
+  <p>You could install OpenFOAM and learn Linux, or buy a seat of a commercial solver. Not yet. SimScale wins for the
+  first honest run because it is <strong>free on the community tier</strong>, <strong>runs entirely in the
+  browser</strong> (nothing to install, the solve happens on their cloud), and has a <strong>clean Fusion 360 →
+  CFD path</strong>.<span class="cite"><a href="#n1">1</a></span> Most importantly it does genuine
+  <strong>3-D</strong>: it sees the wing tips, the spanwise flow, and the induced drag that XFLR5's 2-D strip theory
+  can only guess at. For a low-AR depressor that difference is the whole ball game.</p>
+
+  <h2><span class="num">2</span>The shape of the workflow</h2>
+  <p>Before the clicks, hold the pipeline in your head. The thing you actually simulate is not the foil — it's the
+  <strong>water around it</strong>, with the foil-shaped hole subtracted out. Everything downstream depends on getting
+  that, the fluid, and the mesh right.</p>
+
+  <figure class="frame">
+  <svg viewBox="0 0 700 280" role="img" aria-label="Workflow pipeline: Fusion 360 model, flow domain of water, mesh, solve with k-omega SST in water, read lift and drag.">
+    <defs>
+      <marker id="pa" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="11" refX="11" refY="5.5" orient="auto"><path d="M0,0 L13,5.5 L0,11 Z" fill="#2a9db0"/></marker>
+    </defs>
+
+    <text x="350" y="24" text-anchor="middle" font-family="var(--sans)" font-size="13" fill="#76838d">THE SIMSCALE PIPELINE — you simulate the water, not the foil</text>
+
+    <!-- Stage 1: Fusion model -->
+    <rect x="12" y="92" width="120" height="70" rx="8" fill="#fff" stroke="#0b6b7a" stroke-width="2"/>
+    <text x="72" y="120" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="#0b6b7a">Fusion 360</text>
+    <text x="72" y="138" text-anchor="middle" font-family="var(--sans)" font-size="10.5" fill="#44515b">foil model</text>
+    <text x="72" y="152" text-anchor="middle" font-family="var(--sans)" font-size="9.5" fill="#76838d">export STEP</text>
+
+    <!-- Stage 2: Domain -->
+    <rect x="156" y="92" width="120" height="70" rx="8" fill="#eef9fb" stroke="#0b6b7a" stroke-width="2"/>
+    <text x="216" y="118" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="#0b6b7a">flow DOMAIN</text>
+    <text x="216" y="135" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">box of water,</text>
+    <text x="216" y="149" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">foil subtracted</text>
+
+    <!-- Stage 3: Mesh -->
+    <rect x="300" y="92" width="120" height="70" rx="8" fill="#fff" stroke="#0b6b7a" stroke-width="2"/>
+    <text x="360" y="118" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="#0b6b7a">MESH</text>
+    <text x="360" y="135" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">+ boundary</text>
+    <text x="360" y="149" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">layer (y+)</text>
+
+    <!-- Stage 4: Solve -->
+    <rect x="444" y="92" width="120" height="70" rx="8" fill="#eef9fb" stroke="#0b6b7a" stroke-width="2"/>
+    <text x="504" y="116" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="#0b6b7a">SOLVE</text>
+    <text x="504" y="132" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">incompressible,</text>
+    <text x="504" y="146" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">k-ω SST</text>
+
+    <!-- Stage 5: Results -->
+    <rect x="588" y="92" width="104" height="70" rx="8" fill="#f2faf3" stroke="#3f7d4e" stroke-width="2"/>
+    <text x="640" y="118" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="#3f7d4e">LIFT &amp; DRAG</text>
+    <text x="640" y="135" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">→ C_L, C_D,</text>
+    <text x="640" y="149" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#44515b">L/D</text>
+
+    <!-- arrows -->
+    <g stroke="#2a9db0" stroke-width="2.5" fill="none">
+      <line x1="134" y1="127" x2="152" y2="127" marker-end="url(#pa)"/>
+      <line x1="278" y1="127" x2="296" y2="127" marker-end="url(#pa)"/>
+      <line x1="422" y1="127" x2="440" y2="127" marker-end="url(#pa)"/>
+      <line x1="566" y1="127" x2="584" y2="127" marker-end="url(#pa)"/>
+    </g>
+
+    <!-- water caution -->
+    <text x="504" y="198" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="#c1492b">⚠ set fluid = WATER</text>
+    <text x="504" y="214" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#c1492b">(SimScale defaults to AIR)</text>
+    <line x1="504" y1="164" x2="504" y2="184" stroke="#c1492b" stroke-width="2" stroke-dasharray="3 3"/>
+
+    <text x="350" y="252" text-anchor="middle" font-family="var(--sans)" font-size="11" fill="#76838d">…then check convergence, mesh-independence, and your hand calc before you believe the number.</text>
+  </svg>
+  <figcaption>The pipeline. The blue boxes are setup; the <b style="color:#3f7d4e">green</b> box is what you came for.
+  The one step that silently ruins everything is the <b style="color:#c1492b">fluid</b> — get it wrong and every force
+  is off by ~800×.</figcaption>
+  </figure>
+
+  <h2><span class="num">3</span>The click-path, step by step</h2>
+  <p>Have your foil designed in Fusion and a trolling speed in mind (convert knots to m/s — 1 knot ≈ 0.514 m/s). Then,
+  inside a SimScale project:</p>
+
+  <ol class="steps">
+    <li><strong>Geometry — export &amp; enclose.</strong> Export the foil from Fusion 360 as a <strong>STEP</strong>
+    file and upload it. Then build a <strong>flow domain</strong>: a box of fluid around the foil, big enough that the
+    walls don't interfere — several chord-lengths to each side and above/below, and <strong>more downstream</strong>
+    (the wake needs room). SimScale's "external flow domain" / enclosure tool does this and subtracts the foil, so
+    what you mesh is the <em>water</em> with a foil-shaped hole in it.</li>
+
+    <li><strong>Mesh — coarse first, with a boundary layer.</strong> Use the automatic mesher and add
+    <strong>boundary-layer (inflation) refinement</strong> on the foil surface, because the lift and drag are decided
+    in that thin sheared layer against the wall — recall <strong>y+</strong> from <a href="0008-cfd-101.html">Lesson
+    8</a>. Start <em>coarse</em> to shake out setup mistakes cheaply; only refine once the case runs end to end.</li>
+
+    <li><strong>Analysis type — Incompressible.</strong> Water doesn't compress at trolling speeds, so choose the
+    <strong>incompressible</strong> fluid-flow analysis. (Compressible solvers are for things going near the speed of
+    sound — not us.)</li>
+
+    <li><strong>Materials — set the fluid to WATER.</strong> This is the number-one beginner mistake: SimScale
+    defaults to <strong>air</strong>. Change it to water — density <var>ρ</var> ≈ <strong>1000 kg/m³</strong> (fresh) or
+    <strong>1025</strong> (sea) and water's dynamic viscosity (≈ 0.001 Pa·s). Leave it on air and water is ~800× denser,
+    so <em>every force comes out roughly 800× too small</em> and you won't notice until it's far too late.</li>
+
+    <li><strong>Boundary conditions — tell the box what's happening.</strong> Set the <strong>inlet</strong> to your
+    trolling speed in m/s; the <strong>outlet</strong> to a pressure (gauge 0); the <strong>foil surface</strong> to a
+    no-slip <strong>wall</strong>; and the <strong>box sides/top/bottom</strong> to slip or symmetry so the fake walls
+    don't drag on the flow.</li>
+
+    <li><strong>Turbulence model — k-ω SST.</strong> It's the reliable default for foils: it behaves well both in the
+    near-wall boundary layer and out in the free stream, which is exactly the mix a towed foil produces.</li>
+
+    <li><strong>Run, then watch it converge.</strong> Launch the simulation on the cloud and watch the
+    <strong>residuals</strong> and the force plots settle (convergence, from <a href="0008-cfd-101.html">Lesson
+    8</a>). A run that's still wandering is not an answer.</li>
+
+    <li><strong>Post-process — read the forces, then convert.</strong> Pull the <strong>lift</strong> and
+    <strong>drag</strong> forces on the foil surface. Back them out into <strong>C<sub>L</sub></strong>,
+    <strong>C<sub>D</sub></strong> and <strong>L/D</strong> with the lift equation, and compare to the hand estimate
+    you made back in <a href="0002-lift-equation.html">Lesson 2</a> / <a href="0004-coefficients-polars-stall.html">Lesson
+    4</a>.</li>
+  </ol>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ The four ways to get a confident wrong answer</div>
+    <p><strong>(1) Wrong fluid</strong> — left on air, forces ~800× off. <strong>(2) Privacy</strong> — the free
+    community tier makes projects <strong>public</strong>; don't upload anything you need to keep secret.
+    <strong>(3) Not actually converged or mesh-independent</strong> — a number that's still drifting, or that changes
+    when you refine the mesh, isn't a result. <strong>(4) No sanity check</strong> — a tidy, converged CFD number that
+    disagrees <strong>3×</strong> with your hand calc means something is wrong, almost always the fluid, the units, or
+    the mesh. CFD doesn't replace the back-of-envelope check — it earns trust by <em>agreeing</em> with it.</p>
+  </div>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>SimScale turns a Fusion 360 foil into <strong>real 3-D water CFD</strong> for honest lift and drag — provided
+    you <strong>set the fluid to water</strong>, <strong>mesh the boundary layer</strong>, run
+    <strong>incompressible + k-ω SST</strong>, reach <strong>convergence</strong>, and <strong>sanity-check against a
+    hand calc</strong>. It's the first time you get numbers for <em>your</em> actual low-AR shape that include the tip
+    losses XFLR5 can't see.</p>
+  </div>
+
+  <h2><span class="num">4</span>Check yourself</h2>
+  <p>Recall first — clicking comes later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">In a SimScale external-flow run, the geometry you actually mesh and solve is…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="No — you don't mesh the solid foil. You mesh the fluid: a box of water with the foil-shaped volume subtracted out.">the solid foil body itself</button>
+      <button class="opt" data-correct data-feedback="Right — the flow domain is a box of water around the foil, with the foil subtracted. You simulate the water, not the part.">the box of water around the foil, foil subtracted</button>
+      <button class="opt" data-feedback="The mesh wraps the fluid domain, not just the skin. You build a 3-D box of water with the foil cut out of it.">just the 2-D surface of the foil</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">The single most common SimScale beginner mistake for a depressor is…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — SimScale defaults to air. Leave it and water's ~800× higher density makes every force come out ~800× too small.">leaving the fluid set to air instead of water</button>
+      <button class="opt" data-feedback="Picking k-ω SST is the right default, not a mistake. The classic trap is the fluid being left on air.">choosing the k-ω SST turbulence model</button>
+      <button class="opt" data-feedback="Incompressible is correct for water at trolling speed. The real trap is forgetting to change the fluid from air to water.">using the incompressible analysis type</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">Why bother with SimScale's 3-D run when XFLR5 already gave you a 2-D polar?</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="It's not mainly about speed — XFLR5 is faster. The point is honesty about 3-D effects on a stubby shape.">because the cloud solver is faster than XFLR5</button>
+      <button class="opt" data-correct data-feedback="Correct — 3-D CFD captures tip vortices and induced drag on a low-AR shape, which 2-D screening can't be trusted on.">3-D captures tip vortices and induced drag XFLR5 can't</button>
+      <button class="opt" data-feedback="SimScale doesn't remove the need for a hand check — quite the opposite, you still validate against your Lesson 2 estimate.">because it removes the need for any hand calc</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">Your converged run gives an L/D three times higher than your Lesson 2 hand estimate. You should…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Convergence only means the solver stopped moving — not that the setup was right. A 3× gap is a red flag to investigate.">trust the CFD — it converged, so it's correct</button>
+      <button class="opt" data-correct data-feedback="Right — a converged number that disagrees 3× with the hand calc signals an error, usually fluid, units, or mesh. Investigate before believing it.">suspect an error — likely fluid, units, or mesh — and check</button>
+      <button class="opt" data-feedback="Throwing out the hand calc removes your only sanity check. The hand calc is what tells you the CFD is plausible.">discard the hand calc as too rough to matter</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>SimScale is free, browser-based 3-D CFD with a clean <strong>Fusion 360 → water</strong> path.</li>
+      <li>You simulate the <strong>flow domain</strong> — a generous box of water with the foil subtracted.</li>
+      <li>Mesh with a <strong>boundary layer</strong> (y+), run <strong>incompressible + k-ω SST</strong>.</li>
+      <li><strong>Set the fluid to water</strong> (ρ ≈ 1000–1025) — the default air is off by ~800×.</li>
+      <li>Believe a number only after <strong>convergence, mesh-independence, and a hand-calc sanity check</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://www.simscale.com/docs/tutorials/" target="_blank" rel="noopener">SimScale Docs — CFD tutorials</a></div>
+      <div class="desc">Work an external-aerodynamics / airfoil tutorial end to end (geometry → flow domain → mesh →
+      incompressible solve → forces), then repeat it with <strong>your</strong> Fusion foil and the fluid switched to
+      water. Browse real public runs in the <a href="https://www.simscale.com/projects/" target="_blank" rel="noopener">SimScale
+      project library</a>. And see how it stacks up against XFLR5 and OpenFOAM in our
+      <a href="../reference/cfd-tools.html">CFD tools comparison</a>.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want help sizing your flow domain, converting your trolling speed to
+    an inlet velocity, picking boundary conditions, or turning the lift/drag forces back into C<sub>L</sub>, C<sub>D</sub>
+    and L/D to compare with your hand calc? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#induced-drag">induced drag</a>,
+    <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a>,
+    <a href="../reference/glossary.html#lift-coefficient">lift coefficient</a>,
+    <a href="../reference/glossary.html#drag-coefficient">drag coefficient</a>,
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>,
+    <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>.
+    Tools → <a href="../reference/cfd-tools.html">CFD tools comparison</a>.
+    Builds toward → <b>Lesson 11</b> (verification &amp; trust: is the number <em>right</em>, not just converged?).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Browser-based CFD workflow, community tier and Fusion/CAD import: <a href="https://www.simscale.com/docs/" target="_blank" rel="noopener">SimScale Documentation</a> and <a href="https://www.simscale.com/docs/tutorials/" target="_blank" rel="noopener">CFD tutorials</a>.</li>
+    <li id="n2">k-ω SST turbulence model and incompressible external aerodynamics setup: <a href="https://www.simscale.com/docs/simulation-setup/global-settings/k-omega-sst/" target="_blank" rel="noopener">SimScale, k-ω SST</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0009-xflr5-screening.html">
+      <div class="dir">← Lesson 09</div>
+      <div class="ttl">XFLR5 Screening</div>
+    </a>
+    <a class="next" href="../index.html">
+      <div class="dir">Next · Lesson 11</div>
+      <div class="ttl">Verification &amp; Trust (coming soon) →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 10 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>09 · XFLR5 Screening</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 2 · CAD &amp; CFD · Lesson 09</p>
+  <h1 class="lesson-title">XFLR5: Screening Sections, Fast and Free</h1>
+  <p class="lesson-sub">Before you spend hours on 3-D CFD, spend seconds ranking candidate sections — the right
+  first tool gives you real polars at your Reynolds number for the cost of a few clicks.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~15 minutes</span><span class="sep">•</span>
+    <span>🧮 Software workflow, no maths</span><span class="sep">•</span>
+    <span class="tag build">Your cheap, fast first filter</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p><a href="0008-cfd-101.html">Lesson 8</a> explained what CFD is and why 3-D runs cost real time and patience.
+    But you don't want to spend that effort on six sections you haven't shortlisted. <strong>XFLR5</strong> is free
+    software that computes a section's <a href="../reference/glossary.html#polar">polars</a> in
+    <em>seconds</em> — the perfect tool to ask “which of these candidates makes the best
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D</a> at <em>my</em> conditions?” and throw away the losers
+    before you ever open a 3-D solver.</p>
+  </div>
+
+  <h2><span class="num">1</span>What XFLR5 is — and is for</h2>
+  <p>XFLR5 wraps <strong>XFOIL</strong>, a fast, well-proven 2-D <a href="../reference/glossary.html#polar">panel</a> +
+  boundary-layer method, in a friendly interface.<span class="cite"><a href="#n1">1</a></span> You hand it a foil
+  <strong>section</strong> and a <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>; in return
+  it computes, at <em>your</em> conditions:</p>
+  <ul>
+    <li>The <strong>C<sub>L</sub>–<var>α</var></strong> curve — lift versus angle, including the
+    <a href="../reference/glossary.html#stall">stall</a> and C<sub>L,max</sub> (Lesson 4).</li>
+    <li>The <strong>drag polar</strong> — C<sub>L</sub> vs C<sub>D</sub>, with its low-drag bucket.</li>
+    <li><strong>C<sub>m</sub></strong> (the pitching moment) and the <strong>transition points</strong> where the
+    boundary layer trips from laminar to turbulent.</li>
+  </ul>
+  <p>That is exactly the data you learned to read in <a href="0004-coefficients-polars-stall.html">Lesson 4</a> — now
+  computed for the specific shapes <em>you</em> are choosing between. It is <strong>rapid 2-D section analysis</strong>,
+  and that is what it is brilliant at.</p>
+
+  <h2><span class="num">2</span>The workflow, start to shortlist</h2>
+  <p>Five steps take you from “I have some candidate sections” to “these one or two are worth real CFD.”</p>
+
+  <ol class="steps">
+    <li><strong>Get or define the section.</strong> Use the built-in <strong>NACA generator</strong> (type
+    <code>4412</code> and it builds the coordinates) or <strong>import a <code>.dat</code></strong> coordinate file for
+    a section you found elsewhere. This is your “Foil” in XFLR5's Direct Foil Design view.</li>
+
+    <li><strong>Set the Reynolds number for YOUR foil.</strong> This is the step beginners skip — and then they wonder
+    why the numbers look nothing like reality. Use the figure from <a href="0007-reynolds-number.html">Lesson 7</a>:
+    for a <var>100&nbsp;mm</var> chord at <var>5&nbsp;kn</var> that's roughly
+    <strong>Re ≈ 2.6×10⁵</strong>. A polar is only valid at one Reynolds number, so this single field decides whether
+    your whole analysis is meaningful.<span class="cite"><a href="#n2">2</a></span></li>
+
+    <li><strong>Run a batch (Type 1) analysis.</strong> A <em>Type 1</em> analysis holds Reynolds number fixed and
+    sweeps <a href="../reference/glossary.html#angle-of-attack">angle of attack</a> across your range — say
+    <var>−4°</var> to <var>+14°</var> in 0.5° steps. Run it and XFLR5 fills in the whole polar in seconds.</li>
+
+    <li><strong>Read the polars.</strong> Find the <strong>drag bucket</strong>, the <strong>C<sub>L,max</sub> /
+    stall</strong> point, and — the one that sets your dive depth — the <strong>peak-L/D angle</strong> (Lesson 4).
+    Flip to the L/D-vs-<var>α</var> view to read the peak straight off.</li>
+
+    <li><strong>Rank and shortlist.</strong> Compare candidates by <strong>peak L/D within the C<sub>L</sub> band you
+    actually need</strong> for your downforce — not in the abstract. Keep the best <strong>one or two</strong>; those
+    are what graduate to 3-D CFD next lesson.</li>
+  </ol>
+
+  <h2><span class="num">3</span>Screen the candidates</h2>
+  <p>Overlaying polars to <em>rank</em> sections is exactly what XFLR5 produces. The widget below stands in for that:
+  swap sections, turn on <strong>compare</strong>, and read the <strong>L/D-vs-<var>α</var></strong> view — whichever
+  curve peaks highest <em>within your operating band</em> wins the screen. Notice the peak sits at a modest angle,
+  comfortably below stall (Lesson 4).</p>
+
+  <div id="polar9" class="polar-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">This widget is a <em>stand-in</em> for the real
+  thing — its curves are simple analytic fits. XFLR5 gives you honest numbers at the exact
+  <a href="../reference/glossary.html#reynolds-number">Reynolds number</a> you type in. The <em>shape</em> of the
+  comparison — overlaid polars you rank by peak L/D — is what matters here.</p>
+
+  <h2><span class="num">4</span>What a screen looks like</h2>
+  <p>The output of a screening session is a short ranked table. Below is an <strong>illustrative</strong> example
+  (not measured numbers) of how you'd record three candidates at your Reynolds number — enough to pick a winner and
+  drop the rest.</p>
+
+  <table>
+    <thead>
+      <tr><th>Section</th><th>~Peak L/D</th><th>Stall α</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Flat plate</td><td>~12</td><td>~9°</td><td>Easy to make; modest efficiency, early stall.</td></tr>
+      <tr><td>NACA 0012 (symmetric)</td><td>~40</td><td>~14°</td><td>Predictable; no camber, so works the same flipped.</td></tr>
+      <tr><td>NACA 4412 (cambered)</td><td>~55</td><td>~13°</td><td>Best L/D here; wider drag bucket. Shortlist this.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">Illustrative only — real values depend on your
+  Reynolds number and will be lower than textbook figures at the small, slow scale depressors live in (Lesson 7).
+  Trust the <strong>ranking</strong>, not the exact magnitudes.</p>
+
+  <h2><span class="num">5</span>The line you must not cross</h2>
+  <p>Here is the rule that keeps this whole course honest. XFLR5's <strong>2-D section</strong> results are trustworthy
+  and exactly what you want for screening. But XFLR5 can also predict <strong>3-D wing</strong> behaviour using
+  lifting-line / vortex-lattice methods — and those are <strong>unreliable for low
+  <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a></strong>.<span class="cite"><a href="#n3">3</a></span>
+  Depressors are <em>stubby, low-AR</em> shapes (Lesson 6), so XFLR5's 3-D lift and drag numbers for one are not to be
+  believed.</p>
+  <p>So draw the line clearly: use XFLR5 to pick a <strong>SECTION</strong>, never to get the final 3-D
+  lift/drag of your depressor. The honest 3-D answer comes from real 3-D CFD — SimScale, next lesson. And even for the
+  2-D screen, remember XFLR5 can be <strong>optimistic at low Reynolds number</strong>: treat absolute numbers with
+  caution and trust the <strong>relative ranking</strong> more than the magnitudes.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>XFLR5 gives <strong>fast, free 2-D section polars at your Reynolds number</strong> — ideal for
+    <strong>screening and ranking</strong> candidate sections by <strong>peak L/D</strong> in your operating band.
+    But <strong>distrust its low-AR 3-D numbers</strong>: use it to choose a section, not to size a depressor.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>You've now picked a <strong>section</strong>. But a depressor is a real, stubby <strong>3-D shape</strong> — and
+    only 3-D CFD can tell you its true lift and drag. Next you'll take the body you built in Fusion and turn it into an
+    honest CFD result in <strong>SimScale</strong> — <a href="0010-simscale-hands-on.html">Lesson 10</a>.</p>
+  </div>
+
+  <h2><span class="num">6</span>Check yourself</h2>
+  <p>Recall first, then go run it.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">XFLR5 is the right tool when you want to…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — fast 2-D section polars are exactly what XFLR5 (via XFOIL) does well, perfect for screening many candidates cheaply.">quickly rank several candidate sections by their polars</button>
+      <button class="opt" data-feedback="No — getting the true 3-D lift/drag of a stubby depressor is exactly what XFLR5 is NOT reliable for. That's 3-D CFD's job.">get the final 3-D lift and drag of your finished depressor</button>
+      <button class="opt" data-feedback="XFLR5 analyses sections; it doesn't model the printed part's strength. That's a structural question, not an aero one.">check whether your printed part will hold up under load</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">The step beginners skip — and then get nonsense — is…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="The NACA generator is convenient, but importing vs generating a section doesn't make the results meaningless on its own.">choosing the NACA generator instead of importing a .dat</button>
+      <button class="opt" data-correct data-feedback="Correct — a polar is only valid at one Reynolds number, so setting YOUR Re (from Lesson 7) is what makes the analysis meaningful.">setting the Reynolds number for their actual foil</button>
+      <button class="opt" data-feedback="Plotting C_m is useful but optional; leaving it out doesn't invalidate the lift and drag polars.">plotting the pitching moment C_m</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">Why shouldn't you trust XFLR5's 3-D numbers for a depressor?</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="XFLR5 is free and fully featured — cost isn't the issue. The issue is the method's accuracy at low aspect ratio.">because the free version disables 3-D analysis</button>
+      <button class="opt" data-correct data-feedback="Right — its lifting-line / vortex-lattice 3-D methods are unreliable at low aspect ratio, and depressors are stubby, low-AR shapes.">its 3-D method is unreliable for low-aspect-ratio shapes, and depressors are low-AR</button>
+      <button class="opt" data-feedback="It does run underwater conditions fine — you just set the fluid's Reynolds number. The 3-D problem is aspect ratio, not the fluid.">it can only model foils in air, not water</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">When comparing candidate polars from XFLR5, you should…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — XFLR5 can be optimistic at low Re, so the relative ranking is far more reliable than the exact magnitudes.">trust the ranking more than the absolute numbers</button>
+      <button class="opt" data-feedback="The opposite — absolute magnitudes can be optimistic at low Reynolds number, so don't bank on them.">treat the absolute L/D figures as final and exact</button>
+      <button class="opt" data-feedback="C_L,max matters, but depth follows peak L/D in your operating band — rank on that, not on maximum lift.">pick whichever section has the highest C_L,max</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li><strong>XFLR5</strong> wraps XFOIL to compute <strong>2-D section polars in seconds</strong> at your conditions.</li>
+      <li>The workflow: <strong>section → set Reynolds number → Type 1 batch sweep → read polars → rank by peak L/D</strong>.</li>
+      <li>Setting <strong>YOUR Reynolds number</strong> (Lesson 7) is the step that makes results meaningful.</li>
+      <li>Its <strong>2-D screening is trustworthy</strong>; its <strong>low-AR 3-D numbers are not</strong> — use it to pick a section only.</li>
+      <li>At low Re it can be optimistic — <strong>trust the ranking, not the magnitudes</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://www.xflr5.tech/xflr5.htm" target="_blank" rel="noopener">XFLR5 — official site &amp; Guidelines</a></div>
+      <div class="desc">Download XFLR5 and read the <a href="https://sourceforge.net/projects/xflr5/files/Guidelines.pdf/download" target="_blank" rel="noopener">Guidelines PDF</a>. Then generate a NACA 4412, set your Reynolds number from Lesson 7, run a Type 1 batch sweep, and read off the peak-L/D angle you just learned to find.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to walk you through your first XFLR5 run, help you set the
+    right Reynolds number for your chord and speed, or explain why its 3-D predictions go wrong for stubby foils?
+    Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#polar">polar</a>,
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>,
+    <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>,
+    <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a>,
+    <a href="../reference/glossary.html#stall">stall</a>.
+    Tools → <a href="../reference/cfd-tools.html">the CFD trio (XFLR5 / SimScale / OpenFOAM)</a>.
+    Builds toward → <b>Lesson 10</b> (SimScale: real 3-D CFD on your shape).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">XFLR5, XFOIL and the panel + boundary-layer method: <a href="https://www.xflr5.tech/xflr5.htm" target="_blank" rel="noopener">XFLR5 official site</a>; <a href="https://web.mit.edu/drela/Public/web/xfoil/" target="_blank" rel="noopener">Drela, XFOIL</a>.</li>
+    <li id="n2">Type 1 (fixed-Reynolds) analyses and why Reynolds number must match your foil: <a href="https://sourceforge.net/projects/xflr5/files/Guidelines.pdf/download" target="_blank" rel="noopener">XFLR5 Guidelines (PDF)</a>.</li>
+    <li id="n3">Limits of the lifting-line / vortex-lattice 3-D methods at low aspect ratio: <a href="https://sourceforge.net/projects/xflr5/files/Guidelines.pdf/download" target="_blank" rel="noopener">XFLR5 Guidelines (PDF)</a>; and <a href="https://en.wikipedia.org/wiki/Lifting-line_theory" target="_blank" rel="noopener">Lifting-line theory</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0008-cfd-101.html">
+      <div class="dir">← Lesson 08</div>
+      <div class="ttl">CFD 101</div>
+    </a>
+    <a class="next" href="0010-simscale-hands-on.html">
+      <div class="dir">Next · Lesson 10</div>
+      <div class="ttl">SimScale Hands-On →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 09 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/polar-sim.js"></script>
+<script>mountPolarSim("polar9", { section: "naca4412", view: "ld-alpha", compare: true });</script>
+</body>
+</html>

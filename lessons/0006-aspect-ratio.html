@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06 · Aspect Ratio &amp; Induced Drag</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 1 · Theory · Lesson 06</p>
+  <h1 class="lesson-title">Aspect Ratio &amp; Induced Drag</h1>
+  <p class="lesson-sub">Your foil has <em>ends</em> — and at those ends, lift leaks away as a whole new kind of drag.
+  For short, stubby depressors, this is often the drag that matters most.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~13 minutes</span><span class="sep">•</span>
+    <span>🧮 One formula, plenty of intuition</span><span class="sep">•</span>
+    <span class="tag math">The price of having tips</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p>The polars in <a href="0004-coefficients-polars-stall.html">Lesson 4</a> and the sections in
+    <a href="0005-foil-sections.html">Lesson 5</a> quietly assumed a foil of <strong>infinite span</strong> — a pure
+    2-D slice with no ends. Real foils have <strong>tips</strong>, and tips change everything. At the tips, the flow
+    leaks around the edge and spills your lift into a brand-new drag — <strong>induced drag</strong>. For the short,
+    stubby foils a depressor wants, this leakage is brutal, and it's controlled by one number you get to choose:
+    <strong>aspect ratio</strong>.</p>
+  </div>
+
+  <h2><span class="num">1</span>Aspect ratio: long-and-thin vs short-and-stubby</h2>
+  <p>The <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a> measures how slender a foil is — how much
+  <a href="../reference/glossary.html#span">span</a> it has relative to its <a href="../reference/glossary.html#chord">chord</a>:</p>
+
+  <div class="formula">
+    <span class="var">AR</span> <span class="op">=</span>
+    <span class="var">b</span>² <span class="op">/</span> <span class="var">A</span>
+    <span class="op">=</span> <span class="var">b</span> <span class="op">/</span> <span class="var">c</span>
+    <small><span class="var">AR</span> aspect ratio &nbsp;·&nbsp; <span class="var">b</span> span (tip-to-tip) &nbsp;·&nbsp;
+    <span class="var">A</span> planform area &nbsp;·&nbsp; <span class="var">c</span> chord (the right-hand form holds for a rectangle)</small>
+  </div>
+
+  <p>A glider wing is <strong>high-AR</strong> — long, thin, elegant (AR of 15–30). A depressor is usually
+  <strong>low-AR</strong> — short, stubby, compact and strong (AR of roughly 1–4). Same idea, opposite ends of the
+  scale. And that choice, it turns out, is one of the biggest levers you have over efficiency.</p>
+
+  <h2><span class="num">2</span>Why the tips cost you</h2>
+  <p>Your foil makes its perpendicular force by holding <strong>higher pressure</strong> on one face and
+  <strong>lower pressure</strong> on the other. In the middle of a long span, that pressure difference just sits there
+  doing its job. But at an open <strong>tip</strong>, the two faces meet — and high pressure does what high pressure
+  always does: it leaks around the edge toward the low-pressure side.</p>
+  <p>That leaking flow rolls up into a pair of swirling <a href="../reference/glossary.html#induced-drag">tip
+  vortices</a> trailing off the ends.<span class="cite"><a href="#n1">1</a></span> They cost you twice over:</p>
+  <ul>
+    <li>Near the tips your foil can no longer hold its full pressure difference, so it <strong>spills lift</strong> —
+    the ends are working at a discount.</li>
+    <li>The trailing vortices tilt the local flow downward (a <strong>downwash</strong>), which tips your lift vector
+    slightly <em>backward</em>. Part of what should have been pure lift now points along the flow as drag.</li>
+  </ul>
+
+  <h2><span class="num">3</span>Induced drag: the price of making lift</h2>
+  <p>That second effect is <strong>induced drag</strong> — sometimes called <em>drag-due-to-lift</em>, because unlike
+  the friction-and-shape drag of Lesson 4, it exists <em>only</em> because the foil is making lift with finite ends.
+  It has a clean formula:<span class="cite"><a href="#n2">2</a></span></p>
+
+  <div class="formula">
+    <span class="var">C<sub>Di</sub></span> <span class="op">=</span>
+    <span class="var">C<sub>L</sub></span>² <span class="op">/</span>
+    (<span class="op">π</span> <span class="op">·</span> <span class="var">AR</span> <span class="op">·</span> <span class="var">e</span>)
+    <small><span class="var">C<sub>Di</sub></span> induced-drag coefficient &nbsp;·&nbsp;
+    <span class="var">C<sub>L</sub></span> lift coefficient &nbsp;·&nbsp; <span class="var">AR</span> aspect ratio &nbsp;·&nbsp;
+    <span class="var">e</span> Oswald efficiency factor (≈ 0.8)</small>
+  </div>
+
+  <p>Read it as two warnings. First, induced drag grows with <strong>C<sub>L</sub> squared</strong> — so it bites
+  hardest exactly when you're working the foil <em>hard</em> for downforce. Second, it shrinks with
+  <strong>AR</strong> — so <strong>halving the aspect ratio roughly doubles the induced drag</strong>. The
+  <var>e</var> term (the <a href="../reference/glossary.html#induced-drag">Oswald efficiency factor</a>, usually
+  ≈ 0.8) just docks you a little for not having a perfectly elliptical lift shape.</p>
+
+  <h2><span class="num">4</span>The depressor's double bind</h2>
+  <p>Now stack the depressor's reality on top of that formula. A depressor runs <strong>low AR</strong> (stubby and
+  strong) <em>and</em> <strong>high C<sub>L</sub></strong> (you want lots of downforce). Both terms in
+  C<sub>Di</sub> = C<sub>L</sub>²/(π·AR·e) are pushed the wrong way at once. The result: for many depressors,
+  <strong>induced drag is the dominant drag</strong> — bigger than all the profile drag the section was so carefully
+  shaped to minimise.</p>
+  <p>And induced drag is the main thing capping your total <strong>L/D</strong> — which, from
+  <a href="0003-dive-depth.html">Lesson 3</a>, is what sets how deep you dive. So <strong>aspect ratio is a top-tier
+  design lever</strong>: more span buys you better L/D and more depth. The catch is structural — a longer, more
+  slender foil carries far more <strong>bending load</strong> at its root, is weaker and floppier, and is harder to
+  print and stow. The whole game is trading span for strength.</p>
+
+  <h2><span class="num">5</span>The 2-D polars were the best case</h2>
+  <p>Here's the tie-back that matters for the rest of the course. The pretty polars from Lessons 4–5 — and the ones
+  XFLR5 will hand you later — are <strong>2-D, infinite-span</strong> numbers. They are the <strong>AR → ∞</strong>
+  ideal. A real, finite, low-AR depressor is <em>always worse</em>: same section, same angle, but now paying induced
+  drag on top. This is exactly why you must <strong>distrust a tool's optimistic numbers</strong> for a stubby foil,
+  and why Phase 2 is about verifying them. The shape's character is real; its finite-foil tax is the part theory keeps
+  trying to hide from you.</p>
+
+  <h2><span class="num">6</span>Explore the trade</h2>
+  <p>Drag the <strong>aspect ratio</strong> down toward <strong>1–3</strong> — typical depressor territory — and watch
+  the planform go stubby at constant area, the <span style="color:#2a9db0;font-weight:600">tip vortices</span> fatten,
+  and the <strong>induced</strong> slice of the drag bar swallow the <strong>profile</strong> slice. Track the readouts:
+  C<sub>Di</sub> climbing, the total C<sub>D</sub> following it, and your <strong>L/D at this AR</strong> cratering far
+  below the <strong>L/D if AR → ∞</strong> ideal. That gap <em>is</em> the price of having tips.</p>
+
+  <div id="ar6" class="ar-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">A teaching model using
+  C<sub>Di</sub> = C<sub>L</sub>²/(π·AR·e) — qualitatively right, not a substitute for solving <em>your</em> planform.
+  Getting an honest finite-foil L/D is what XFLR5 and CFD are for (Phase 2).</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>Real foils <strong>leak lift at the tips</strong>, which costs you <strong>induced drag</strong>,
+    <strong>C<sub>Di</sub> = C<sub>L</sub>²/(π·AR·e)</strong>. Low-AR depressors run high C<sub>L</sub> and low AR, so
+    they pay this heavily — which makes <strong>aspect ratio one of your biggest levers on L/D and dive depth</strong>,
+    traded off against strength.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>Section (Lesson 5) and aspect ratio (this one) set the <em>shape</em> of your curves. But the curves themselves
+    <strong>shift with speed and size</strong> — a small, slow depressor lives at a low <strong>Reynolds number</strong>
+    where drag is higher and C<sub>L,max</sub> lower than the textbooks promise. That's
+    <a href="0007-reynolds-number.html">Lesson 7</a>.</p>
+  </div>
+
+  <h2><span class="num">7</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">For a rectangular foil, the aspect ratio is…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — AR = b²/A, which for a rectangle simplifies to span ÷ chord. High AR means long and slender.">span divided by chord</button>
+      <button class="opt" data-feedback="That's just the planform area (A = span × chord), not the aspect ratio. AR compares span to chord.">span multiplied by chord</button>
+      <button class="opt" data-feedback="Thickness is a section property (Lesson 5). Aspect ratio is about span vs chord — the planform's slenderness.">the foil's thickness ratio</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">Induced drag exists because…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="That's profile drag (friction + shape), which a 2-D section already has. Induced drag is the extra tax from finite tips.">the water rubs against the foil's surface</button>
+      <button class="opt" data-correct data-feedback="Correct — flow leaks around the open tips into trailing vortices, spilling lift and tilting it backward as drag.">flow leaks around the tips into trailing vortices</button>
+      <button class="opt" data-feedback="Stall is a separate breakdown at high angle. Induced drag is present whenever a finite foil makes lift, well before stall.">the foil has stalled at high angle</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">According to C<sub>Di</sub> = C<sub>L</sub>²/(π·AR·e), halving the aspect ratio…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — C_Di is inversely proportional to AR, so halving AR roughly doubles the induced drag.">roughly doubles the induced drag</button>
+      <button class="opt" data-feedback="The opposite — smaller AR means more induced drag, not less. AR is in the denominator.">roughly halves the induced drag</button>
+      <button class="opt" data-feedback="It very much matters — AR is the main term you control in the induced-drag formula.">has no effect on induced drag</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">Why is induced drag such a big deal specifically for depressors?</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Depressors are the opposite — low AR and high C_L, which both push induced drag up, not down.">they run high AR and low C<sub>L</sub>, minimising it</button>
+      <button class="opt" data-correct data-feedback="Right — low AR and high C_L both inflate C_Di, so induced drag often dominates and caps the depressor's L/D.">they run low AR and high C<sub>L</sub>, so it often dominates</button>
+      <button class="opt" data-feedback="It's the reverse — finite, stubby foils suffer induced drag badly; only an infinite-span foil escapes it.">finite foils don't suffer induced drag at all</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li><strong>Aspect ratio</strong> AR = b²/A (= span/chord for a rectangle) measures slenderness; depressors are <strong>low-AR</strong>.</li>
+      <li>Open <strong>tips</strong> leak flow into <strong>tip vortices</strong> that spill lift and tilt it into drag.</li>
+      <li><strong>Induced drag</strong>: C<sub>Di</sub> = C<sub>L</sub>²/(π·AR·e) — grows with C<sub>L</sub>², shrinks with AR.</li>
+      <li>Low AR + high C<sub>L</sub> makes induced drag <strong>dominant</strong> for depressors, capping L/D and depth.</li>
+      <li>2-D polars are the <strong>AR → ∞</strong> ideal; a real finite foil is always worse — so verify (Phase 2).</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · read this next</div>
+      <div class="title"><a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/induced-drag-coefficient/" target="_blank" rel="noopener">NASA Glenn — Induced Drag Coefficient</a></div>
+      <div class="desc">The derivation and formula for C<sub>Di</sub>, the Oswald efficiency factor, and how aspect ratio drives drag-due-to-lift — no calculus required. Then read its companion <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/aspect-ratio/" target="_blank" rel="noopener">Aspect Ratio</a> page.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to estimate the induced drag for <em>your</em> span and chord,
+    show how much L/D you'd buy by adding 20 mm of span, or explain why an elliptical planform has the best possible
+    <var>e</var>? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a>,
+    <a href="../reference/glossary.html#induced-drag">induced drag</a>,
+    <a href="../reference/glossary.html#span">span</a>,
+    <a href="../reference/glossary.html#chord">chord</a>,
+    <a href="../reference/glossary.html#planform-area">planform area</a>,
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>.
+    Builds toward → <b>Lesson 07</b> (Reynolds number: why the curves move with speed and size).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Tip vortices, downwash and finite-wing effects: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/vortex-drag/" target="_blank" rel="noopener">NASA Glenn, Vortex (Induced) Drag</a>.</li>
+    <li id="n2">Induced-drag coefficient C<sub>Di</sub> = C<sub>L</sub>²/(π·AR·e) and the Oswald efficiency factor: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/induced-drag-coefficient/" target="_blank" rel="noopener">NASA Glenn, Induced Drag Coefficient</a>; aspect ratio: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/aspect-ratio/" target="_blank" rel="noopener">NASA Glenn, Aspect Ratio</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0005-foil-sections.html">
+      <div class="dir">← Lesson 05</div>
+      <div class="ttl">Foil Sections</div>
+    </a>
+    <a class="next" href="0007-reynolds-number.html">
+      <div class="dir">Next · Lesson 07</div>
+      <div class="ttl">Reynolds Number in Water →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 06 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/ar-sim.js"></script>
+<script>mountArSim("ar6", { ar: 3, cl: 0.8 });</script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05 · Foil Sections: Flat Plate vs Cambered</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 1 · Theory · Lesson 05</p>
+  <h1 class="lesson-title">Foil Sections: Flat Plate vs Cambered</h1>
+  <p class="lesson-sub">The 2-D cross-section you choose <em>is</em> the curves you met last lesson. A little camber and
+  the right thickness move the whole polar — for free.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~14 minutes</span><span class="sep">•</span>
+    <span>🧮 Graphs, no calculus</span><span class="sep">•</span>
+    <span class="tag math">Where the curves come from</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p><a href="0004-coefficients-polars-stall.html">Lesson 4</a> taught you to read a foil's
+    <strong>C<sub>L</sub></strong> and <strong>C<sub>D</sub></strong> curves — the slope, the stall, the drag bucket,
+    the peak-L/D point. But what <em>decides</em> those curves? The <strong>section</strong>: the 2-D shape of the
+    foil's cross-section. Change the section and you redraw every curve. This lesson is how a few shape choices —
+    <strong>camber</strong> and <strong>thickness</strong> — move the polar up, left, and deeper, and how to read the
+    <a href="../reference/glossary.html#naca-section">NACA name</a> stamped on a section so you can pick a good one for
+    a printed depressor instead of settling for a flat plate.</p>
+  </div>
+
+  <h2><span class="num">1</span>The section is the cross-section — and it sets the curves</h2>
+  <p>Slice a foil straight through, perpendicular to its <a href="../reference/glossary.html#span">span</a>, and the
+  outline you see is the <strong>section</strong> (or profile). It's a 2-D shape, defined by two things laid over the
+  <a href="../reference/glossary.html#chord">chord</a> line: the <strong>mean camber line</strong> (how the shape
+  curves) and the <strong>thickness</strong> (how fat it is). Those two choices are what actually produce the
+  C<sub>L</sub>–<var>α</var> slope, the C<sub>L,max</sub>, and the drag bucket you learned to read.<span class="cite"><a href="#n1">1</a></span>
+  Pick the section and you've picked the curves.</p>
+
+  <h2><span class="num">2</span>The flat plate: honest, printable, mediocre</h2>
+  <p>The simplest section is a <strong>flat plate</strong> — no camber, barely any thickness. It does make lift (any
+  angled surface does), it prints in minutes, and it's a perfectly good way to prove the idea works. But it pays for
+  that simplicity: a sharp leading edge means the flow trips and separates early, so a flat plate
+  <strong>stalls at a low angle</strong> and carries <strong>more drag</strong> for the lift it makes. Fine for a
+  first wet test; not what you want bolted to your line for a season. It's the baseline every better section beats.</p>
+
+  <h2><span class="num">3</span>Camber: lift you get almost for free</h2>
+  <p>Now <strong>curve the mean line</strong> — give the section <a href="../reference/glossary.html#camber">camber</a>,
+  like a gentle banana. This is the single biggest "free" win in section choice. A cambered section:</p>
+  <ul>
+    <li><strong>makes lift at zero angle of attack.</strong> A symmetric section makes C<sub>L</sub> = 0 at
+    <var>α</var> = 0°; a cambered one is already working. Its whole C<sub>L</sub>–<var>α</var> line is shifted
+    <em>left</em>, so its <strong>zero-lift angle is negative</strong> — roughly <var>α</var><sub>0</sub> ≈ −4° for a
+    NACA 4412.<span class="cite"><a href="#n2">2</a></span></li>
+    <li><strong>reaches a higher C<sub>L,max</sub> for less drag</strong> — a better, deeper drag bucket sitting
+    further up and to the left on the polar. More lift, lower drag, at the same time.</li>
+  </ul>
+  <p>You can read that zero-lift shift straight off the lift line. With a slope near 0.1 per degree, the lift at
+  <var>α</var> = 0° is just the slope times the offset from <var>α</var><sub>0</sub>:</p>
+
+  <div class="formula">
+    <span class="var">C<sub>L</sub></span> <span class="op">(</span><span class="var">α</span><span class="op">=0)</span>
+    <span class="op">≈</span> 0.1 <span class="op">·</span> <span class="op">(</span>0 <span class="op">−</span>
+    <span class="var">α<sub>0</sub></span><span class="op">)</span> <span class="op">=</span> 0.1
+    <span class="op">·</span> 4° <span class="op">=</span> 0.4
+    <small>a NACA 4412 already makes a healthy C<sub>L</sub> ≈ 0.4 at zero geometric angle — a flat plate makes zero</small>
+  </div>
+
+  <p>One twist for us: a depressor points its lift <strong>down</strong>. So we orient the camber
+  <strong>belly-up</strong> — the mirror image of an aircraft wing. Same shape, same free lift, just flipped so the
+  perpendicular force aims at the lake-bed.</p>
+
+  <h2><span class="num">4</span>Thickness: strength and a gentler stall</h2>
+  <p>The other dial is <a href="../reference/glossary.html#thickness">thickness</a>. Fattening the section costs a
+  little drag, but it buys two things that matter a lot for a real, towed, printed part:</p>
+  <ul>
+    <li><strong>Structural strength.</strong> You're 3D-printing this and towing it at up to ~10 knots — the bending
+    loads are real. Thickness is depth in a beam, and beam stiffness rises fast with depth. A thicker section simply
+    doesn't snap.</li>
+    <li><strong>A gentler, more forgiving stall.</strong> A rounded, thicker leading edge lets the flow stay attached
+    longer and lets stall arrive <em>softly</em> instead of as a cliff — handy when your angle of attack wanders in
+    real water.</li>
+  </ul>
+  <p>Typical foils run about <strong>10–15% thick</strong> (thickness as a fraction of chord). For a printed depressor
+  that band is your friend: enough material to be strong and to give the trailing edge something to actually print,
+  without throwing away much L/D.</p>
+
+  <h2><span class="num">5</span>Decoding the NACA 4-digit name</h2>
+  <p>Classic sections come with a 4-digit <a href="../reference/glossary.html#naca-section">NACA</a> name that
+  <em>is</em> its geometry. Read it digit by digit:</p>
+
+  <div class="formula">
+    <span class="var">NACA 4412</span>
+    <small>
+    <b>4</b> → max camber = <b>4%</b> of chord &nbsp;·&nbsp;
+    <b>4</b> → camber sits at <b>40%</b> of chord back from the nose &nbsp;·&nbsp;
+    <b>12</b> → max thickness = <b>12%</b> of chord
+    </small>
+  </div>
+
+  <p>So <strong>NACA 4412</strong> is a moderately cambered, moderately thick, well-behaved section — a sensible
+  starting point. A name beginning <strong>00</strong> means <em>zero</em> camber: a <strong>symmetric</strong>
+  section. <strong>NACA 0012</strong> is the symmetric cousin — same 12% thickness, no camber, so C<sub>L</sub> = 0 at
+  <var>α</var> = 0° and a polar centred on the origin. Compare 4412 against 0012 and you're seeing exactly what camber
+  alone does.</p>
+
+  <h2><span class="num">6</span>Explore the curves</h2>
+  <p>Turn on <strong>overlay</strong> and put all three up together — the <strong>flat plate</strong>, the symmetric
+  <strong>NACA 0012</strong>, and the cambered <strong>NACA 4412</strong>. Watch what camber does: it shifts the whole
+  polar <strong>up and to the left</strong> — more lift, lower drag — and pushes the lift line left so the cambered
+  section already makes lift at <var>α</var> = 0°. Notice the flat plate stalls earliest and runs widest on drag. Then
+  flip to the polar view and find each section's deeper, better-placed drag bucket.</p>
+
+  <div id="polar5" class="polar-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">These are simple analytic fits — qualitatively
+  right, not measured polars. For honest numbers on <em>your</em> section at <em>your</em>
+  <a href="../reference/glossary.html#reynolds-number">Reynolds number</a>, that's what XFLR5 and CFD are for
+  (Phase 2).</p>
+
+  <h2><span class="num">7</span>So what should our depressor use?</h2>
+  <p>A <strong>moderately cambered, moderately thick NACA-style section</strong> — something in the spirit of a 4412 —
+  beats a flat plate on L/D while staying strong and printable. Camber buys lift cheaply; thickness buys strength and a
+  kinder stall. But none of it is truly free, and the trade-offs all point the same way if you overdo it:</p>
+  <ul>
+    <li><strong>More camber</strong> → more lift, but drag and the nose-down <em>pitching moment</em> grow too (the
+    foil tries harder to twist — that loads your mount).</li>
+    <li><strong>More thickness</strong> → stronger and softer-stalling, but draggier.</li>
+    <li><strong>Very thin trailing edges</strong> are hard to print cleanly and fragile once printed — another reason
+    a sensible thickness wins for us.</li>
+  </ul>
+  <p>Moderate, not maximal, is the printed-depressor sweet spot.</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>The <strong>section sets the curves</strong>. <strong>Camber</strong> buys lift cheaply — lift at zero angle and
+    a higher C<sub>L,max</sub> for less drag — and <strong>thickness</strong> buys strength and a gentler stall. Pick a
+    <strong>moderate cambered NACA section over a flat plate</strong>, oriented belly-up for a depressor.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ Next thread to pull</div>
+    <p>Everything here is a <strong>2-D ideal</strong> — a section, as if the foil ran on forever (infinite span). A
+    real depressor is short and stubby, and it has <strong>tips</strong>. At the tips the pressure leaks around and
+    bleeds off lift while adding a brand-new kind of drag. Short foils lose a <em>lot</em> there. That's
+    <a href="../reference/glossary.html#aspect-ratio">aspect ratio</a> and
+    <a href="../reference/glossary.html#induced-drag">induced drag</a> — <a href="0006-aspect-ratio.html">Lesson 6</a>.</p>
+  </div>
+
+  <h2><span class="num">8</span>Check yourself</h2>
+  <p>Recall first, then go check it on the widget.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">Compared with a flat plate, adding <strong>camber</strong> to a section mainly…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — camber shifts the whole polar up and left: lift at zero angle and a higher C_L,max for less drag.">lets it make lift at α = 0° and shifts the polar up/left</button>
+      <button class="opt" data-feedback="The opposite — camber lowers drag for a given lift (a deeper, better-placed bucket), it doesn't add drag everywhere.">raises drag at every angle with no lift benefit</button>
+      <button class="opt" data-feedback="Camber doesn't make a section symmetric — that's the 00xx (zero-camber) sections. Camber is the curve.">makes the section perfectly symmetric</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">A <strong>NACA 4412</strong> section has…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Correct — 4% max camber, at 40% of chord, 12% thick. The name is the geometry.">4% max camber at 40% chord, and is 12% thick</button>
+      <button class="opt" data-feedback="No — read it as 4 / 4 / 12: that's camber %, camber position (tenths of chord), then thickness %. It's not 44% anything.">44% camber and is 12% thick</button>
+      <button class="opt" data-feedback="That would be a 00xx name — zero camber means symmetric. The leading 4 means it is cambered.">zero camber (it's symmetric)</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">For a 3D-printed depressor towed up to ~10 knots, extra <strong>thickness</strong> mainly buys…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — thickness gives structural strength and a gentler, more forgiving stall, at the cost of a little drag.">structural strength and a gentler stall, costing some drag</button>
+      <button class="opt" data-feedback="Thickness costs a little drag, it doesn't lower it. Its payoff is strength and stall behaviour, not drag.">lower drag and a sharper stall</button>
+      <button class="opt" data-feedback="Thickness is about strength and stall, not the zero-lift angle — that's set by camber.">a more negative zero-lift angle</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">Why orient the camber <strong>belly-up</strong> on a depressor?</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — a depressor aims its lift downward, so the section is the mirror of an aircraft wing.">so the section's lift points down, toward the lake-bed</button>
+      <button class="opt" data-feedback="Orientation doesn't change how it prints — it changes which way the lift force points.">because it prints faster that way</button>
+      <button class="opt" data-feedback="Flipping the camber doesn't remove drag; it just aims the perpendicular (lift) force downward.">to cancel out the drag</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>The <strong>section</strong> (2-D cross-section: mean line + thickness) is what sets the C<sub>L</sub>/C<sub>D</sub> curves.</li>
+      <li>A <strong>flat plate</strong> works but stalls early and drags more — a baseline, not an optimum.</li>
+      <li><strong>Camber</strong> buys lift cheaply: lift at <var>α</var> = 0° (negative zero-lift angle, ≈ −4° for 4412) and a deeper bucket.</li>
+      <li><strong>Thickness</strong> (~10–15%) buys strength and a gentler stall for a little drag — ideal for a printed part.</li>
+      <li><strong>NACA 4412</strong> = 4% camber, at 40% chord, 12% thick; <strong>00xx</strong> = symmetric.</li>
+      <li>For us: a <strong>moderate cambered NACA section beats a flat plate</strong>, oriented belly-up.</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/shape-effects-on-lift/" target="_blank" rel="noopener">NASA Glenn — Shape Effects on Lift</a></div>
+      <div class="desc">How camber and thickness change the lift a section makes, with no calculus. Then open
+      <a href="http://airfoiltools.com/" target="_blank" rel="noopener">Airfoil Tools</a> and lay a NACA 4412, a NACA
+      0012, and a flat plate side by side — watch the cambered polar sit up and to the left of the others.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to decode a different NACA number, suggest a camber/thickness
+    pair for your tow speed and print, or explain why a cambered section makes lift at zero angle at all? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#naca-section">NACA section</a>,
+    <a href="../reference/glossary.html#camber">camber</a>,
+    <a href="../reference/glossary.html#thickness">thickness</a>,
+    <a href="../reference/glossary.html#chord">chord</a>,
+    <a href="../reference/glossary.html#polar">polar</a>,
+    <a href="../reference/glossary.html#stall">stall</a>.
+    Builds toward → <b>Lesson 06</b> (aspect ratio &amp; induced drag: what the tips cost you).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">How section shape — camber and thickness — changes lift: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/shape-effects-on-lift/" target="_blank" rel="noopener">NASA Glenn, Shape Effects on Lift</a>.</li>
+    <li id="n2">NACA 4-digit geometry and the negative zero-lift angle of cambered sections: <a href="http://airfoiltools.com/airfoil/details?airfoil=naca4412-il" target="_blank" rel="noopener">Airfoil Tools — NACA 4412</a>; and <a href="https://en.wikipedia.org/wiki/NACA_airfoil" target="_blank" rel="noopener">NACA airfoil (4-digit series)</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0004-coefficients-polars-stall.html">
+      <div class="dir">← Lesson 04</div>
+      <div class="ttl">Coefficients, Polars &amp; Stall</div>
+    </a>
+    <a class="next" href="0006-aspect-ratio.html">
+      <div class="dir">Next · Lesson 06</div>
+      <div class="ttl">Aspect Ratio &amp; Induced Drag →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 05 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/polar-sim.js"></script>
+<script>mountPolarSim("polar5", { section: "naca4412", view: "polar", alpha: 5, compare: true });</script>
+</body>
+</html>

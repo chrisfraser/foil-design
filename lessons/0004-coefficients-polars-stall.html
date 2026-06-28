@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 · Coefficients, Polars &amp; Stall</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script defer src="../assets/widgets.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="dot">⌖</span> Hydrodynamic Foils</a>
+    <nav>
+      <a href="../index.html">Lessons</a>
+      <a href="../reference/glossary.html">Glossary</a>
+      <a href="../reference/cfd-tools.html">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Phase 1 · Theory · Lesson 04</p>
+  <h1 class="lesson-title">Coefficients, Polars &amp; Stall</h1>
+  <p class="lesson-sub">Where the magic number L/D actually comes from — and why your best efficiency hides at a
+  modest angle, not the steepest one.</p>
+  <div class="lesson-meta">
+    <span>⏱ ~14 minutes</span><span class="sep">•</span>
+    <span>🧮 Reading graphs, no calculus</span><span class="sep">•</span>
+    <span class="tag math">The shape of every foil's character</span>
+  </div>
+
+  <div class="callout mission">
+    <div class="callout-label">◎ Why this lesson</div>
+    <p><a href="0003-dive-depth.html">Lesson 3</a> showed your dive depth rides on one number: the foil's
+    <strong>L/D</strong>. But where does it come from? Every foil's whole personality — how much lift it makes at
+    each angle, how much drag it pays, when it gives up — lives in two dimensionless numbers,
+    <strong>C<sub>L</sub></strong> and <strong>C<sub>D</sub></strong>, and the curves they trace. Learn to read those
+    curves and you can judge any section before you ever cut or print it.</p>
+  </div>
+
+  <h2><span class="num">1</span>Coefficients strip away everything but shape and angle</h2>
+  <p>Recall the lift equation, <strong>L = ½ρv²·A·C<sub>L</sub></strong>. Speed, density and area are bookkeeping —
+  you set them with the throttle and a ruler. Everything about the <em>foil itself</em> is bottled in
+  <strong>C<sub>L</sub></strong>, the <a href="../reference/glossary.html#lift-coefficient">lift coefficient</a>: a
+  pure number, the same in air or water, at 3 knots or 30, that says “how good is this shape, at this angle, at making
+  lift.” Drag gets its own, <strong>C<sub>D</sub></strong>. Strip away the conditions and a foil <em>is</em> its
+  C<sub>L</sub> and C<sub>D</sub>.</p>
+
+  <h2><span class="num">2</span>C<sub>L</sub> rises with angle — until it doesn't</h2>
+  <p>Tilt a foil into the flow and C<sub>L</sub> climbs almost <strong>in a straight line</strong> with angle of
+  attack — for a thin foil, roughly <strong>0.1 per degree</strong>.<span class="cite"><a href="#n1">1</a></span> Two
+  features of that line matter:</p>
+  <ul>
+    <li>The <strong>zero-lift angle</strong>: a symmetric foil makes zero lift at α = 0°, but a
+    <a href="../reference/glossary.html#camber">cambered</a> one already makes lift at 0° — its line is shifted left,
+    crossing zero at a <em>negative</em> angle. (More on camber next lesson.)</li>
+    <li><strong>C<sub>L,max</sub> and stall</strong>: the line can't rise forever. Past a critical angle the flow
+    separates, lift <em>collapses</em>, and drag spikes — <a href="../reference/glossary.html#stall">stall</a>, the
+    same breakdown you drove in Lesson 1.</li>
+  </ul>
+
+  <h2><span class="num">3</span>The drag polar and the “bucket”</h2>
+  <p>Plot C<sub>L</sub> against C<sub>D</sub> instead and you get the <strong>polar</strong> — the single most useful
+  chart in foil design.<span class="cite"><a href="#n2">2</a></span> A good section has a <strong>drag bucket</strong>:
+  a range of lift values where drag stays stubbornly low, then climbs steeply at the ends. You want to operate inside
+  that bucket.</p>
+
+  <h2><span class="num">4</span>L/D peaks <em>before</em> stall — not at it</h2>
+  <p>Here's the trap that catches beginners. Your instinct says “more angle → more lift → deeper.” But
+  <strong>efficiency</strong> — L/D, the number that sets your depth — peaks at a fairly <em>modest</em> angle, well
+  below stall. Crank the angle toward C<sub>L,max</sub> and you do get more lift, but drag grows faster, so L/D
+  <em>falls</em>. On the polar, peak L/D is the point a straight line from the origin just kisses the curve.</p>
+
+  <h2><span class="num">5</span>Explore the curves</h2>
+  <p>Switch between the three views, drag the angle, and swap sections. Watch the operating dot. Find each section's
+  <strong>peak L/D</strong> (the green star in the L/D view) and notice how far it sits below the
+  <span style="color:#c1492b;font-weight:600">stall</span> band. Then flip to the polar and see the same point as the
+  origin-tangent. Turn on overlay to compare the flat plate against the cambered NACA 4412.</p>
+
+  <div id="polar1" class="polar-sim"></div>
+  <p class="muted" style="font-family:var(--sans);font-size:.84rem">The coefficient models here are simple analytic
+  fits — qualitatively right, not a real polar. Getting honest numbers for <em>your</em> shape, at <em>your</em>
+  Reynolds number, is exactly what XFLR5 and CFD are for (Phase 2).</p>
+
+  <div class="callout key">
+    <div class="callout-label">★ The one win from this lesson</div>
+    <p>A foil is its <strong>C<sub>L</sub></strong> and <strong>C<sub>D</sub></strong> curves. C<sub>L</sub> rises
+    ~linearly with angle then <strong>stalls</strong>; the <strong>polar</strong> shows a low-drag
+    <strong>bucket</strong>; and <strong>peak L/D sits at a modest angle, below stall</strong>. Design for peak L/D,
+    not for maximum lift.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-label">⚠ The catch — these curves move</div>
+    <p>A polar is only valid for one <strong>Reynolds number</strong>. The same foil's curves shift as speed and size
+    change — and at the low Reynolds numbers our small, slow depressors live in, drag is higher and C<sub>L,max</sub>
+    lower than the pretty textbook polars promise. That's <a href="../index.html#phase-1">Lesson 7</a>. First, two
+    things that <em>shape</em> these curves: the <strong>section</strong> (Lesson 5) and the
+    <strong>aspect ratio</strong> (Lesson 6).</p>
+  </div>
+
+  <h2><span class="num">6</span>Check yourself</h2>
+  <p>Recall first, slide later.</p>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 1 of 4</div>
+    <div class="q-text">The lift coefficient C<sub>L</sub> mainly captures…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Those are the conditions you set separately (½ρv²·A). C_L isolates the foil's shape and angle.">the speed, density and area</button>
+      <button class="opt" data-correct data-feedback="Right — C_L is the dimensionless number for the foil's shape and angle of attack, the same in any fluid or speed.">the foil's shape and angle of attack</button>
+      <button class="opt" data-feedback="Line length sets depth geometry (Lesson 3), not C_L. C_L is purely the foil's shape-and-angle number.">the length of line you let out</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 2 of 4</div>
+    <div class="q-text">As you increase the angle of attack from zero, C<sub>L</sub>…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Yes — roughly a straight line (~0.1 per degree for a thin foil) until the flow separates and it collapses at stall.">rises almost linearly, then collapses at stall</button>
+      <button class="opt" data-feedback="It doesn't keep rising — past the stall angle the flow separates and lift drops sharply.">rises steadily without limit</button>
+      <button class="opt" data-feedback="No — more angle means more lift up to stall, not less. The fall only comes after stall.">falls steadily the whole way</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 3 of 4</div>
+    <div class="q-text">For deepest, most efficient towing you want to run the foil at…</div>
+    <div class="q-options">
+      <button class="opt" data-feedback="Max lift (near C_L,max) costs disproportionate drag — L/D is already falling there. Depth follows L/D, not raw lift.">the angle that gives maximum lift</button>
+      <button class="opt" data-correct data-feedback="Correct — depth follows L/D (Lesson 3), and L/D peaks at a modest angle, comfortably below stall.">the angle of peak L/D, below stall</button>
+      <button class="opt" data-feedback="The stall angle is the worst place — lift collapses and drag spikes, so L/D craters.">the stall angle, for the most force</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q-kicker">Question 4 of 4</div>
+    <div class="q-text">A foil's “drag bucket” on the polar is…</div>
+    <div class="q-options">
+      <button class="opt" data-correct data-feedback="Right — a range of C_L where drag stays low before climbing steeply at the ends. Operate inside it.">a band of lift where drag stays low</button>
+      <button class="opt" data-feedback="The opposite — the bucket is where drag is at its lowest, not highest.">the point of maximum drag</button>
+      <button class="opt" data-feedback="The stall angle is a separate feature; the bucket is about the low-drag region of the polar curve.">another name for the stall angle</button>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="recap">
+    <h3>What you can now say</h3>
+    <ol>
+      <li>A foil's character lives in <strong>C<sub>L</sub></strong> and <strong>C<sub>D</sub></strong> — dimensionless shape-and-angle numbers.</li>
+      <li><strong>C<sub>L</sub> rises ~linearly</strong> with angle (~0.1/°), then <strong>stalls</strong>; camber shifts the zero-lift angle.</li>
+      <li>The <strong>polar</strong> (C<sub>L</sub> vs C<sub>D</sub>) shows the low-drag <strong>bucket</strong>.</li>
+      <li><strong>Peak L/D</strong> — and so deepest towing — sits at a <strong>modest angle, below stall</strong>.</li>
+      <li>Polars are <strong>Reynolds-number specific</strong> (Lesson 7).</li>
+    </ol>
+  </div>
+
+  <div class="sourcebox">
+    <div class="icon">📖</div>
+    <div>
+      <div class="label">Primary source · do this next</div>
+      <div class="title"><a href="http://airfoiltools.com/airfoil/details?airfoil=naca4412-il" target="_blank" rel="noopener">Airfoil Tools — NACA 4412 polars</a></div>
+      <div class="desc">Real measured/computed C<sub>L</sub>–α and drag polars for a classic cambered section, at several Reynolds numbers. Find the drag bucket, the stall, and the peak-L/D point you just learned to read — and notice how the curves shift with Reynolds number.</div>
+    </div>
+  </div>
+
+  <div class="ask-teacher">
+    💬 <b>I'm your teacher — ask me anything.</b> Want me to read a specific airfoil's polar with you, estimate the
+    peak-L/D angle for a section at your speed, or explain why drag has a “bucket” shape at all? Just ask.
+  </div>
+
+  <div class="crosslinks">
+    <b>Linked:</b> Glossary →
+    <a href="../reference/glossary.html#lift-coefficient">lift coefficient</a>,
+    <a href="../reference/glossary.html#drag-coefficient">drag coefficient</a>,
+    <a href="../reference/glossary.html#polar">polar</a>,
+    <a href="../reference/glossary.html#lift-drag-ratio">L/D ratio</a>,
+    <a href="../reference/glossary.html#stall">stall</a>,
+    <a href="../reference/glossary.html#camber">camber</a>.
+    Builds toward → <b>Lesson 05</b> (foil sections: what makes these curves better).
+  </div>
+
+  <h2 id="refs"><span class="num">§</span>References</h2>
+  <ol style="font-family:var(--sans);font-size:.84rem;color:var(--ink-soft);line-height:1.5">
+    <li id="n1">Lift coefficient, the ~linear C<sub>L</sub>–α slope and stall: <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-coefficient/" target="_blank" rel="noopener">NASA Glenn, The Lift Coefficient</a>.</li>
+    <li id="n2">Drag polars, the drag bucket and L/D: <a href="http://airfoiltools.com/" target="_blank" rel="noopener">Airfoil Tools</a> polar database; and <a href="https://en.wikipedia.org/wiki/Polar_curve_(aerodynamics)" target="_blank" rel="noopener">Polar curve (aerodynamics)</a>.</li>
+  </ol>
+
+  <nav class="lesson-nav">
+    <a href="0003-dive-depth.html">
+      <div class="dir">← Lesson 03</div>
+      <div class="ttl">What Sets the Dive Depth</div>
+    </a>
+    <a class="next" href="0005-foil-sections.html">
+      <div class="dir">Next · Lesson 05</div>
+      <div class="ttl">Foil Sections: Flat Plate vs Cambered →</div>
+    </a>
+  </nav>
+
+  <p class="pagefoot">Lesson 04 of the Hydrodynamic Foils course ·
+  <a href="../index.html">all lessons</a> · <a href="../reference/glossary.html">glossary</a></p>
+</main>
+
+<script src="../assets/polar-sim.js"></script>
+<script>mountPolarSim("polar1", { section: "naca4412", view: "cl-alpha", alpha: 6, compare: true });</script>
+</body>
+</html>

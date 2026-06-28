@@ -376,6 +376,14 @@ pre code { background: none; padding: 0; color: inherit; }
 .ds-eq b { color: #ffd479; }
 .ds-eq .ds-note { font-family: var(--sans); font-size: .78rem; color: #8fb9c6; margin-top: .5rem; line-height: 1.4; }
 
+/* ---- Step list (numbered workflow steps) -------------------------------- */
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 1.6rem 0; display: grid; gap: .9rem; }
+.steps > li { position: relative; counter-increment: step; padding: .9rem 1rem .95rem 3.2rem; background: #fff; border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow); }
+.steps > li::before { content: counter(step); position: absolute; left: .85rem; top: .85rem; width: 1.7rem; height: 1.7rem; border-radius: 999px; background: var(--ocean); color: #fff; font-family: var(--sans); font-weight: 800; font-size: .92rem; display: flex; align-items: center; justify-content: center; }
+.steps .step-title { font-family: var(--sans); font-weight: 700; color: var(--abyss); margin-bottom: .2rem; }
+.steps .step-detail { color: var(--ink-soft); }
+.steps .step-tip { font-family: var(--sans); font-size: .82rem; color: var(--kelp); margin-top: .4rem; }
+
 /* ---- Polar explorer / AR / Reynolds widgets (shared card chrome) -------- */
 .polar-sim, .ar-sim, .re-calc {
   margin: 1.6rem 0; padding: 1.1rem 1.2rem 1.2rem;
